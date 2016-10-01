@@ -1,6 +1,5 @@
 default:
-    autoload:
-      - %paths.base%/test/features/Context
+
     suites:
         default:
             paths: [ "%paths.base%/modules/"]
@@ -8,4 +7,4 @@ default:
                 - 'Behat\MinkExtension\Context\MinkContext'
                 - 'Sanpi\Behatch\Context\RestContext'
                 - 'Sanpi\Behatch\Context\JsonContext'
-                - FeatureContext
+                - Context\FeatureContext
