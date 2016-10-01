@@ -1,0 +1,25 @@
+{
+  "name": "jcray.modules",
+  "version": "0.0.1",
+  "description": "Jcray Modules user environement",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JcrayDotCom/jcray.modules.git"
+  },
+  "keywords": [
+    "jcray"
+  ],
+  "author": "JcrayDotCom",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JcrayDotCom/jcray.modules/issues"
+  },
+  "homepage": "https://github.com/JcrayDotCom/jcray.modules#readme",
+  "dependencies": {
+    "bower": "^1.7.9"
+  }
+}

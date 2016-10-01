@@ -1,0 +1,15 @@
+{
+    "name": "jcraydotcom/modules",
+    "description": "Jcray modules environnement",
+    "homepage": "http://jcray.com",
+    "require-dev": {
+        "behat/behat": "^3.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jcray Dot Com",
+            "email": "contact@jcray.com"
+        }
+    ]
+}

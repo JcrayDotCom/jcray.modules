@@ -1,0 +1,25 @@
+{
+  "name": "jcray.modules",
+  "description": "Jcray Modules user environement",
+  "main": "index.html",
+  "authors": [
+    "JcrayDotCom"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jcray"
+  ],
+  "homepage": "https://github.com/JcrayDotCom/jcray.modules",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "materialize": "^0.97.7",
+    "bootstrap": "^3.3.7"
+  }
+}
