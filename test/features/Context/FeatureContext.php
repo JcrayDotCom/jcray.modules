@@ -34,7 +34,7 @@ class FeatureContext extends BaseContext implements Context
      */
     public function iSendARequestWith($arg1, PyStringNode $string)
     {
-        $url = '/tech/modules/render?game='.$this->game_url;
+        $url = '/v8/tech/modules/render?game='.$this->game_url;
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
 
         return $this->getRestContext()->iSendARequestToWithBody($arg1, $url, $string);
