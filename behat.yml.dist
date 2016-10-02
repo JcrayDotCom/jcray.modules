@@ -1,10 +1,26 @@
+
 default:
+    autoload:
+      - %paths.base%/test/features
 
     suites:
         default:
             paths: [ "%paths.base%/modules/"]
             contexts:
-                - 'Behat\MinkExtension\Context\MinkContext'
-                - 'Sanpi\Behatch\Context\RestContext'
-                - 'Sanpi\Behatch\Context\JsonContext'
-                - Context\FeatureContext
+                - Behat\MinkExtension\Context\MinkContext
+                - behatch:browser
+                - behatch:rest
+                - behatch:debug:
+                    screenshotDir: "."
+                - behatch:json:
+                    evaluationMode: javascript
+                - behatch:system
+                - behatch:table
+                - behatch:xml
+                - Context\FeatureContext: {user_token: "no-token", game_url: "test"}
+    extensions:
+        Behat\MinkExtension:
+            base_url: 'http://jcray.tech/'
+            goutte: ~
+            selenium2: ~
+        Sanpi\Behatch\Extension: ~

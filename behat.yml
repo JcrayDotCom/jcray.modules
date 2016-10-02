@@ -1,7 +1,7 @@
 
 default:
     autoload:
-      - %paths.base%/test/features/Context
+      - %paths.base%/test/features
 
     suites:
         default:
@@ -9,6 +9,7 @@ default:
             contexts:
                 - Behat\MinkExtension\Context\MinkContext
                 - behatch:browser
+                - behatch:rest
                 - behatch:debug:
                     screenshotDir: "."
                 - behatch:json:
@@ -16,10 +17,10 @@ default:
                 - behatch:system
                 - behatch:table
                 - behatch:xml
-                - FeatureContext
+                - Context\FeatureContext: {user_token: "no-token", game_url: "test"}
     extensions:
         Behat\MinkExtension:
-            base_url: 'http://jcray.dev/app_dev.php'
+            base_url: 'http://jcray.tech/'
             goutte: ~
             selenium2: ~
         Sanpi\Behatch\Extension: ~
