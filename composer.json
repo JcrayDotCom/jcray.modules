@@ -4,11 +4,11 @@
     "homepage": "http://jcray.com",
     "require-dev": {
         "behat/behat": "*",
-        "behat/mink": "*",
-        "behat/mink-extension": "*",
-        "behat/mink-browserkit-driver": "*",
         "behat/mink-goutte-driver": "*",
-        "sanpi/behatch-contexts": "*"
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-sahi-driver": "*",
+        "behat/mink-zombie-driver": "*",
+        "behatch/contexts": "*"
     },
     "config": {
         "bin-dir": "bin/"

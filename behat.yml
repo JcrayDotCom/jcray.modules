@@ -1,20 +1,25 @@
+
 default:
     autoload:
       - %paths.base%/test/features/Context
+
     suites:
         default:
             paths: [ "%paths.base%/modules/"]
             contexts:
-                - 'Behat\MinkExtension\Context\MinkContext'
-                - 'Sanpi\Behatch\Context\RestContext'
-                - 'Sanpi\Behatch\Context\JsonContext'
+                - Behat\MinkExtension\Context\MinkContext
+                - behatch:browser
+                - behatch:debug:
+                    screenshotDir: "."
+                - behatch:json:
+                    evaluationMode: javascript
+                - behatch:system
+                - behatch:table
+                - behatch:xml
                 - FeatureContext
-
     extensions:
         Behat\MinkExtension:
-            base_url: http://behat-three.local/app_dev.php
-            browser_name: firefox
-            sessions:
-              default:
-                goutte: ~
+            base_url: 'http://jcray.dev/app_dev.php'
+            goutte: ~
+            selenium2: ~
         Sanpi\Behatch\Extension: ~

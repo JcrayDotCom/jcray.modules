@@ -1,12 +1,18 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Sanpi\Behatch\Context\BehatchContext;
+use Sanpi\Behatch\Context\RestContext;
+use Behat\Gherkin\Node\PyStringNode;
 
-class FeatureContext implements Context
+class FeatureContext extends RestContext implements Context
 {
-    public function __construct(array $parameters)
+    /**
+     * @When I send a :arg1 request with:
+     */
+    public function iSendARequestWith($arg1, PyStringNode $string)
     {
-        $this->useContext('behatch', new BehatchContext($parameters));
+        $url = '/modules/{current_module}/render?game={last_created_game}';
+
+        return $this->iSendARequestToWithBody($arg1, $url, $string);
     }
 }
