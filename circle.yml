@@ -1,0 +1,18 @@
+machine:
+    timezone: Europe/Paris
+    php:
+        version: 7.0.4
+
+dependencies:
+    post:
+        - composer global require fabpot/php-cs-fixer
+    cache_directories:
+        - vendor
+        - bin
+        - ~/.composer
+
+test:
+    override:
+        - "cp behat.yml.dist behat.yml"
+        - "bin/behat --tags=~Skip"
+        - "php-cs-fixer fix --dry-run --diff modules//"
