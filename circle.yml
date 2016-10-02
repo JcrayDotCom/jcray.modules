@@ -15,5 +15,5 @@ dependencies:
 test:
     override:
         - "cp behat.yml.dist behat.yml"
-        - "bin/behat --tags=~Skip"
-        - "php-cs-fixer fix --dry-run --diff modules//"
+        - "bin/behat --tags=~Skip --stop-on-failure"
+        - "php-cs-fixer fix --dry-run --diff modules/"
