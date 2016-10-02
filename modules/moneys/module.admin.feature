@@ -15,6 +15,7 @@ Feature:
         }
     }
     """
+    Then print last response
     Then the response status code should be 200
     Then it should be 1 element for this game
     And this element should have a property "isMoney" equal to "1"

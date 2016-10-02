@@ -41,7 +41,6 @@ class FeatureContext extends BaseContext implements Context
         $gameInfo = new PyStringNode([$gameInfo], 0);
 
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
-        $this->getRestContext()->iSendARequestToWithBody('POST', $url, $gameInfo);
     }
 
     /**
@@ -64,7 +63,7 @@ class FeatureContext extends BaseContext implements Context
     public function iSendARequestWith($arg1, PyStringNode $string)
     {
         $this->createGame();
-        $url = '/v8/tech/modules/render?game='.$this->gameSlug;
+        $url = '/modules/tech/render?game='.$this->gameSlug;
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
 
         return $this->getRestContext()->iSendARequestToWithBody($arg1, $url, $string);

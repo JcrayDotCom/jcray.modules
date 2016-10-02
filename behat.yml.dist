@@ -21,7 +21,7 @@ default:
                 - Context\CustomRestContext
     extensions:
         Behat\MinkExtension:
-            base_url: 'http://jcray.tech/'
+            base_url: 'http://api.jcray.tech/v8/'
             goutte: ~
             selenium2: ~
         Sanpi\Behatch\Extension: ~
