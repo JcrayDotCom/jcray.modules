@@ -25,24 +25,6 @@ class FeatureContext extends BaseContext implements Context
         $this->restContext = $environment->getContext('Context\CustomRestContext');
     }
 
-    private function createGame()
-    {
-        if ($this->gameSlug) {
-            return;
-        }
-
-        $url = '/me/games';
-        $this->gameSlug = md5($this->user_id);
-
-        $gameInfo = json_encode([
-            'name' => $this->user_id,
-            'slug' => $this->gameSlug,
-        ]);
-        $gameInfo = new PyStringNode([$gameInfo], 0);
-
-        $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
-    }
-
     /**
      * @return RestContext
      */
@@ -51,10 +33,10 @@ class FeatureContext extends BaseContext implements Context
         return $this->restContext;
     }
 
-    public function __construct($user_token, $user_id)
+    public function __construct($game_slug)
     {
-        $this->user_token = $user_token;
-        $this->user_id = $user_id;
+        $this->user_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJrZXkiOiIyZGEyN2YzZjVkYWI4NTJiNDI0NDViODM0MTJjMDgwZDYwYmNmOTU3MjVlMDBmOTExMjIzZjBkNTE3ODM0MTQ5In0.4MxMRtg5MSmDI_82dISRxsD-9tSPTauw-XKss20t2f0';
+        $this->game_slug = $game_slug;
     }
 
     /**
@@ -62,8 +44,7 @@ class FeatureContext extends BaseContext implements Context
      */
     public function iSendARequestWith($arg1, PyStringNode $string)
     {
-        $this->createGame();
-        $url = '/modules/tech/render?game='.$this->gameSlug;
+        $url = '/modules/tech/render?game='.$this->game_slug;
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
 
         return $this->getRestContext()->iSendARequestToWithBody($arg1, $url, $string);
