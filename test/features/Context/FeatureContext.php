@@ -35,7 +35,7 @@ class FeatureContext extends BaseContext implements Context
 
     public function __construct($game_slug)
     {
-        $this->user_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJrZXkiOiIyZGEyN2YzZjVkYWI4NTJiNDI0NDViODM0MTJjMDgwZDYwYmNmOTU3MjVlMDBmOTExMjIzZjBkNTE3ODM0MTQ5In0.4MxMRtg5MSmDI_82dISRxsD-9tSPTauw-XKss20t2f0';
+        $this->user_token = '7fdb0615c176f8128960907eeee89fdf9ef2186db57c378ceaa51017209ac2dd';
         $this->game_slug = $game_slug;
     }
 

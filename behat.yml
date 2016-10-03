@@ -17,7 +17,7 @@ default:
                 - behatch:system
                 - behatch:table
                 - behatch:xml
-                - Context\FeatureContext: {user_token: "no-token", game_slug: "customFakeGamePrefix"}
+                - Context\FeatureContext: {game_slug: "customFakeGamePrefix"}
                 - Context\CustomRestContext
     extensions:
         Behat\MinkExtension:
