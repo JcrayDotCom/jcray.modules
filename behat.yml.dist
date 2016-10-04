@@ -17,7 +17,7 @@ default:
                 - behatch:system
                 - behatch:table
                 - behatch:xml
-                - Context\FeatureContext: {game_slug: "customFakeGamePrefix"}
+                - Context\FeatureContext: {developement_token: "GoTo http://jcray.tech!"}
                 - Context\CustomRestContext
     extensions:
         Behat\MinkExtension:
