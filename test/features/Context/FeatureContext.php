@@ -14,6 +14,8 @@ class FeatureContext extends BaseContext implements Context
 
     private $gameSlug;
 
+    private $adminControleer;
+
     /**
      * @BeforeScenario
      *
@@ -39,12 +41,36 @@ class FeatureContext extends BaseContext implements Context
     }
 
     /**
+     * @Given I use the :folderName module
+     */
+    public function iUseTheModule($folderName)
+    {
+        $file = __DIR__.'/../../../modules/'.$folderName.'/';
+        $this->adminController = file_get_contents($file.'admin.php');
+        $this->adminTemplate = file_get_contents($file.'admin.tpl');
+        $this->gameController = file_get_contents($file.'game.php');
+        $this->gameTemplate = file_get_contents($file.'game.tpl');
+    }
+
+    /**
      * @When I send a :arg1 request with:
      */
     public function iSendARequestWith($arg1, PyStringNode $string)
     {
         $url = '/modules/tech/render';
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
+        $dataObject = json_decode($string);
+
+        if (null == $dataObject) {
+            throw new \Exception('Request body can\'t be non-json value');
+        }
+
+        $dataObject->adminController = $this->adminController;
+        $dataObject->adminTemplate = $this->adminTemplate;
+        $dataObject->gameController = $this->gameController;
+        $dataObject->gameTemplate = $this->gameTemplate;
+
+        $string = new PyStringNode([json_encode($dataObject)], 0);
 
         return $this->getRestContext()->iSendARequestToWithBody($arg1, $url, $string);
     }

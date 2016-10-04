@@ -4,6 +4,9 @@ Feature:
   To pay or buy these elements you should have moneys.
   As an administrator, you should can create moneys, and as a gamer you should have several types of money.
 
+  Background:
+    Given I use the "moneys" module
+    
   Scenario: Successfully create a money
     When I send a "POST" request with:
     """
