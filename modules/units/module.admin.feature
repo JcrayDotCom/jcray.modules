@@ -4,17 +4,10 @@ Feature:
   As an administrator, you should can create unitss, and as a gamer you can recruit units.
 
   Background:
-    Given I have signed up
-    Given there is a game
-    Given the game's slug is game1
-    Given I load the module "units"
-    Given I prepare a POST request on "/modules/{last_created_module}/render?game={last_created_game}"
-    And the following headers:
-      | Authorization | Bearer {my_api_token}             |
-      | Content-Type  | application/x-www-form-urlencoded |
+    Given I use the "units" module
 
   Scenario: Successfully create an unit
-    Given I send the following body:
+    When I send a "POST" request with:
     """
     {
         "newUnit": {
@@ -36,7 +29,7 @@ Feature:
       Given this game has 1 element
       Given this element name is "An unit"
       Given this element has a property named "isUnit" with value "1";
-      Given I send the following body:
+      When I send a "POST" request with:
       """
       {
           "removeUnit": "An unit"
@@ -50,7 +43,7 @@ Feature:
         Given this game has 1 element
         Given this element name is "An unit"
         Given this element has a property named "isUnit" with value "1";
-        Given I send the following body:
+        When I send a "POST" request with:
         """
         {
             "units": [

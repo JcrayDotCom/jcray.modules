@@ -59,6 +59,8 @@ class FeatureContext extends BaseContext implements Context
     {
         $url = '/modules/tech/render';
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
+        $this->getRestContext()->iAddHeaderEqualTo('Content-type', 'application/x-www-form-urlencoded');
+
         $dataObject = json_decode($string);
 
         if (null == $dataObject) {

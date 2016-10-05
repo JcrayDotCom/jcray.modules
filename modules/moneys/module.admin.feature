@@ -6,7 +6,7 @@ Feature:
 
   Background:
     Given I use the "moneys" module
-    
+
   Scenario: Successfully create a money
     When I send a "POST" request with:
     """
@@ -18,13 +18,18 @@ Feature:
         }
     }
     """
+
     Then print last response
     Then the response status code should be 200
-    Then it should be 1 element for this game
-    And this element should have a property "isMoney" equal to "1"
-    And this element should have a property "quantity" equal to 1000
-    And this element should have a property "picture" equal to "blah"
-
+    Then the JSON nodes should be equal to
+        | moneys[0].name | A money |
+        | moneys[0].properties[0].name | quantity |
+        | moneys[0].properties[0].value | 1000 |
+        | moneys[0].properties[1].name | picture |
+        | moneys[0].properties[1].picture | blah |
+        | moneys[0].properties[2].name | isMoney |
+        | moneys[0].properties[2].picture | 1 |
+    
     Scenario: Successfully remove a money
       Given I send the following body:
       """
