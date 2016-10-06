@@ -14,6 +14,12 @@ class FeatureContext extends BaseContext implements Context
 
     private $previous_nodes;
 
+    private $adminController;
+    private $adminTemplate;
+    private $gameController;
+    private $gameTemplate;
+    private $launched = [];
+
     /**
      * @BeforeScenario
      *
@@ -43,12 +49,46 @@ class FeatureContext extends BaseContext implements Context
      */
     public function iUseTheModule($folderName)
     {
+        $lockFile = 'module.lock';
+
+        if (!is_file($lockFile) || file_get_contents($lockFile) != $folderName) {
+            file_put_contents($lockFile, $folderName);
+            $resetTemplate = new \stdClass();
+            $resetTemplate->admin_controller =
+            $resetTemplate->admin_template =
+            $resetTemplate->game_controller =
+            $resetTemplate->game_template = '__reset__';
+
+            $dataObject = new \stdClass();
+            $dataObject->module_configuration = $resetTemplate;
+            $string = new PyStringNode(explode("\n", json_encode($dataObject, true)), 0);
+
+            $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
+            $this->getRestContext()->iAddHeaderEqualTo('Content-type', 'application/json');
+            $url = '/modules/tech/render?'.time();
+
+            $request = $this->getRestContext()->iSendARequestToWithBody('POST', $url, $string);
+        }
+
         $file = __DIR__.'/../../../modules/'.$folderName.'/';
         $this->adminController = file_get_contents($file.'admin.php');
         $this->adminTemplate = file_get_contents($file.'admin.tpl');
         $this->gameController = file_get_contents($file.'game.php');
         $this->gameTemplate = file_get_contents($file.'game.tpl');
     }
+
+     /**
+      * @BeforeSuite
+      */
+     public static function prepareModule($event)
+     {
+         if (is_file('module.lock')) {
+             unlink('module.lock');
+         }
+         if (is_file('last_nodes')) {
+             unlink('last_nodes');
+         }
+     }
 
     /**
      * @When I send a :arg1 request with:
@@ -76,26 +116,28 @@ class FeatureContext extends BaseContext implements Context
         $string = new PyStringNode(explode("\n", json_encode($dataObject, true)), 0);
 
         $request = $this->getRestContext()->iSendARequestToWithBody($arg1, $url, $string);
-        $this->previous_nodes = json_decode($this->getRestContext()->getMinkContext()->getMink()->getSession()->getPage()->getContent());
+        file_put_contents('last_nodes', $this->getRestContext()->getMinkContext()->getMink()->getSession()->getPage()->getContent());
 
         return $request;
     }
 
     private function parseRequestBody($requestBody)
     {
-        if (!$this->previous_nodes) {
+        if (!is_file('last_nodes')) {
             return $requestBody;
         }
 
-        preg_match_all('%\{previous_nodes\.(.+)\.(.+)\}%', $requestBody, $matches);
-        var_dump($matches);
-        unset($matches[0]);
-        foreach ($matches as $match) {
+        $this->previous_nodes = json_decode(file_get_contents('last_nodes'));
+        preg_match_all('%\{previous_nodes\.(.+)\[(.+)\]\.(.+)\}%', $requestBody, $matches);
+        for ($i = 0; $i < count($matches[0]); ++$i) {
             foreach ($this->previous_nodes as $k => $v) {
-                if ($k == $match[1]) {
-                    //$match = str_replace('{previous_nodes.'.$match[1].'.'.$match2[1].'}');
+                if ($k == $matches[1][$i]) {
+                    $property = $matches[3][$i];
+                    $requestBody = str_replace($matches[0][$i], $v[(int) $matches[2][$i]]->$property, $requestBody);
                 }
             }
         }
+
+        return $requestBody;
     }
 }
