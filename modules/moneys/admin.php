@@ -3,9 +3,10 @@
 $newMoney = null;
 $arrayReturn = [];
 
-if (null !== $newMoney = $game->createElementIfInRequest('newMoney')) {
-    $newMoney->set('isMoney', true);
-}
+$newMoney = $game->createElementIfInRequest('newMoney', [
+    'isMoney' => true,
+]);
+
 $game->deleteElementIfInRequest('removeMoney');
 
 $game->updateElementsIfInRequest('moneys');

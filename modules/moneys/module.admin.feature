@@ -18,44 +18,45 @@ Feature:
         }
     }
     """
-
-    Then print last response
     Then the response status code should be 200
-    Then the JSON nodes should be equal to
+    Then the JSON nodes should be equal to:
         | moneys[0].name | A money |
         | moneys[0].properties[0].name | quantity |
         | moneys[0].properties[0].value | 1000 |
         | moneys[0].properties[1].name | picture |
-        | moneys[0].properties[1].picture | blah |
+        | moneys[0].properties[1].value | blah |
         | moneys[0].properties[2].name | isMoney |
-        | moneys[0].properties[2].picture | 1 |
-    
+        | moneys[0].properties[2].value | 1 |
+
     Scenario: Successfully remove a money
-      Given I send the following body:
+      When I send a "POST" request with:
       """
       {
           "newMoney": {
-              "name": "A money",
+              "name": "A money bis",
               "quantity": 1000,
               "picture": "blah"
           },
           "removeMoney": "A money"
       }
       """
-      When I send the request
-      Then I should receive a 200 response
-      Then it should be 0 element for this game
+      Then the response status code should be 200
+      And the JSON nodes should be equal to:
+        | moneys[0].name                | A money bis|
+        | moneys[0].properties[0].name  | quantity |
+        | moneys[0].properties[0].value | 1000 |
+        | moneys[0].properties[1].name  | picture |
+        | moneys[0].properties[1].value | blah |
+        | moneys[0].properties[2].name  | isMoney |
+        | moneys[0].properties[2].value | 1 |
 
       Scenario: Successfully edit a money
-        Given this game has 1 element
-        Given this element name is "A money"
-        Given this element has a property named "isMoney" with value "1";
-        Given I send the following body:
+        When I send a "POST" request with:
         """
         {
             "moneys": [
                 {
-                    "id": {last_created_element.id},
+                    "id": {previous_nodes.moneys[0].id},
                     "name": "A new money",
                     "properties": [{
                         "name": "picture",
@@ -69,10 +70,4 @@ Feature:
             ]
         }
         """
-        When I send the request
         Then I should receive a 200 response
-        Then it should be 1 element for this game
-        And this element should have a property "isMoney" equal to "1"
-        And this element should have "A new money" as "name"
-        And this element should have a property "quantity" equal to 1500
-        And this element should have a property "picture" equal to "blah2"

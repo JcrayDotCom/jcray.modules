@@ -12,9 +12,7 @@ class FeatureContext extends BaseContext implements Context
 {
     private $restContext;
 
-    private $gameSlug;
-
-    private $adminControleer;
+    private $previous_nodes;
 
     /**
      * @BeforeScenario
@@ -57,23 +55,47 @@ class FeatureContext extends BaseContext implements Context
      */
     public function iSendARequestWith($arg1, PyStringNode $string)
     {
-        $url = '/modules/tech/render';
+        $url = '/modules/tech/render?'.time();
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
-        $this->getRestContext()->iAddHeaderEqualTo('Content-type', 'application/x-www-form-urlencoded');
+        $this->getRestContext()->iAddHeaderEqualTo('Content-type', 'application/json');
 
+        $string = $this->parseRequestBody($string);
         $dataObject = json_decode($string);
 
         if (null == $dataObject) {
-            throw new \Exception('Request body can\'t be non-json value');
+            throw new \Exception('Request body have to be a json');
         }
 
-        $dataObject->adminController = $this->adminController;
-        $dataObject->adminTemplate = $this->adminTemplate;
-        $dataObject->gameController = $this->gameController;
-        $dataObject->gameTemplate = $this->gameTemplate;
+        $module_configuration = new \stdClass();
+        $module_configuration->admin_controller = $this->adminController;
+        $module_configuration->admin_template = $this->adminTemplate;
+        $module_configuration->game_controller = $this->gameController;
+        $module_configuration->game_template = $this->gameTemplate;
+        $dataObject->module_configuration = $module_configuration;
 
-        $string = new PyStringNode([json_encode($dataObject)], 0);
+        $string = new PyStringNode(explode("\n", json_encode($dataObject, true)), 0);
 
-        return $this->getRestContext()->iSendARequestToWithBody($arg1, $url, $string);
+        $request = $this->getRestContext()->iSendARequestToWithBody($arg1, $url, $string);
+        $this->previous_nodes = json_decode($this->getRestContext()->getMinkContext()->getMink()->getSession()->getPage()->getContent());
+
+        return $request;
+    }
+
+    private function parseRequestBody($requestBody)
+    {
+        if (!$this->previous_nodes) {
+            return $requestBody;
+        }
+
+        preg_match_all('%\{previous_nodes\.(.+)\.(.+)\}%', $requestBody, $matches);
+        var_dump($matches);
+        unset($matches[0]);
+        foreach ($matches as $match) {
+            foreach ($this->previous_nodes as $k => $v) {
+                if ($k == $match[1]) {
+                    //$match = str_replace('{previous_nodes.'.$match[1].'.'.$match2[1].'}');
+                }
+            }
+        }
     }
 }
