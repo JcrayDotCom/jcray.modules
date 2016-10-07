@@ -1,4 +1,5 @@
 /vendor/
 /node_modules/
 /behat.yml
-
+/last_nodes
+/module.lock

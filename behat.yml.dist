@@ -17,7 +17,7 @@ default:
                 - behatch:system
                 - behatch:table
                 - behatch:xml
-                - Context\FeatureContext: {developement_token: "GoTo http://jcray.tech!"}
+                - Context\FeatureContext
                 - Context\CustomRestContext
     extensions:
         Behat\MinkExtension:
