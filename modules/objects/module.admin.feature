@@ -34,3 +34,4 @@ Feature:
       }
       """
       Then the response status code should be 200
+      And the JSON node "objects" should have 0 element

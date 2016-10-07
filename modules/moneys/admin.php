@@ -8,7 +8,6 @@ $newMoney = $game->createElementIfInRequest('newMoney', [
 ]);
 
 $game->deleteElementIfInRequest('removeMoney');
-
 $game->updateElementsIfInRequest('moneys');
 
 $moneys = $game->getElementsByProperties([
