@@ -39,37 +39,11 @@ class FeatureContext extends BaseContext implements Context
         return $this->restContext;
     }
 
-    public function __construct($developement_token)
-    {
-        $this->user_token = $developement_token;
-    }
-
     /**
      * @Given I use the :folderName module
      */
     public function iUseTheModule($folderName)
     {
-        $lockFile = 'module.lock';
-
-        if (!is_file($lockFile) || file_get_contents($lockFile) != $folderName) {
-            file_put_contents($lockFile, $folderName);
-            $resetTemplate = new \stdClass();
-            $resetTemplate->admin_controller =
-            $resetTemplate->admin_template =
-            $resetTemplate->game_controller =
-            $resetTemplate->game_template = '__reset__';
-
-            $dataObject = new \stdClass();
-            $dataObject->module_configuration = $resetTemplate;
-            $string = new PyStringNode(explode("\n", json_encode($dataObject, true)), 0);
-
-            $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
-            $this->getRestContext()->iAddHeaderEqualTo('Content-type', 'application/json');
-            $url = '/modules/tech/render?'.time();
-
-            $request = $this->getRestContext()->iSendARequestToWithBody('POST', $url, $string);
-        }
-
         $file = __DIR__.'/../../../modules/'.$folderName.'/';
         $this->adminController = file_get_contents($file.'admin.php');
         $this->adminTemplate = file_get_contents($file.'admin.tpl');
@@ -77,17 +51,47 @@ class FeatureContext extends BaseContext implements Context
         $this->gameTemplate = file_get_contents($file.'game.tpl');
     }
 
+    private static function getToken($force = false)
+    {
+        if (!$force && is_file('token.lock')) {
+            return file_get_contents('token.lock');
+        }
+
+        $url = 'http://jcray.tech/tech/token?'.time();
+
+        $result = file_get_contents($url);
+
+        $token = json_decode($result)->token;
+        file_put_contents('token.lock', $token);
+
+        return $token;
+    }
+
      /**
-      * @BeforeSuite
+      * @AfterSuite
       */
      public static function prepareModule($event)
      {
-         if (is_file('module.lock')) {
-             unlink('module.lock');
-         }
-         if (is_file('last_nodes')) {
-             unlink('last_nodes');
-         }
+         unlink('token.lock');
+         unlink('last_nodes');
+     }
+
+     /**
+      * @BeforeSuite
+      */
+     public static function cleanTests($event)
+     {
+         $url = 'http://api.jcray.tech/v8/games/tech/reset?'.time();
+
+         $opts = array(
+          'http' => array(
+            'method' => 'GET',
+            'header' => 'Authorization: Bearer '.self::getToken(true)."\r\n",
+          ),
+        );
+
+         $context = stream_context_create($opts);
+         file_get_contents($url, false, $context);
      }
 
     /**
@@ -96,7 +100,7 @@ class FeatureContext extends BaseContext implements Context
     public function iSendARequestWith($arg1, PyStringNode $string)
     {
         $url = '/modules/tech/render?'.time();
-        $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->user_token);
+        $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->getToken());
         $this->getRestContext()->iAddHeaderEqualTo('Content-type', 'application/json');
 
         $string = $this->parseRequestBody($string);
