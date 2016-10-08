@@ -20,13 +20,13 @@ Feature:
     """
     Then the response status code should be 200
     Then the JSON nodes should be equal to:
-        | moneys[0].name | A money |
-        | moneys[0].properties[0].name | quantity |
-        | moneys[0].properties[0].value | 1000 |
-        | moneys[0].properties[1].name | picture |
-        | moneys[0].properties[1].value | blah |
-        | moneys[0].properties[2].name | isMoney |
-        | moneys[0].properties[2].value | 1 |
+        | moneys[0].name                | A money   |
+        | moneys[0].properties[0].name  | quantity  |
+        | moneys[0].properties[0].value | 1000      |
+        | moneys[0].properties[1].name  | picture   |
+        | moneys[0].properties[1].value | blah      |
+        | moneys[0].properties[2].name  | isMoney   |
+        | moneys[0].properties[2].value | 1         |
 
     Scenario: Successfully remove a money
       When I send a "POST" request with:

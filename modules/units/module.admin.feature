@@ -17,38 +17,23 @@ Feature:
         }
     }
     """
-    When I send the request
-    Then I should receive a 200 response
-    Then it should be 1 element for this game
-    And this element should have a property "isUnit" equal to "1"
-    And this element should have a property "quantity" equal to 1
-    And this element should have a property "picture" equal to "blah"
-    And this game should have 1 "ElementAction"
-
-    Scenario: Successfully remove an unit
-      Given this game has 1 element
-      Given this element name is "An unit"
-      Given this element has a property named "isUnit" with value "1";
-      When I send a "POST" request with:
-      """
-      {
-          "removeUnit": "An unit"
-      }
-      """
-      When I send the request
-      Then I should receive a 200 response
-      Then it should be 0 element for this game
+    Then the response status code should be 200
+    Then the JSON nodes should be equal to:
+        | units[0].name                | An unit   |
+        | units[0].properties[0].name  | quantity  |
+        | units[0].properties[0].value | 1         |
+        | units[0].properties[1].name  | picture   |
+        | units[0].properties[1].value | blah      |
+        | units[0].properties[2].name  | isUnit    |
+        | units[0].properties[2].value | 1         |
 
       Scenario: Successfully edit an unit
-        Given this game has 1 element
-        Given this element name is "An unit"
-        Given this element has a property named "isUnit" with value "1";
         When I send a "POST" request with:
         """
         {
             "units": [
                 {
-                    "id": {last_created_element.id},
+                    "id": {previous_nodes.units[0].id},
                     "name": "A new unit",
                     "properties": [{
                         "name": "picture",
@@ -62,11 +47,22 @@ Feature:
             ]
         }
         """
-        When I send the request
-        Then I should receive a 200 response
-        Then it should be 1 element for this game
-        And this element should have a property "isUnit" equal to "1"
-        And this element should have "A new unit" as "name"
-        And this element should have a property "quantity" equal to 2
-        And this element should have a property "picture" equal to "blah2"
-        And this game should have 1 "ElementAction" with "name" equal to "booster"
+        Then the response status code should be 200
+        Then the JSON nodes should be equal to:
+            | units[0].name                | A new unit   |
+            | units[0].properties[0].name  | quantity  |
+            | units[0].properties[0].value | 2         |
+            | units[0].properties[1].name  | picture   |
+            | units[0].properties[1].value | blah2     |
+            | units[0].properties[2].name  | isUnit    |
+            | units[0].properties[2].value | 1         |
+
+    Scenario: Successfully remove an unit
+      When I send a "POST" request with:
+      """
+      {
+          "removeUnit": "A new unit"
+      }
+      """
+      Then the response status code should be 200
+      And the JSON node "units" should have 0 element
