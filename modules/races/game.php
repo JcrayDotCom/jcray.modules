@@ -1,6 +1,6 @@
 <?php
 
-$races = $game->getElementsByProperties(['isRace' => true]);
+$races = $game->getElementsByProperties(['type' => 'race']);
 
 if ($request->get('chosenRace')) {
     $player->set('race', $request->get('chosenRace')['id']);

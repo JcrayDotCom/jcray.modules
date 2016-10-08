@@ -4,14 +4,14 @@ $newMoney = null;
 $arrayReturn = [];
 
 $newMoney = $game->createElementIfInRequest('newMoney', [
-    'isMoney' => true,
+    'type' => 'money',
 ]);
 
 $game->deleteElementIfInRequest('removeMoney');
 $game->updateElementsIfInRequest('moneys');
 
 $moneys = $game->getElementsByProperties([
-    'isMoney' => true,
+    'type' => 'money',
 ]);
 
 return array_merge($arrayReturn, ['newMoney' => $newMoney, 'moneys' => $moneys]);

@@ -26,8 +26,8 @@ Feature:
         | moneys[0].properties[0].value | 1000      |
         | moneys[0].properties[1].name  | picture   |
         | moneys[0].properties[1].value | blah      |
-        | moneys[0].properties[2].name  | isMoney   |
-        | moneys[0].properties[2].value | 1         |
+        | moneys[0].properties[2].name  | type      |
+        | moneys[0].properties[2].value | money     |
 
     Scenario: Successfully remove a money
       When I send a "POST" request with:
@@ -48,8 +48,8 @@ Feature:
         | moneys[0].properties[0].value | 1000          |
         | moneys[0].properties[1].name  | picture       |
         | moneys[0].properties[1].value | blah          |
-        | moneys[0].properties[2].name  | isMoney       |
-        | moneys[0].properties[2].value | 1             |
+        | moneys[0].properties[2].name  | type          |
+        | moneys[0].properties[2].value | money         |
 
       Scenario: Successfully edit a money
         When I send a "POST" request with:
@@ -78,5 +78,5 @@ Feature:
             | moneys[0].properties[0].value | 1500              |
             | moneys[0].properties[1].name  | picture           |
             | moneys[0].properties[1].value | blah2             |
-            | moneys[0].properties[2].name  | isMoney           |
-            | moneys[0].properties[2].value | 1                 |
+            | moneys[0].properties[2].name  | type              |
+            | moneys[0].properties[2].value | money             |

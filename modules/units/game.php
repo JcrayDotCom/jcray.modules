@@ -2,7 +2,7 @@
 
 $game->registerMenu('Unités');
 
-$elements = $game->getElementsByProperties(['isUnit' => true]);
+$elements = $game->getElementsByProperties(['type' => 'unit']);
 $playerElements = [];
 $error = false;
 

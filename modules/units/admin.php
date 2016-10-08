@@ -2,10 +2,12 @@
 
 $game->registerMenu('Unités');
 
-// Create Unit if newUnit is sent
-if (null !== $newUnit = $game->createElementIfInRequest('newUnit')) {
-    $newUnit->set('isUnit', true);
-}
+$newUnit = null;
+$arrayReturn = [];
+
+$newUnit = $game->createElementIfInRequest('newUnit', [
+    'type' => 'unit',
+]);
 
 // Remove Unit if removeUnit is sent
 $game->deleteElementIfInRequest('removeUnit');
@@ -54,7 +56,7 @@ foreach ($gameStats as $stat) {
 }
 
 $moneys = $game->getElementsByProperties(['isMoney' => true]);
-$elements = $game->getElementsByProperties(['isUnit' => true]);
+$elements = $game->getElementsByProperties(['type' => 'unit']);
 $action = $game->createAction('booster');
 
 foreach ($elements as $element) {

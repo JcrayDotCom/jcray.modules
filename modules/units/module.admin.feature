@@ -26,8 +26,8 @@ Feature:
         | units[0].properties[0].value | 1         |
         | units[0].properties[1].name  | picture   |
         | units[0].properties[1].value | blah      |
-        | units[0].properties[2].name  | isUnit    |
-        | units[0].properties[2].value | 1         |
+        | units[0].properties[2].name  | type      |
+        | units[0].properties[2].value | unit      |
 
       Scenario: Successfully edit an unit
         When I send a "POST" request with:
@@ -56,8 +56,8 @@ Feature:
             | units[0].properties[0].value | 2         |
             | units[0].properties[1].name  | picture   |
             | units[0].properties[1].value | blah2     |
-            | units[0].properties[2].name  | isUnit    |
-            | units[0].properties[2].value | 1         |
+            | units[0].properties[2].name  | type      |
+            | units[0].properties[2].value | unit      |
 
     Scenario: Successfully remove an unit
       When I send a "POST" request with:
