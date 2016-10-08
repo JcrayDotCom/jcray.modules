@@ -15,9 +15,13 @@
                 </div>
                 <div class="col-md-3">
                     <div style="text-align: center;padding-top: 20px;">
-                        %hook.delete.template%
+                        %hook:delete:template%
                     </div>
+                    <span class="pull-right">%hook:statsButton:template%</span>
+                    <span class="pull-right">%hook:costsButton:template%</span>
                 </div>
+                %hook:statsEditor:template%
+                %hook:costsEditor:template%
             </li>
         </ul>
     {% endblock %}

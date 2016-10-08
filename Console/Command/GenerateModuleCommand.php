@@ -105,9 +105,14 @@ class GenerateModuleCommand extends Command
                 $fileContent = '<?php '."\n".$fileContent;
             }
             $file = $fileContent;
-            preg_match_all('|\%hook\.(.+)\.(.+)\%|', $fileContent, $matches);
+            preg_match_all('|\%hook\:(.+)\:(.+)\%|', $fileContent, $matches);
             foreach ($matches[0] as $hook) {
-                $hookFile = realpath(__DIR__.'/../../Generator/parts').'/'.str_replace('%', '', $hook);
+                if (in_array(str_replace('%', '', $hook), $recipeData['ignore'])) {
+                    $io->note('Hook '.str_replace('%', '', $hook).' is in ignore list. Skipped.');
+                    $fileContent = str_replace($hook, '',  $fileContent);
+                    continue;
+                }
+                $hookFile = realpath(__DIR__.'/../../Generator/parts').'/'.str_replace(['%', ':'], ['', '.'], $hook);
                 if (!is_file($hookFile)) {
                     $io->error('Hook file '.$hookFile.' does not exist.');
                     die();

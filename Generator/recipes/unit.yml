@@ -8,8 +8,3 @@ parts:
     - admin:delete:controller
     - admin:list:controller
     - admin:default_return:controller
-ignore:
-    - hook:statsEditor:template
-    - hook:statsButton:template
-    - hook:costsButton:template
-    - hook:costsEditor:template

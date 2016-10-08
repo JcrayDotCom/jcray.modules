@@ -30,7 +30,11 @@
 <a class="btn-floating btn-large waves-effect waves-light red" ng-click="data.removeAnimal = element.name;post();"><i class="tiny material-icons">delete</i></a>
 
                     </div>
+                    <span class="pull-right"></span>
+                    <span class="pull-right"></span>
                 </div>
+                
+                
             </li>
         </ul>
     {% endblock %}
