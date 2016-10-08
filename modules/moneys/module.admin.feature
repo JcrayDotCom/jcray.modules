@@ -1,4 +1,5 @@
 @module
+@moneys
 Feature:
   In a game, you can buy and sell elements.
   To pay or buy these elements you should have moneys.

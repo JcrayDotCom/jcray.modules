@@ -74,6 +74,21 @@ class FeatureContext extends BaseContext implements Context
      {
          unlink('token.lock');
          unlink('last_nodes');
+
+         $modules = [];
+         $p = opendir('modules');
+         while ($f = readdir($p)) {
+             if (is_dir('modules/'.$f) && $f != '.' && $f != '..') {
+                 $modules[$f] = [
+                     'adminController' => file_get_contents('modules/'.$f.'/admin.php'),
+                     'adminTemplate' => file_get_contents('modules/'.$f.'/admin.tpl'),
+                     'gameController' => file_get_contents('modules/'.$f.'/game.php'),
+                     'gameTemplate' => file_get_contents('modules/'.$f.'/game.tpl'),
+                 ];
+             }
+         }
+
+         file_put_contents('web/assets/modules.auto.js', 'var modules = '.json_encode($modules).';');
      }
 
      /**

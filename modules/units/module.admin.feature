@@ -1,4 +1,6 @@
 @module
+@units
+
 Feature:
   In a game, you can recruit units.
   As an administrator, you should can create unitss, and as a gamer you can recruit units.

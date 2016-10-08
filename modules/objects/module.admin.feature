@@ -1,4 +1,6 @@
 @module
+@objects
+
 Feature:
   As an administrator, you can create, edit and remove objects.
 
