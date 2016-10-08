@@ -3,18 +3,51 @@ Jcray Modules v8
 
 (Working on.)
 
-These modules are used on [Jcray](http://jcray.com).
+These modules will be used on [Jcray](http://jcray.com).
 
 ## Why modules ?
-This repository is made to show modules source code used on jcray (v8). Jcray v8 modules system can use dynamic source (for example, modules developed by users) or static source files (for example, modules developed by administrators)
+Developing modules directly in a web-ui can be painfull (because Jcray is a game creation system, not an IDE ;). You can use this repo to develop your modules using your
+favorite IDE.
 
 ## Issues & fixes
 Users can submit issues directly in this repository, or submit their fixes using pull requests.
 
-## Tests
-Tests are [behat](http://behat.org/en/latest/guides.html) tests and can only be launched in jcray v8 environnement (not in your environnement).
+## Modules submission
+Users can submit modules using Pull Request.
 
+## Installing PHP libraries (using composer):
+Install composer:
+``` bash
+$ sudo apt-get install composer
+```
+``` bash
+$ composer install
+```
 
-## Deploy && runing tests
-Coming soon.
-( idea: a jcray v8 dev version, on which everybody can run custom modules from custom branch)
+## Installing assets:
+Install npm and bower:
+``` bash
+$ sudo apt-get install npm && npm install -g bower
+```
+Deploying assets:
+``` bash
+$ bower install
+```
+
+## Runing tests
+Before using your custom modules, you have to run tests. These tests will generate a "modules.auto.js" file which contains all the modules sources.
+Tests are [behat](http://behat.org/en/latest/guides.html) tests.
+To run tests:
+``` bash
+$ bin/behat modules
+```
+
+To run tests for a specific module:
+``` bash
+$ bin/behat modules --tags={ModuleName}
+```
+
+## Todo:
+- Game side dev
+- Write tests for untested modules
+- Write tests for all game controllers
