@@ -7,16 +7,22 @@ var jcrayTech = angular.module('jcrayTech', ['ngCookies']);
 
 jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
     function ($scope, $templateCache, $http, $cookies) {
+        $scope.bearer; 
         console.log('Waiting for credentials...');
+        if ($cookies.get('bearer')) {
+            $scope.bearer = $cookies.get('bearer');
+
+        }
         $http.get('http://jcray.tech/tech/token').then(function(r){
+            $scope.bearer = r.data.token;
             $cookies.put('bearer', r.data.token);
             console.log('Token granted:'+r.data.token)
         });
 
         $scope.getDefaultHeaders = function(){
-            if ($cookies.get('bearer')) {
+            if (bearer) {
                 return {'headers': {
-                    'Authorization': 'Bearer '+$cookies.get('bearer'),
+                    'Authorization': 'Bearer '+$scope.bearer,
                     'X-Jcray-API': 1
                 }};
             }

@@ -6,45 +6,58 @@
         <link rel="stylesheet" href="assets/vendor/components-font-awesome/css/font-awesome.min.css" />
     </head>
     <body ng-app="jcrayApp">
-        <div id="content" ng-controller="appCtrl">
-            <div class="row">
-                <nav class="col-md-12 blue-grey">
-                    <h3 class="brand-logo">
-                        <a  href="#" style="position:relative; z-index:99;" ng-click="mode == 'admin'?mode='game':mode='admin';">
-                            {{ mode | uppercase}} <span ng-if="currentModule">{{ currentModule. name}}</span>
-                        </a>
-                    </h3>
-                    <div class="nav-wrapper">
-                        <ul class="right hide-on-med-and-down">
-                            <li ng-repeat="(name, module) in modules"><a href="#" ng-click="setCurrentModule(name, module)">{{ name }}</a></li>
-                        </ul>
-                    </div>
-                </nav>
+        <div ng-controller="appCtrl">
+            <div ng-if="!bearer">
+                <div class="row">
+                    <nav class="col-md-12 blue-grey">
+                        <h3 class="brand-logo">
+                            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i> Requesting token...
+                        </h3>
+                    </nav>
+                </div>
             </div>
-            <div class="row" ng-if="currentModule">
-                <div class="error" ng-if="lastError">
-                    <div class="showback" ng-if="currentGame.modules.length">
-                        <h4><strong>{{ 'An error happened...' |trans }}</strong></h4>
-                        <blockquote>{{ lastError }}</blockquote>
+            <div ng-if="bearer">
+                <div id="content">
+                    <div class="row">
+                        <nav class="col-md-12 blue-grey">
+                            <h3 class="brand-logo">
+                                <a  href="#" style="position:relative; z-index:99;" ng-click="mode == 'admin'?mode='game':mode='admin';">
+                                    {{ mode | uppercase}} <span ng-if="currentModule">{{ currentModule. name}}</span>
+                                </a>
+                            </h3>
+                            <div class="nav-wrapper">
+                                <ul class="right hide-on-med-and-down">
+                                    <li ng-repeat="(name, module) in modules"><a href="#" ng-click="setCurrentModule(name, module)">{{ name }}</a></li>
+                                </ul>
+                            </div>
+                        </nav>
                     </div>
-                </div>
-
-                <div ng-if="mode == 'admin' && currentModule" class="col-md-12">
-                    <div ng-if="renderable">
-                        <div ng-include=" 'admin'+currentModule.name+'Template.html' "></div>
-                    </div>
-                    <div ng-if="!renderable">
-                        <div class="valign-wrapper">
-                            <h5 class="valign">
-                                <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-                                Loading module data...
-                            </h5>
+                    <div class="row" ng-if="currentModule">
+                        <div class="error" ng-if="lastError">
+                            <div class="showback" ng-if="currentGame.modules.length">
+                                <h4><strong>{{ 'An error happened...' |trans }}</strong></h4>
+                                <blockquote>{{ lastError }}</blockquote>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div ng-if="mode == 'game' && currentModule" class="col-md-12">
-                    <div ng-if="renderable>
-                        <div ng-include=" 'game'+currentModule.name+'Template.html' "></div>
+
+                        <div ng-if="mode == 'admin' && currentModule" class="col-md-12">
+                            <div ng-if="renderable">
+                                <div ng-include=" 'admin'+currentModule.name+'Template.html' "></div>
+                            </div>
+                            <div ng-if="!renderable">
+                                <div class="valign-wrapper">
+                                    <h5 class="valign">
+                                        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                                        Loading module data...
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="mode == 'game' && currentModule" class="col-md-12">
+                            <div ng-if="renderable">
+                                <div ng-include=" 'game'+currentModule.name+'Template.html' "></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
