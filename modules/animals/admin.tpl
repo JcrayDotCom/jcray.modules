@@ -1,3 +1,4 @@
+<!-- Create a Animal -->
 {% block %}
     {% title %}Create a new Animal {% endtitle %}
     <form>
@@ -8,6 +9,7 @@
     </form>
 {% endblock %}
 
+<!-- Edit a Animal -->
 <div ng-if="data.animals && data.animals.length">
     {% block %}
         {% title %}animals of your game{% endtitle %}
@@ -17,7 +19,7 @@
                     <label>Name</label>
                     <input type="text" ng-model="Animal.name" ng-change="post()" />
                 </div>
-                <div class="col-md-4" ng-repeat="property in %elementNAme%.properties" ng-if="property.name == 'picture' || property.name == 'quantity'">
+                <div class="col-md-4" ng-repeat="property in Animal.properties" ng-if="property.name == 'picture' || property.name == 'quantity'">
                     <label>{{ property.name }}</label>
                     <input type="text" ng-model="property.value"  ng-change="post()" />
                 </div>

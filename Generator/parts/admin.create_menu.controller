@@ -1,0 +1,5 @@
+/*
+* Add module %elementsName% to the game menu
+*/
+
+$game->registerMenu('%elementsName%');

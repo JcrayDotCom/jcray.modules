@@ -3,6 +3,12 @@
 $arrayReturn = [];
 
 /*
+* Add module animals to the game menu
+*/
+
+$game->registerMenu('animals');
+
+/*
 * Create a new Animal
 */
 
