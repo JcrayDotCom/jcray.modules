@@ -9,7 +9,7 @@ parts:
     - admin:list:controller
     - admin:default_return:controller
 ignore:
-    - hook:statsEditor:template
-    - hook:statsButton:template
-    - hook:costsButton:template
-    - hook:costsEditor:template
+    - hook:elementStatsEditor:template
+    - hook:elementStatsButton:template
+    - hook:elementCostsButton:template
+    - hook:elementCostsEditor:template

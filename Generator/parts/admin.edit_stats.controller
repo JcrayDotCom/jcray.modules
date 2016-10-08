@@ -1,0 +1,31 @@
+/*
+* Edit stats of %elementsName%
+*/
+
+// By default no stats
+if (!$game->get('%elementsName%Stats')) {
+    $game->set('%elementsName%Stats', []);
+}
+
+// Updating stats
+if ($request->get('%elementsName%Stats')) {
+    $game->set('%elementsName%Stats', $request->get('%elementsName%Stats'));
+}
+
+// Creating a new stat
+if ($request->get('newStat')) {
+    $gameStats = $game->get('%elementsName%Stats');
+    $gameStats[] = $request->get('newStat');
+    $game->set('%elementsName%Stats', $gameStats);
+}
+
+// Apply default stats to all elements
+$gameStats = $game->get('%elementsName%Stats');
+$elements = $game->getElementsByProperties(['type' => '%elementName%']);
+foreach ($gameStats as $stat) {
+    foreach ($elements as $element) {
+        if (!$element->get($stat->name)) {
+            $element->set($stat->name, (int) $stat->quantity);
+        }
+    }
+}

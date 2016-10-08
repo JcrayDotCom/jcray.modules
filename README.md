@@ -67,8 +67,15 @@ Some parts of a module is often the same: creation an element, edit it, delete i
 $ bin/console jcray:modules:generate
 ```
 
+More documentation:
+- [About Module Generator](https://github.com/JcrayDotCom/jcray.modules/blob/master/doc/ModuleGenerator.md)
+- [About Module Generator Recipes](https://github.com/JcrayDotCom/jcray.modules/blob/master/doc/ModuleGeneratorRecipes.md)
+- [About Controllers](https://github.com/JcrayDotCom/jcray.modules/blob/master/doc/Controllers.md)
+- [About Templates](https://github.com/JcrayDotCom/jcray.modules/blob/master/doc/Templates.md)
+- [About Behat tests](https://github.com/JcrayDotCom/jcray.modules/blob/master/doc/BehatTests.md)
 
 ## Todo:
 - Game side dev
 - Write tests for untested modules
 - Write tests for all game controllers
+- Write more recipes parts :)

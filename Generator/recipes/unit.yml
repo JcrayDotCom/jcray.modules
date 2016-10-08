@@ -3,6 +3,8 @@ parts:
     - admin:create_menu:controller
     - admin:create:controller
     - admin:create:template
+    - admin:edit_stats:controller
+    - admin:edit_costs:controller
     - admin:edit:controller
     - admin:edit:template
     - admin:delete:controller
