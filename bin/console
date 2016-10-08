@@ -1,0 +1,12 @@
+#!/usr/bin/php
+<?php
+require_once(__DIR__.'/../vendor/autoload.php');
+require_once(__DIR__.'/../Console/Command/GenerateModulesLoaderCommand.php');
+
+use Symfony\Component\Console\Application;
+use JcrayDotCom\Console\Command\GenerateModulesLoaderCommand;
+
+$generateModulesLoaderCommand = new GenerateModulesLoaderCommand();
+$console = new Application('JcrayTech', '0.1');
+$console->add($generateModulesLoaderCommand);
+$console->run();

@@ -50,6 +50,12 @@ $ bin/behat modules --tags={ModuleName}
 ## Tests admin and game templates
 After running behat tests, go to web/index.html :)
 
+## Regenerating modules.auto.js
+If you just edited a module template, maybe you don't need to wait for all behat tests passing to regenerate the modules.auto.js file (which contains the controller and templates contents). You can use the bin/console executable to regenerate it manually:
+``` bash
+$ bin/console modules:generate:js
+```
+
 ## Todo:
 - Game side dev
 - Write tests for untested modules
