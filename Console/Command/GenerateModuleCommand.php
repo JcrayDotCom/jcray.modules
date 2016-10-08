@@ -50,6 +50,7 @@ class GenerateModuleCommand extends Command
 
             $partInfos = explode(':', $part);
             $targetFileTest = 'module.'.$partInfos[0].'.feature';
+
             $targetFile = $partInfos[0].($partInfos[2] == 'template' ? '.tpl' : '.php');
             if (!isset($files[$targetFile])) {
                 $files[$targetFile] = [];
@@ -104,6 +105,22 @@ class GenerateModuleCommand extends Command
                 $fileContent = '<?php '."\n".$fileContent;
             }
             $file = $fileContent;
+            preg_match_all('|\%hook\.(.+)\.(.+)\%|', $fileContent, $matches);
+            foreach ($matches[0] as $hook) {
+                $hookFile = realpath(__DIR__.'/../../Generator/parts').'/'.str_replace('%', '', $hook);
+                if (!is_file($hookFile)) {
+                    $io->error('Hook file '.$hookFile.' does not exist.');
+                    die();
+                }
+                $fileContent = str_replace($hook, str_replace([
+                    '%elementName%',
+                    '%elementsName%',
+                ], [
+                    ucfirst(Inflector::camelize($elementName)),
+                    Inflector::camelize($moduleName),
+                ], file_get_contents($hookFile)), $fileContent);
+            }
+
             file_put_contents($moduleFolder.'/'.$filename, $fileContent);
             $io->text('Generated '.$moduleFolder.'/'.$filename);
         }
