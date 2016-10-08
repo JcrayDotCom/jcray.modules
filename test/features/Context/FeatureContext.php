@@ -2,23 +2,51 @@
 
 namespace Context;
 
+require_once __DIR__.'/../../../Console/Command/GenerateModulesLoaderCommand.php';
+
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Sanpi\Behatch\Context\BaseContext;
 use Sanpi\Behatch\Context\RestContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Symfony\Component\Console\Application;
+use JcrayDotCom\Console\Command\GenerateModulesLoaderCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class FeatureContext extends BaseContext implements Context
 {
+    /**
+     * @var RestContext
+     */
     private $restContext;
 
-    private $previous_nodes;
-
+    /**
+     *   @var string
+     */
     private $adminController;
+
+    /**
+     *   @var string
+     */
     private $adminTemplate;
+
+    /**
+     *   @var string
+     */
     private $gameController;
+
+    /**
+     *   @var string
+     */
     private $gameTemplate;
-    private $launched = [];
+
+    /**
+     * @var console
+     */
+    private $console;
 
     /**
      * @BeforeScenario
@@ -29,6 +57,41 @@ class FeatureContext extends BaseContext implements Context
     {
         $environment = $scope->getEnvironment();
         $this->restContext = $environment->getContext('Context\CustomRestContext');
+    }
+
+    public static function getConsole()
+    {
+        $console = new Application('JcrayTech', '0.1');
+
+        $generateModulesLoaderCommand = new GenerateModulesLoaderCommand();
+        $console->add($generateModulesLoaderCommand);
+        $console->setAutoExit(false);
+
+        return $console;
+    }
+
+    /**
+     * @param string $command
+     * @param array  $args
+     *
+     * @return $this
+     */
+    public static function execCommand($commandName, $args = [])
+    {
+        $input = new ArrayInput(array_merge(
+           ['command' => $commandName],
+           $args
+        ));
+
+        $output = new BufferedOutput(
+            OutputInterface::VERBOSITY_NORMAL,
+            true
+        );
+
+        self::getConsole()->run($input, $output);
+
+        $content = $output->fetch();
+        fwrite(STDOUT, $content);
     }
 
     /**
@@ -75,20 +138,7 @@ class FeatureContext extends BaseContext implements Context
          unlink('token.lock');
          unlink('last_nodes');
 
-         $modules = [];
-         $p = opendir('modules');
-         while ($f = readdir($p)) {
-             if (is_dir('modules/'.$f) && $f != '.' && $f != '..') {
-                 $modules[$f] = [
-                     'admin_controller' => file_get_contents('modules/'.$f.'/admin.php'),
-                     'admin_template' => file_get_contents('modules/'.$f.'/admin.tpl'),
-                     'game_controller' => file_get_contents('modules/'.$f.'/game.php'),
-                     'game_template' => file_get_contents('modules/'.$f.'/game.tpl'),
-                 ];
-             }
-         }
-
-         file_put_contents('web/assets/modules.auto.js', 'var modules = '.json_encode($modules).';');
+         return self::execCommand('modules:generate:js');
      }
 
      /**

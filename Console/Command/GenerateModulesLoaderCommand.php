@@ -15,6 +15,7 @@ class GenerateModulesLoaderCommand extends Command
     {
         $this
             ->setName('modules:generate:js')
+            ->setDescription('Regenerate the modules.auto.js file with updated controllers and templates files contents')
         ;
     }
 

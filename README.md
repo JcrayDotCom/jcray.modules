@@ -46,6 +46,10 @@ To run tests for a specific module:
 ``` bash
 $ bin/behat modules --tags={ModuleName}
 ```
+or
+``` bash
+$ bin/behat modules/{ModuleName}
+```
 
 ## Tests admin and game templates
 After running behat tests, go to web/index.html :)
