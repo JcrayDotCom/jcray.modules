@@ -7,11 +7,18 @@
     </head>
     <body ng-app="jcrayApp">
         <div ng-controller="appCtrl">
+            <style>
+                body{ background: transparent; }
+                html {
+                    background: url('http://jcray.tech/bundles/app/images/logoJcray.png') no-repeat center center #546e7a!important;
+                }
+            </style>
             <div ng-if="!bearer">
+
                 <div class="row">
                     <nav class="col-md-12 blue-grey">
-                        <h3 class="brand-logo">
-                            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i> Requesting token...
+                        <h3 class="brand-logo" style="font-size: 13px;">
+                            ... Requesting token ...
                         </h3>
                     </nav>
                 </div>

@@ -7,7 +7,7 @@ var jcrayTech = angular.module('jcrayTech', ['ngCookies']);
 
 jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
     function ($scope, $templateCache, $http, $cookies) {
-        $scope.bearer; 
+        $scope.bearer;
         console.log('Waiting for credentials...');
         if ($cookies.get('bearer')) {
             $scope.bearer = $cookies.get('bearer');
@@ -20,7 +20,7 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
         });
 
         $scope.getDefaultHeaders = function(){
-            if (bearer) {
+            if ($scope.bearer) {
                 return {'headers': {
                     'Authorization': 'Bearer '+$scope.bearer,
                     'X-Jcray-API': 1
