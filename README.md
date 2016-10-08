@@ -4,6 +4,7 @@ Jcray Modules v8
 (Working on.)
 
 These modules will be used on [Jcray](http://jcray.com).
+All modules files are located in the /modules/ folder.
 
 ## Why modules ?
 Developing modules directly in a web-ui can be painfull (because Jcray is a game creation system, not an IDE ;). You can use this repo to develop your modules using your
