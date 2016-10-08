@@ -47,6 +47,9 @@ To run tests for a specific module:
 $ bin/behat modules --tags={ModuleName}
 ```
 
+## Tests admin and game templates
+After running behat tests, go to web/index.html :)
+
 ## Todo:
 - Game side dev
 - Write tests for untested modules
