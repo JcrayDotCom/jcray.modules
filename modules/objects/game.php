@@ -4,7 +4,7 @@ $game->registerMenu('Objets');
 
 if ($player) {
     $objects = $game->getElementsByProperties([
-        'type' => 'object',
+        'type' => 'Object',
     ]);
 
     foreach ($objects as $object) {
@@ -28,7 +28,7 @@ if ($player) {
     }
 
     $playerObjects = $player->getElementsByProperties([
-        'type' => 'object',
+        'type' => 'Object',
     ]);
 
     return [

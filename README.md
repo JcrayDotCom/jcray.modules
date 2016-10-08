@@ -57,8 +57,15 @@ After running behat tests, go to web/index.html :)
 ## Regenerating modules.auto.js
 If you just edited a module template, maybe you don't need to wait for all behat tests passing to regenerate the modules.auto.js file (which contains the controller and templates contents). You can use the bin/console executable to regenerate it manually:
 ``` bash
-$ bin/console modules:generate:js
+$ bin/console jcray:modules:autoload
 ```
+
+## AutoGenerating modules
+Some parts of a module is often the same: creation an element, edit it, delete it... It's a bit boring to rewrite these functionnalities just to change one or two words... You can generate a classical creation/edit/remove workflow for a module, using the jcray module generator:
+``` bash
+$ bin/console jcray:modules:generate
+```
+
 
 ## Todo:
 - Game side dev

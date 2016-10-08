@@ -10,18 +10,18 @@ $newRace = null;
 $arrayReturn = [];
 
 $newRace = $game->createElementIfInRequest('newRace', [
-    'type' => 'race',
+    'type' => 'Race',
 ]);
 
 // Delete Race if removeRace is sent
 $game->deleteElementIfInRequest('removeRace');
 
 // Update races properties if is sent
-$game->updateElementsIfInRequest('units');
+$game->updateElementsIfInRequest('races');
 
-$races = $game->getElementsByProperties(['type' => 'race']);
+$races = $game->getElementsByProperties(['type' => 'Race']);
 
-$game->registerFilter('race');
+$game->registerFilter('Race');
 
 return [
     'races' => $races,

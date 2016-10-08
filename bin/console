@@ -1,12 +1,20 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
-require_once(__DIR__.'/../vendor/autoload.php');
-require_once(__DIR__.'/../Console/Command/GenerateModulesLoaderCommand.php');
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../Console/Command/GenerateModulesLoaderCommand.php';
+require_once __DIR__.'/../Console/Command/GenerateModuleCommand.php';
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use JcrayDotCom\Console\Command\GenerateModuleCommand;
 use JcrayDotCom\Console\Command\GenerateModulesLoaderCommand;
 
+$input = new ArgvInput();
+
 $generateModulesLoaderCommand = new GenerateModulesLoaderCommand();
+$generateModuleCommand = new GenerateModuleCommand();
 $console = new Application('JcrayTech', '0.1');
 $console->add($generateModulesLoaderCommand);
-$console->run();
+$console->add($generateModuleCommand);
+
+$console->run($input);

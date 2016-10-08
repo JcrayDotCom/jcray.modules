@@ -26,7 +26,7 @@ Feature:
         | objects[0].properties[1].name  | picture      |
         | objects[0].properties[1].value | blah         |
         | objects[0].properties[2].name  | type         |
-        | objects[0].properties[2].value | object       |
+        | objects[0].properties[2].value | Object       |
 
     Scenario: Successfully remove an object
       When I send a "POST" request with:

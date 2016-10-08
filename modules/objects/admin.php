@@ -3,7 +3,7 @@
 $game->registerMenu('Objets');
 
 $newObject = $game->createElementIfInRequest('newObject', [
-    'type' => 'object',
+    'type' => 'Object',
     'usable' => true,
 ]);
 
@@ -20,7 +20,7 @@ if ($request->get('currentObject')) {
 }
 
 $objects = $game->getElementsByProperties([
-    'type' => 'object',
+    'type' => 'Object',
 ]);
 
 return [

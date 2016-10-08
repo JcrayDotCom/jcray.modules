@@ -6,7 +6,7 @@ $newUnit = null;
 $arrayReturn = [];
 
 $newUnit = $game->createElementIfInRequest('newUnit', [
-    'type' => 'unit',
+    'type' => 'Unit',
 ]);
 
 // Remove Unit if removeUnit is sent

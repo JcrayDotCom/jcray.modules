@@ -1,0 +1,5 @@
+/*
+* Delete a %elementName%
+*/
+
+$game->deleteElementIfInRequest('remove%elementName%');

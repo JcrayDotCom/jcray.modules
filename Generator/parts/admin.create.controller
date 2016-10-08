@@ -1,0 +1,10 @@
+
+/*
+* Create a new %elementName%
+*/
+
+$new%elementName% = null;
+
+$new%elementName% = $game->createElementIfInRequest('new%elementName%', [
+    'type' => '%elementName%',
+]);

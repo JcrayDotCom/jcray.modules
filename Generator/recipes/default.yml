@@ -1,0 +1,9 @@
+parts:
+    - admin:default_vars:controller
+    - admin:create:controller
+    - admin:create:template
+    - admin:edit:controller
+    - admin:edit:template
+    - admin:delete:controller
+    - admin:list:controller
+    - admin:default_return:controller

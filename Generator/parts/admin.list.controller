@@ -1,0 +1,7 @@
+/*
+* Retrieve all %elementsName%
+*/
+
+$arrayReturn['%elementsName%'] = $game->getElementsByProperties([
+    'type' => '%elementName%',
+]);

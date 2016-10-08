@@ -27,7 +27,7 @@ Feature:
         | moneys[0].properties[1].name  | picture   |
         | moneys[0].properties[1].value | blah      |
         | moneys[0].properties[2].name  | type      |
-        | moneys[0].properties[2].value | money     |
+        | moneys[0].properties[2].value | Money     |
 
     Scenario: Successfully remove a money
       When I send a "POST" request with:
@@ -49,7 +49,7 @@ Feature:
         | moneys[0].properties[1].name  | picture       |
         | moneys[0].properties[1].value | blah          |
         | moneys[0].properties[2].name  | type          |
-        | moneys[0].properties[2].value | money         |
+        | moneys[0].properties[2].value | Money         |
 
       Scenario: Successfully edit a money
         When I send a "POST" request with:
@@ -79,4 +79,4 @@ Feature:
             | moneys[0].properties[1].name  | picture           |
             | moneys[0].properties[1].value | blah2             |
             | moneys[0].properties[2].name  | type              |
-            | moneys[0].properties[2].value | money             |
+            | moneys[0].properties[2].value | Money             |

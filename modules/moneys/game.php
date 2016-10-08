@@ -1,7 +1,7 @@
 <?php
 
 $moneys = $game->getElementsByProperties([
-    'type' => 'money',
+    'type' => 'Money',
 ]);
 
 $playerMoneys = [];

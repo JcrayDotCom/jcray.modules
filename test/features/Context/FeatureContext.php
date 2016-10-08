@@ -108,10 +108,10 @@ class FeatureContext extends BaseContext implements Context
     public function iUseTheModule($folderName)
     {
         $file = __DIR__.'/../../../modules/'.$folderName.'/';
-        $this->adminController = file_get_contents($file.'admin.php');
-        $this->adminTemplate = file_get_contents($file.'admin.tpl');
-        $this->gameController = file_get_contents($file.'game.php');
-        $this->gameTemplate = file_get_contents($file.'game.tpl');
+        $this->adminController = is_file($file.'admin.php') ? file_get_contents($file.'admin.php') : '';
+        $this->adminTemplate = is_file($file.'admin.tpl') ? file_get_contents($file.'admin.tpl') : '';
+        $this->gameController = is_file($file.'game.php') ? file_get_contents($file.'game.php') : '';
+        $this->gameTemplate = is_file($file.'game.tpl') ? file_get_contents($file.'game.tpl') : '';
     }
 
     private static function getToken($force = false)
@@ -136,9 +136,11 @@ class FeatureContext extends BaseContext implements Context
      public static function prepareModule($event)
      {
          unlink('token.lock');
-         unlink('last_nodes');
+         if (is_file('last_nodes')) {
+             unlink('last_nodes');
+         }
 
-         return self::execCommand('modules:generate:js');
+         return self::execCommand('jcray:modules:autoload');
      }
 
      /**

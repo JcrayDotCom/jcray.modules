@@ -14,7 +14,7 @@ class GenerateModulesLoaderCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('modules:generate:js')
+            ->setName('jcray:modules:autoload')
             ->setDescription('Regenerate the modules.auto.js file with updated controllers and templates files contents')
         ;
     }
@@ -31,10 +31,10 @@ class GenerateModulesLoaderCommand extends Command
             if (is_dir($modulesPath.'/'.$f) && $f != '.' && $f != '..') {
                 $io->text('Found module '.$f.' in '.realpath($modulesPath.'/'.$f));
                 $modules[$f] = [
-                    'admin_controller' => file_get_contents($modulesPath.'/'.$f.'/admin.php'),
-                    'admin_template' => file_get_contents($modulesPath.'/'.$f.'/admin.tpl'),
-                    'game_controller' => file_get_contents($modulesPath.'/'.$f.'/game.php'),
-                    'game_template' => file_get_contents($modulesPath.'/'.$f.'/game.tpl'),
+                    'admin_controller' => is_file($modulesPath.'/'.$f.'/admin.php') ? file_get_contents($modulesPath.'/'.$f.'/admin.php') : '<?php '."\n",
+                    'admin_template' => is_file($modulesPath.'/'.$f.'/admin.tpl') ? file_get_contents($modulesPath.'/'.$f.'/admin.tpl') : '{% block %}'."\n\n".'{% endblock %}',
+                    'game_controller' => is_file($modulesPath.'/'.$f.'/game.php') ? file_get_contents($modulesPath.'/'.$f.'/game.php') : '<?php '."\n",
+                    'game_template' => is_file($modulesPath.'/'.$f.'/game.tpl') ? file_get_contents($modulesPath.'/'.$f.'/game.tpl') : '{% block %}'."\n\n".'{% endblock %}',
                 ];
             }
         }

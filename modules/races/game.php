@@ -1,12 +1,12 @@
 <?php
 
-$races = $game->getElementsByProperties(['type' => 'race']);
+$races = $game->getElementsByProperties(['type' => 'Race']);
 
 if ($request->get('chosenRace')) {
-    $player->set('race', $request->get('chosenRace')['id']);
+    $player->set('Race', $request->get('chosenRace')['id']);
 }
 
-$playerRace = $player->get('race');
+$playerRace = $player->get('Race');
 if ($playerRace) {
     $playerRace = $game->getElement($playerRace);
 }
