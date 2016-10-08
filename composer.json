@@ -3,7 +3,15 @@
     "description": "Jcray modules environnement",
     "homepage": "http://jcray.com",
     "require-dev": {
-        "behat/behat": "^3.2"
+        "behat/behat": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-sahi-driver": "*",
+        "behat/mink-zombie-driver": "*",
+        "behatch/contexts": "*"
+    },
+    "config": {
+        "bin-dir": "bin/"
     },
     "license": "MIT",
     "authors": [
@@ -11,5 +19,7 @@
             "name": "Jcray Dot Com",
             "email": "contact@jcray.com"
         }
-    ]
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

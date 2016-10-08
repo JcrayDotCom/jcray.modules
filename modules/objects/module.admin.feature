@@ -1,19 +1,14 @@
 @module
+@objects
+
 Feature:
   As an administrator, you can create, edit and remove objects.
 
   Background:
-    Given I have signed up
-    Given there is a game
-    Given the game's slug is game1
-    Given I load the module "objects"
-    Given I prepare a POST request on "/modules/{last_created_module}/render?game={last_created_game}"
-    And the following headers:
-      | Authorization | Bearer {my_api_token}             |
-      | Content-Type  | application/x-www-form-urlencoded |
+    Given I use the "objects" module
 
-  Scenario: Successfully create a money
-    Given I send the following body:
+  Scenario: Successfully create an object
+    When I send a "POST" request with:
     """
     {
         "newObject": {
@@ -23,23 +18,22 @@ Feature:
         }
     }
     """
-    When I send the request
-    Then I should receive a 200 response
-    Then it should be 1 element for this game
-    And this element should have a property "isObject" equal to "1"
-    And this element should have a property "quantity" equal to 0
-    And this element should have a property "picture" equal to "blah"
+    Then the response status code should be 200
+    Then the JSON nodes should be equal to:
+        | objects[0].name                | An object    |
+        | objects[0].properties[0].name  | quantity     |
+        | objects[0].properties[0].value | 0            |
+        | objects[0].properties[1].name  | picture      |
+        | objects[0].properties[1].value | blah         |
+        | objects[0].properties[2].name  | isObject     |
+        | objects[0].properties[2].value | 1            |
 
     Scenario: Successfully remove an object
-      Given this game has 1 element
-      Given this element name is "An object"
-      Given this element has a property named "isObject" with value "1";
-      Given I send the following body:
+      When I send a "POST" request with:
       """
       {
           "removeObject": "An object"
       }
       """
-      When I send the request
-      Then I should receive a 200 response
-      Then it should be 0 element for this game
+      Then the response status code should be 200
+      And the JSON node "objects" should have 0 element

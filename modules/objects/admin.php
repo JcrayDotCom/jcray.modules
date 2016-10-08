@@ -2,10 +2,10 @@
 
 $game->registerMenu('Objets');
 
-if (null !== $newObject = $game->createElementIfInRequest('newObject')) {
-    $newObject->set('isObject', true)
-        ->setUsable(true);
-}
+$newObject = $game->createElementIfInRequest('newObject', [
+    'isObject' => true,
+    'usable' => true,
+]);
 
 $game->deleteElementIfInRequest('removeObject');
 
