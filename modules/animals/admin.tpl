@@ -2,9 +2,9 @@
 {% block %}
     {% title %}Create a new Animal {% endtitle %}
     <form>
-        <input type="text" ng-model="data.Animal.name" placeholder="Animal name" />
-        <input type="text" ng-model="data.Animal.quantity" placeholder="Animal default quantity" />
-        <input type="text" ng-model="data.Animal.picture" placeholder="Picture (prefixed with http://)" />
+        <input type="text" ng-model="data.newAnimal.name" placeholder="Animal name" />
+        <input type="text" ng-model="data.newAnimal.quantity" placeholder="Animal default quantity" />
+        <input type="text" ng-model="data.newAnimal.picture" placeholder="Picture (prefixed with http://)" />
         {% button %}Create this new Animal{% endbutton %}
     </form>
 {% endblock %}

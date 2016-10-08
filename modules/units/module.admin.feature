@@ -3,7 +3,7 @@
 
 Feature:
   In a game, you can recruit units.
-  As an administrator, you should can create unitss, and as a gamer you can recruit units.
+  As an administrator, you should can create units, and as a gamer you can recruit units.
 
   Background:
     Given I use the "units" module
