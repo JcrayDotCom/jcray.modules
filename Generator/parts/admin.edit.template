@@ -1,3 +1,4 @@
+<!-- Edit a %elementName% -->
 <div ng-if="data.%elementsName% && data.%elementsName%.length">
     {% block %}
         {% title %}%elementsName% of your game{% endtitle %}
@@ -7,7 +8,7 @@
                     <label>Name</label>
                     <input type="text" ng-model="%elementName%.name" ng-change="post()" />
                 </div>
-                <div class="col-md-4" ng-repeat="property in %elementNAme%.properties" ng-if="property.name == 'picture' || property.name == 'quantity'">
+                <div class="col-md-4" ng-repeat="property in %elementName%.properties" ng-if="property.name == 'picture' || property.name == 'quantity'">
                     <label>{{ property.name }}</label>
                     <input type="text" ng-model="property.value"  ng-change="post()" />
                 </div>
