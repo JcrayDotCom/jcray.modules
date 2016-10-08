@@ -20,6 +20,8 @@
   "dependencies": {
     "angular": "^1.5.8",
     "materialize": "^0.97.7",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "angular-cookies": "^1.5.8",
+    "components-font-awesome": "^4.6.3"
   }
 }

@@ -80,10 +80,10 @@ class FeatureContext extends BaseContext implements Context
          while ($f = readdir($p)) {
              if (is_dir('modules/'.$f) && $f != '.' && $f != '..') {
                  $modules[$f] = [
-                     'adminController' => file_get_contents('modules/'.$f.'/admin.php'),
-                     'adminTemplate' => file_get_contents('modules/'.$f.'/admin.tpl'),
-                     'gameController' => file_get_contents('modules/'.$f.'/game.php'),
-                     'gameTemplate' => file_get_contents('modules/'.$f.'/game.tpl'),
+                     'admin_controller' => file_get_contents('modules/'.$f.'/admin.php'),
+                     'admin_template' => file_get_contents('modules/'.$f.'/admin.tpl'),
+                     'game_controller' => file_get_contents('modules/'.$f.'/game.php'),
+                     'game_template' => file_get_contents('modules/'.$f.'/game.tpl'),
                  ];
              }
          }
