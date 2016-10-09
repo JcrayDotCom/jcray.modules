@@ -6,4 +6,4 @@ Scenario: Successfully remove a %elementName%
   }
   """
   Then the response status code should be 200
-  And the JSON node "%elementsName%" should have 0 element
+  And the JSON node "%elementsName%" should have 1 element

@@ -19,6 +19,19 @@ if ($request->get('newStat')) {
     $game->set('%elementsName%Stats', $gameStats);
 }
 
+// Delete a stat
+if ($request->get('remove%elementName%Stat')) {
+    $gameStats = $game->get('%elementsName%Stats');
+    $newStats = [];
+    foreach ($gameStats as $stat) {
+        if ($stat->name != $request->get('remove%elementName%Stat')['name']) {
+            $newStats[] = $stat;
+        }
+    }
+
+    $game->set('%elementsName%Stats', $newStats);
+}
+
 // Apply default stats to all elements
 $gameStats = $arrayReturn['%elementsName%Stats'] = $game->get('%elementsName%Stats');
 
@@ -27,6 +40,9 @@ foreach ($gameStats as $stat) {
     foreach ($elements as $element) {
         if (!$element->get($stat->name)) {
             $element->set($stat->name, (int) $stat->quantity);
+        }
+        if ($request->get('remove%elementName%Stat')) {
+            $element->removeProperty($request->get('remove%elementName%Stat')['name']);
         }
     }
 }

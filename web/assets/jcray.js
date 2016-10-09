@@ -44,10 +44,14 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
         $scope.data = {};
 
         $scope.setCurrentModule = function(name, module) {
-                $scope.renderable = false;
-                module.name = name;
-                $scope.currentModule = module;
-                $scope.renderModule();
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.src = 'assets/modules.auto.js';
+            $("head").append(s);
+            $scope.renderable = false;
+            module.name = name;
+            $scope.currentModule = module;
+            $scope.renderModule();
         };
 
         $scope.renderModule = function() {

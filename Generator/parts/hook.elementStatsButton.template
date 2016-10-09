@@ -1,2 +1,2 @@
 <!-- Button for edit the stats of the %elementName% -->
-<a class="btn-floating btn-tiny waves-effect waves-light blue" ng-click="elementTab = 'stats'; data.statsElement%elementName% = element"><i class="fa fa-bar-chart"></i></a>
+<a class="btn-floating btn-tiny waves-effect waves-light blue" ng-click="elementTab = 'stats'+element.id; data.statsElement%elementName% = element"><i class="fa fa-bar-chart"></i></a>

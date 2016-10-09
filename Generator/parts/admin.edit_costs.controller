@@ -15,7 +15,7 @@ if ($request->get('costsElement%elementName%')) {
 }
 
 $elements = $game->getElementsByProperties(['type' => '%elementName%']);
-$moneys = $game->getElementsByProperties(['type' => 'Money']);
+$moneys = $game->getElementsByProperties(['type' => 'Resource']);
 
 // Apply default costs to %elementsName%
 foreach ($elements as $element) {
