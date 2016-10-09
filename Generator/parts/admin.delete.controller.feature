@@ -2,7 +2,7 @@ Scenario: Successfully remove a %elementName%
   When I send a "POST" request with:
   """
   {
-      "remove%elementName%": "{previous_nodes.%elementsName%[0].name}"
+      "remove%elementName%": "{previous_nodes.%elementsName%[1].name}"
   }
   """
   Then the response status code should be 200
