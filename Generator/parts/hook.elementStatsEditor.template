@@ -1,1 +1,30 @@
-<!-- todo :s -->
+<!-- Edit the stats of the %elementName% -->
+<div ng-if="data.statsElement%elementName% && elementTab == 'stats'">
+
+    <ul class="collection">
+        <li class="collection-item row">
+            <div class="col-md-3">
+                <label>Create a new stat</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newStat.name" placeholder="Name of the stat" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newStat.quantity" placeholder="Default value for this stat" />
+            </div>
+            <div class="col-md-3">
+                <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
+            </div>
+        </li>
+        <li class="collection-item row" ng-repeat="stat in data.%elementsName%Stats">
+            <div ng-repeat="property in data.statsElement%elementName%.properties" ng-if="property.name == stat.name">
+                <div class="col-md-6">
+                    <label>{{ property.name }}</label>
+                </div/>
+                <div class="col-md-6">
+                    <input type="text" ng-model="property.value" ng-change="post()" />
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

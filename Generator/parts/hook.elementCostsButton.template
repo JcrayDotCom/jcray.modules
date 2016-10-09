@@ -1,0 +1,2 @@
+<!-- Button for edit the costs of the %elementName% -->
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'; data.costsElement%elementName% = element"><i class="fa fa-money"></i></a>

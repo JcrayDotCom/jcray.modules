@@ -1,4 +1,6 @@
 parts:
+    - admin:tabs:template
+    - admin:error:template
     - admin:default_vars:controller
     - admin:create_menu:controller
     - admin:create:controller

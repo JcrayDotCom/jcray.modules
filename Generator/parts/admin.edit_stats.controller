@@ -20,7 +20,8 @@ if ($request->get('newStat')) {
 }
 
 // Apply default stats to all elements
-$gameStats = $game->get('%elementsName%Stats');
+$gameStats = $arrayReturn['%elementsName%Stats'] = $game->get('%elementsName%Stats');
+
 $elements = $game->getElementsByProperties(['type' => '%elementName%']);
 foreach ($gameStats as $stat) {
     foreach ($elements as $element) {

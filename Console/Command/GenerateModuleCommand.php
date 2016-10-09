@@ -9,6 +9,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Console\Input\InputArgument;
 use Doctrine\Common\Inflector\Inflector;
+use Symfony\Component\Console\Input\ArrayInput;
 
 class GenerateModuleCommand extends Command
 {
@@ -107,7 +108,7 @@ class GenerateModuleCommand extends Command
             $file = $fileContent;
             preg_match_all('|\%hook\:(.+)\:(.+)\%|', $fileContent, $matches);
             foreach ($matches[0] as $hook) {
-                if (in_array(str_replace('%', '', $hook), $recipeData['ignore'])) {
+                if (isset($recipeData['ignore']) && in_array(str_replace('%', '', $hook), $recipeData['ignore'])) {
                     $io->note('Hook '.str_replace('%', '', $hook).' is in ignore list. Skipped.');
                     $fileContent = str_replace($hook, '',  $fileContent);
                     continue;
@@ -132,5 +133,9 @@ class GenerateModuleCommand extends Command
 
         shell_exec(__DIR__.'/../../bin/php-cs-fixer fix '.$moduleFolder);
         $io->success('Module created in '.$moduleFolder);
+
+        $command = $this->getApplication()->find('jcray:modules:autoload');
+        $input = new ArrayInput([]);
+        $returnCode = $command->run($input, $output);
     }
 }

@@ -58,8 +58,11 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                 game_controller: $scope.currentModule.game_controller,
                 game_template: $scope.currentModule.game_template
             };
-
+            $scope.data.error = null;
             $http.post('http://api.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
+                if (r.data.error) {
+                    $scope.data.error = r.data.error;
+                }
                 console.log('Received data:');
                 console.log(r.data);
                 while ($scope.currentModule.admin_template.replace('{% button %}', '') != $scope.currentModule.admin_template) {
@@ -83,6 +86,11 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                 $scope.data = r.data;
                 $templateCache.put($scope.mode+$scope.currentModule.name+'Template.html', $scope.currentModule.admin_template);
                 $scope.renderable = true;
+            }, function(r){
+                if (r.data.error) {
+                    $scope.data.error = r.data.error;
+                    console.log('Error in controller: '+r.data.error.message);
+                }
             });
         };
 

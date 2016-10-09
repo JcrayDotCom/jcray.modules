@@ -1,2 +1,2 @@
 <!-- Delete the %elementName% -->
-<a class="btn-floating btn-large waves-effect waves-light red" ng-click="data.remove%elementName% = element.name;post();"><i class="tiny material-icons">delete</i></a>
+<a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.remove%elementName% = element.name;post();"><i class="tiny material-icons">delete</i></a>

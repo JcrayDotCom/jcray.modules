@@ -1,0 +1,7 @@
+<div ng-if="data.error">
+    <div class="card red-grey darken-1">
+        <div class="card-content">
+            {{ data.error.message  }}
+        </div>
+    </div>
+</div>

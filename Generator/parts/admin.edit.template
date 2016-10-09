@@ -1,5 +1,7 @@
+<div ng-init="tabs ? tabs.edit = 'All %elementName%' : null"></div>
+
 <!-- Edit a %elementName% -->
-<div ng-if="data.%elementsName% && data.%elementsName%.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit') && data.%elementsName% && data.%elementsName%.length">
     {% block %}
         {% title %}%elementsName% of your game{% endtitle %}
         <ul class="collection">
@@ -14,14 +16,12 @@
                     <input type="text" ng-model="property.value" ng-change="post()" />
                 </div>
                 <div class="col-md-3">
-                    <div style="text-align: center;padding-top: 20px;">
-                        %hook:delete:template%
-                    </div>
-                    <span class="pull-right">%hook:statsButton:template%</span>
-                    <span class="pull-right">%hook:costsButton:template%</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementStatsButton:template%</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementCostsButton:template%</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:delete:template%</span>
                 </div>
-                %hook:statsEditor:template%
-                %hook:costsEditor:template%
+                <div class="clearfix">%hook:elementStatsEditor:template%</div>
+                <div class="clearfix">%hook:elementCostsEditor:template%</div>
             </li>
         </ul>
     {% endblock %}
