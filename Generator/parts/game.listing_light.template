@@ -1,0 +1,10 @@
+<div ng-if="data.%elementsName%.length">
+    <div class="chip" ng-repeat="element in data.%elementsName%">
+        <img ng-repeat="property in element.properties" ng-if="element.name == 'picture'" ng-src="{{ property.value }}" alt="{{ element.name }}">
+        <span ng-repeat="playerElement in data.playerElements" ng-if="playerElement.name == element.name">
+            <span ng-repeat="property in playerElement.properties" ng-if="property.name == 'quantity'">
+                {{ property.value }}
+            </spabn>
+        </span>
+    </div>
+</div>

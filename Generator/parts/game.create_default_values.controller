@@ -1,0 +1,23 @@
+/*
+* Get the %elementsName% owned by the player
+*/
+
+$%elementsName% = $game->getElementsByProperties([
+    'type' => '%elementName%',
+]);
+
+$player%elementsName% = [];
+
+if ($player) {
+    foreach ($%elementsName% as $element) {
+        $playerElement = $player->getElement($element->getId());
+        if (!$playerElement) {
+            $playerElement = $player->createElement($element->getId());
+        }
+        $playerElements[] = $playerElement;
+    }
+
+    $arrayReturn['playerElements'] = $playerElements;
+}
+
+$arrayReturn['%elementsName%'] = $%elementsName%;

@@ -1,4 +1,5 @@
 parts:
+    # admin
     - admin:tabs:template
     - admin:default_vars:controller
     - admin:create_menu:controller
@@ -9,8 +10,11 @@ parts:
     - admin:delete:controller
     - admin:list:controller
     - admin:default_return:controller
-ignore:
-    - hook:elementStatsEditor:template
-    - hook:elementStatsButton:template
-    - hook:elementCostsButton:template
-    - hook:elementCostsEditor:template
+
+    # Game controller
+    - game:default_vars:controller
+    - game:create_default_values:controller
+    - game:default_return:controller
+
+    # Game template
+    - game:listing_light:template
