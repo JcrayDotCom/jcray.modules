@@ -13,12 +13,9 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
             $scope.bearer = $cookies.get('bearer');
 
         }
-        $http.get('http://jcray.tech/tech/token').then(function(r){
-            $scope.bearer = r.data.token;
-            $cookies.put('bearer', r.data.token);
-            console.log('Token granted:'+r.data.token)
-        });
-
+        $scope.bearer = techEnv.token;
+        $cookies.put('bearer', $scope.bearer );
+        
         $scope.getDefaultHeaders = function(){
             if ($scope.bearer) {
                 return {'headers': {

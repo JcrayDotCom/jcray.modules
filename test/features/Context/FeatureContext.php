@@ -3,6 +3,7 @@
 namespace Context;
 
 require_once __DIR__.'/../../../Console/Command/GenerateModulesLoaderCommand.php';
+require_once __DIR__.'/../../../Console/Command/CreateTechUserCommand.php';
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
@@ -11,6 +12,7 @@ use Sanpi\Behatch\Context\RestContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Symfony\Component\Console\Application;
 use JcrayDotCom\Console\Command\GenerateModulesLoaderCommand;
+use JcrayDotCom\Console\Command\CreateTechUserCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -64,7 +66,10 @@ class FeatureContext extends BaseContext implements Context
         $console = new Application('JcrayTech', '0.1');
 
         $generateModulesLoaderCommand = new GenerateModulesLoaderCommand();
+        $createTechUserCommand = new CreateTechUserCommand();
+
         $console->add($generateModulesLoaderCommand);
+        $console->add($createTechUserCommand);
         $console->setAutoExit(false);
 
         return $console;
@@ -116,18 +121,11 @@ class FeatureContext extends BaseContext implements Context
 
     private static function getToken($force = false)
     {
-        if (!$force && is_file('token.lock')) {
-            return file_get_contents('token.lock');
-        }
+        self::execCommand('jcray:tech:env');
+        $targetPrivateFile = __DIR__.'/../../../token.auto.json';
+        $data = json_decode(file_get_contents($targetPrivateFile));
 
-        $url = 'http://jcray.tech/tech/token?'.time();
-
-        $result = file_get_contents($url);
-
-        $token = json_decode($result)->token;
-        file_put_contents('token.lock', $token);
-
-        return $token;
+        return $data->token;
     }
 
      /**
@@ -135,7 +133,6 @@ class FeatureContext extends BaseContext implements Context
       */
      public static function prepareModule($event)
      {
-         unlink('token.lock');
          if (is_file('last_nodes')) {
              unlink('last_nodes');
          }

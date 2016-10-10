@@ -3,3 +3,5 @@
 /behat.yml
 /last_nodes
 /module.lock
+/token.auto.json
+/web/assets/token.auto.js

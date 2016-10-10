@@ -55,6 +55,14 @@ $ bin/behat modules/{ModuleName}
 ## Tests admin and game templates
 After running behat tests, go to web/index.html :)
 
+## ReGenerating token and game
+For your tests, jcray.tech provider a fake account and a fake game. These are generated on each tests runing.
+If you want to manuallay regenerate it (without running tests):
+``` bash
+$ bin/console jcray:tech:env
+```
+
+
 ## Regenerating modules.auto.js
 If you just edited a module template, maybe you don't need to wait for all behat tests passing to regenerate the modules.auto.js file (which contains the controller and templates contents). You can use the bin/console executable to regenerate it manually:
 ``` bash
