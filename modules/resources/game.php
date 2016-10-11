@@ -10,7 +10,7 @@ $resources = $game->getElementsByProperties([
     'type' => 'Resource',
 ]);
 
-$playerresources = [];
+$playerElements = [];
 
 if ($player) {
     foreach ($resources as $element) {

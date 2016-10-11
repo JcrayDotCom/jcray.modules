@@ -35,15 +35,18 @@
     {% block %}
         {% title %}resources of your game{% endtitle %}
         <ul class="collection">
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
+            </li>
             <li ng-repeat="element in data.resources" class="collection-item row">
 
                 <div class="col-md-3">
                     <label>Name</label>
                     <input type="text" ng-model="element.name" ng-change="post()" />
                 </div>
-                <div class="col-md-3" ng-repeat="property in element.properties" ng-if="property.name == 'picture' || property.name == 'quantity'">
-                    <label>{{ property.name }}</label>
-                    <input type="text" ng-model="property.value" ng-change="post()" />
+                <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
+                    <label>{{ propertyName }}</label>
+                    <input type="text" ng-model="propertyValue" />
                 </div>
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
@@ -98,6 +101,9 @@
     </ul>
 </div>
 </div>
+            </li>
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
         </ul>
     {% endblock %}
