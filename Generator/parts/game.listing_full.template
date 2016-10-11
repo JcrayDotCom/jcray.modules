@@ -1,0 +1,22 @@
+<!-- List %elementsName% of the player -->
+<div ng-if="data.playerElements.length">
+    <ul class="collection">
+        <li class="collection-item row" ng-repeat="playerElement in data.playerElements">
+            <div class="col-md-3">
+                <h4>{{ playerElement.element.name }}</h4>
+                <img ng-repeat="property in playerElement.element.properties" ng-if="property.name == 'picture'" ng-src="{{ property.value }}" alt="{{ element.name }}">
+            </div>
+            <div class="col-md-3" ng-repeat="property in playerElement.properties" ng-if="property.name == 'quantity'">
+                <h5>x{{ property.value }}</h5>
+            </div>
+            <div class="col-md-3">
+                <input type="text" placeholder="How many to buy?" ng-model="playerElement.data" />
+            </div>
+            <div class="col-md-3">
+                <button class="btn" ng-click="post()">
+                    <i class="material-icons">send</i>
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>

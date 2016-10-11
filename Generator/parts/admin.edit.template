@@ -1,4 +1,4 @@
-<div ng-init="tabs ? tabs.edit = 'All %elementName%' : null"></div>
+<div ng-init="tabs ? tabs.edit = 'All %elementsName%' : null"></div>
 
 <!-- Edit a %elementName% -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.%elementsName% && data.%elementsName%.length">
