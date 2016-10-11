@@ -19,5 +19,6 @@ $createTechUserCommand = new CreateTechUserCommand();
 $console = new Application('JcrayTech', '0.1');
 $console->add($generateModulesLoaderCommand);
 $console->add($generateModuleCommand);
+$console->add($createTechUserCommand);
 
 $console->run($input);

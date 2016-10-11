@@ -25,13 +25,11 @@ class CreateTechUserCommand extends Command
         $io->text('Ask for a new token...');
         $result = file_get_contents('http://jcray.tech/tech/token?'.time());
         $targetPublicFile = __DIR__.'/../../web/assets/token.auto.js';
-        file_put_contents($targetPublicFile, 'var techEnv="'.$result.'"');
+        file_put_contents($targetPublicFile, 'var techEnv='.$result.';');
 
         $targetPrivateFile = __DIR__.'/../../token.auto.json';
         file_put_contents($targetPrivateFile, $result);
 
         $io->success('Granted!');
-
-        return $token;
     }
 }
