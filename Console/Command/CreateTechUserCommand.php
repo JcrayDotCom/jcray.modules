@@ -24,7 +24,15 @@ class CreateTechUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->text('Ask for a new token...');
-        $result = file_get_contents('http://jcray.tech/tech/token?'.time());
+        $opts = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ];
+
+        $result = file_get_contents('https://jcray.tech/tech/token?'.time(), false, stream_context_create($opts));
+
         $techEnv = json_decode($result);
         if (null === $techEnv) {
             $io->error('Unable to grant access.');
