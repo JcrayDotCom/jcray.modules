@@ -59,7 +59,7 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                 game_template: $scope.currentModule.game_template
             };
             $scope.data.error = null;
-            $http.post('http://'+($scope.mode == 'admin' ? 'api' : techEnv.game.slug)+'.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
+            $http.post('https://'+($scope.mode == 'admin' ? 'api' : techEnv.game.slug)+'.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
                 if (r.data.error) {
                     $scope.data.error = r.data.error;
                 }
