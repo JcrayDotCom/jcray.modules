@@ -6,7 +6,7 @@ $%elementsName% = $game->getElementsByProperties([
     'type' => '%elementName%',
 ]);
 
-$player%elementsName% = [];
+$playerElements = [];
 
 if ($player) {
     foreach ($%elementsName% as $element) {

@@ -26,6 +26,10 @@ class CreateTechUserCommand extends Command
         $io->text('Ask for a new token...');
         $result = file_get_contents('http://jcray.tech/tech/token?'.time());
         $techEnv = json_decode($result);
+        if (null === $techEnv) {
+            $io->error('Unable to grant access.');
+            throw new \Exception('Error retrieving token.');
+        }
 
         $targetPublicFile = __DIR__.'/../../web/assets/token.auto.js';
         file_put_contents($targetPublicFile, 'var techEnv='.$result.';');

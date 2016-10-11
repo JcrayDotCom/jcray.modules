@@ -18,6 +18,7 @@ Feature:
         }
     }
     """
+    Then print last response
     Then the response status code should be 200
     Then the JSON nodes should be equal to:
         | objects[0].name                | An object    |
