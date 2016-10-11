@@ -121,8 +121,11 @@ class FeatureContext extends BaseContext implements Context
 
     private static function getToken($force = false)
     {
-        self::execCommand('jcray:tech:env');
         $targetPrivateFile = __DIR__.'/../../../token.auto.json';
+        if (!is_file($targetPrivateFile)) {
+            self::execCommand('jcray:tech:env');
+        }
+
         $data = json_decode(file_get_contents($targetPrivateFile));
 
         return $data->token;
