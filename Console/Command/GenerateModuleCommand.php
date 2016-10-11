@@ -13,8 +13,6 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 class GenerateModuleCommand extends Command
 {
-    private $helperSet;
-
     protected function configure()
     {
         $this
@@ -24,6 +22,9 @@ class GenerateModuleCommand extends Command
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $recipe = $input->getArgument('recipe');

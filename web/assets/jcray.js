@@ -15,11 +15,11 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
         }
         $scope.bearer = techEnv.token;
         $cookies.put('bearer', $scope.bearer );
-        
+
         $scope.getDefaultHeaders = function(){
             if ($scope.bearer) {
                 return {'headers': {
-                    'Authorization': 'Bearer '+$scope.bearer,
+                    'Authorization': 'Bearer '+($scope.mode == 'admin' ? techEnv.token : techEnv.player.token),
                     'X-Jcray-API': 1
                 }};
             }
@@ -52,7 +52,6 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
         };
 
         $scope.renderModule = function() {
-
             $scope.data.module_configuration = {
                 admin_controller: $scope.currentModule.admin_controller,
                 admin_template: $scope.currentModule.admin_template,
@@ -60,12 +59,13 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                 game_template: $scope.currentModule.game_template
             };
             $scope.data.error = null;
-            $http.post('http://api.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
+            $http.post('http://'+($scope.mode == 'admin' ? 'api' : techEnv.game.slug)+'.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
                 if (r.data.error) {
                     $scope.data.error = r.data.error;
                 }
                 console.log('Received data:');
                 console.log(r.data);
+
                 while ($scope.currentModule.admin_template.replace('{% button %}', '') != $scope.currentModule.admin_template) {
                     $scope.currentModule.admin_template = $scope.currentModule.admin_template.replace('{% button %}', '<button class="btn" ng-click="post()">');
                 }
@@ -85,7 +85,7 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                     $scope.currentModule.admin_template = $scope.currentModule.admin_template.replace('{% endtitle %}', '</div>');
                 }
                 $scope.data = r.data;
-                $templateCache.put($scope.mode+$scope.currentModule.name+'Template.html', $scope.currentModule.admin_template);
+                $templateCache.put($scope.mode+$scope.currentModule.name+'Template.html', $scope.mode == 'admin' ? $scope.currentModule.admin_template : $scope.currentModule.game_template);
                 $scope.renderable = true;
             }, function(r){
                 if (r.data.error) {
