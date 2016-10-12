@@ -131,6 +131,17 @@ class FeatureContext extends BaseContext implements Context
         return $data->token;
     }
 
+    public static function http_request($url, $opts = [])
+    {
+        $opts = array_merge([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ], $opts);
+
+        return file_get_contents($url, false, stream_context_create($opts));
+    }
      /**
       * @AfterSuite
       */
@@ -148,7 +159,7 @@ class FeatureContext extends BaseContext implements Context
       */
      public static function cleanTests($event)
      {
-         $url = 'http://api.jcray.tech/v8/games/tech/reset?'.time();
+         $url = 'https://api.jcray.tech/v8/games/tech/reset?'.time();
 
          $opts = array(
           'http' => array(
@@ -157,8 +168,7 @@ class FeatureContext extends BaseContext implements Context
           ),
         );
 
-         $context = stream_context_create($opts);
-         file_get_contents($url, false, $context);
+         self::http_request($url, $opts);
      }
 
     /**

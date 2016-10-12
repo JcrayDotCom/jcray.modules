@@ -1,0 +1,5 @@
+/*
+*   List stats of %elementsName%
+*/
+
+$arrayReturn['%elementsName%Stats'] = $game->get('%elementsName%Stats');

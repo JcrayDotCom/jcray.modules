@@ -1,64 +1,92 @@
 <?php
 
-$game->registerMenu('Unités');
+$arrayReturn = [];
+
+/*
+* Add module units to the game menu
+*/
+
+$game->registerMenu('units');
+
+/*
+* Create a new Unit
+*/
 
 $newUnit = null;
-$arrayReturn = [];
 
 $newUnit = $game->createElementIfInRequest('newUnit', [
     'type' => 'Unit',
 ]);
 
-// Remove Unit if removeUnit is sent
-$game->deleteElementIfInRequest('removeUnit');
+/*
+* Edit stats of units
+*/
 
-// Update Units properties if is sent
-$game->updateElementsIfInRequest('units');
-
-if (!$game->get('unitStats')) {
-    $game->set('unitStats', []);
+// By default no stats
+if (!$game->get('unitsStats')) {
+    $game->set('unitsStats', []);
 }
 
+// Updating stats
+if ($request->get('unitsStats')) {
+    $game->set('unitsStats', $request->get('unitsStats'));
+}
+
+// Creating a new stat
 if ($request->get('newStat')) {
-    $gameStats = $game->get('unitStats');
+    $gameStats = $game->get('unitsStats');
     $gameStats[] = $request->get('newStat');
-    $game->set('unitStats', $gameStats);
+    $game->set('unitsStats', $gameStats);
 }
 
-if ($request->get('unitStats')) {
-    $game->set('unitStats', $request->get('unitStats'));
-}
-
-$createdCosts = [];
-if ($request->get('currentUnit')) {
-    $currentUnit = (array) $request->get('currentUnit');
-    $unit = $game->getElement($currentUnit['id']);
-    foreach ($currentUnit['costs'] as $costInfos) {
-        $costInfos = (array) $costInfos;
-        $costInfos['cost'] = (array) $costInfos['cost'];
-        $createdCosts[] = $unit->createCost($costInfos['cost']['id'], $costInfos['quantity']);
+// Delete a stat
+if ($request->get('removeUnitStat')) {
+    $gameStats = $game->get('unitsStats');
+    $newStats = [];
+    foreach ($gameStats as $stat) {
+        if ($stat->name != $request->get('removeUnitStat')['name']) {
+            $newStats[] = $stat;
+        }
     }
-    $currentUnit = (array) $request->get('currentUnit');
-    foreach ($currentUnit['properties'] as $property) {
-        $property = (array) $property;
-        $unit->set($property['name'], $property['value']);
-    }
+
+    $game->set('unitsStats', $newStats);
 }
 
-$gameStats = $game->get('unitStats');
-$elements = $game->getElementsByProperties(['isUnit' => true]);
+// Apply default stats to all elements
+$gameStats = $arrayReturn['unitsStats'] = $game->get('unitsStats');
+
+$elements = $game->getElementsByProperties(['type' => 'Unit']);
 foreach ($gameStats as $stat) {
     foreach ($elements as $element) {
         if (!$element->get($stat->name)) {
-            $element->set($stat->name, $stat->quantity);
+            $element->set($stat->name, (int) $stat->quantity);
+        }
+        if ($request->get('removeUnitStat')) {
+            $element->removeProperty($request->get('removeUnitStat')['name']);
         }
     }
 }
 
-$moneys = $game->getElementsByProperties(['isMoney' => true]);
-$elements = $game->getElementsByProperties(['type' => 'unit']);
-$action = $game->createAction('booster');
+/*
+* Edit costs of an Unit
+*/
 
+// Update costs of a Unit
+if ($request->get('costsElementUnit')) {
+    $currentUnit = (array) $request->get('costsElementUnit');
+    $elementUnit = $game->getElement($currentUnit['id']);
+    foreach ($currentUnit['costs'] as $costInfos) {
+        $costInfos = (array) $costInfos;
+        $costInfos['cost'] = (array) $costInfos['cost'];
+        $createdCosts[] = $elementUnit->createCost($costInfos['cost']['id'], $costInfos['quantity']);
+    }
+    $arrayReturn['costsElementUnit'] = $request->get('costsElementUnit');
+}
+
+$elements = $game->getElementsByProperties(['type' => 'Unit']);
+$moneys = $game->getElementsByProperties(['type' => 'Resource']);
+
+// Apply default costs to units
 foreach ($elements as $element) {
     $costs = $element->getCosts();
     foreach ($moneys as $money) {
@@ -68,9 +96,24 @@ foreach ($elements as $element) {
     }
 }
 
-return [
-    'units' => $elements,
-    'moneys' => $moneys,
-    'createdCosts' => $createdCosts,
-    'unitStats' => (array) $game->get('unitStats'),
-];
+/*
+* Edit an existant Unit
+*/
+
+$game->updateElementsIfInRequest('units');
+
+/*
+* Delete a Unit
+*/
+
+$game->deleteElementIfInRequest('removeUnit');
+
+/*
+* Retrieve all units
+*/
+
+$arrayReturn['units'] = $game->getElementsByProperties([
+    'type' => 'Unit',
+]);
+
+return $arrayReturn;

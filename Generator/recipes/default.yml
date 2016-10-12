@@ -1,3 +1,13 @@
+###
+#   Jcray v8 - Tech
+#
+#   This recipe is the default recipe.
+#   It creates, edits, and deletes elements.
+#
+#   It does not allow to manage costs or stats on elements
+#
+#   Modules: Resources
+##
 parts:
     # admin
     - admin:tabs:template
@@ -18,3 +28,9 @@ parts:
 
     # Game template
     - game:listing_light:template
+
+ignore:
+    # Do not show the costs button on elements listing
+    - hook:elementCostsButton:template
+    # Do not show the stats button on elements listing
+    - hook:elementStatsButton:template

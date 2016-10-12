@@ -1,19 +1,22 @@
-<div ng-init="tabs ? tabs.edit = 'All %elementName%' : null"></div>
+<div ng-init="tabs ? tabs.edit = 'All %elementsName%' : null"></div>
 
 <!-- Edit a %elementName% -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.%elementsName% && data.%elementsName%.length">
     {% block %}
         {% title %}%elementsName% of your game{% endtitle %}
         <ul class="collection">
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
+            </li>
             <li ng-repeat="element in data.%elementsName%" class="collection-item row">
 
                 <div class="col-md-3">
                     <label>Name</label>
                     <input type="text" ng-model="element.name" ng-change="post()" />
                 </div>
-                <div class="col-md-3" ng-repeat="property in element.properties" ng-if="property.name == 'picture' || property.name == 'quantity'">
-                    <label>{{ property.name }}</label>
-                    <input type="text" ng-model="property.value" ng-change="post()" />
+                <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
+                    <label>{{ propertyName }}</label>
+                    <input type="text" ng-model="propertyValue" />
                 </div>
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementStatsButton:template%</span>
@@ -22,6 +25,9 @@
                 </div>
                 <div class="clearfix">%hook:elementStatsEditor:template%</div>
                 <div class="clearfix">%hook:elementCostsEditor:template%</div>
+            </li>
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
         </ul>
     {% endblock %}

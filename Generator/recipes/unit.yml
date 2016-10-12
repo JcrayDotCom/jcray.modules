@@ -1,3 +1,11 @@
+###
+#   Jcray v8 - Tech
+#
+#   This recipe is the units recipe.
+#   It creates, edits, and deletes elements, and allow to manage costs or stats on elements.
+#
+#   Modules: units
+##
 parts:
     # Admin controller
     - admin:default_vars:controller
@@ -20,5 +28,7 @@ parts:
     - game:default_vars:controller
     - game:buy:controller
     - game:create_default_values:controller
+    - game:listing_stats:controller
     - game:default_return:controller
     # Game template
+    - game:listing_full:template

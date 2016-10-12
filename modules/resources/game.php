@@ -1,15 +1,19 @@
+<?php
+
+$arrayReturn = [];
+
 /*
-* Get the %elementsName% owned by the player
+* Get the resources owned by the player
 */
 
-$%elementsName% = $game->getElementsByProperties([
-    'type' => '%elementName%',
+$resources = $game->getElementsByProperties([
+    'type' => 'Resource',
 ]);
 
 $playerElements = [];
 
 if ($player) {
-    foreach ($%elementsName% as $element) {
+    foreach ($resources as $element) {
         $playerElement = $player->getElement($element->getId());
         if (!$playerElement) {
             $playerElement = $player->createElement($element->getId());
@@ -20,4 +24,10 @@ if ($player) {
     $arrayReturn['playerElements'] = $playerElements;
 }
 
-$arrayReturn['%elementsName%'] = $%elementsName%;
+$arrayReturn['resources'] = $resources;
+
+if (isset($error)) {
+    $arrayReturn['error'] = $error;
+}
+
+return $arrayReturn;

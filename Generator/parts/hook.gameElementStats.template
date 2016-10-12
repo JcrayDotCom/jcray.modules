@@ -1,0 +1,7 @@
+<!-- Stats for the playerElement -->
+<ul class="collection row">
+    <li ng-repeat="stat in data.%elementsName%Stats">
+        <span class="col-md-6">{{ stat.name }}</span>
+        <span class="col-md-6" ng-repeat="property in playerElement.properties" ng-if="property.name == stat.name">{{ property.value }}</span>
+    <li>
+</ul>

@@ -9,8 +9,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CreateTechUserCommand extends Command
 {
-    private $helperSet;
-
     protected function configure()
     {
         $this
@@ -19,11 +17,28 @@ class CreateTechUserCommand extends Command
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
         $io->text('Ask for a new token...');
-        $result = file_get_contents('http://jcray.tech/tech/token?'.time());
+        $opts = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ];
+
+        $result = file_get_contents('https://jcray.tech/tech/token?'.time(), false, stream_context_create($opts));
+
+        $techEnv = json_decode($result);
+        if (null === $techEnv) {
+            $io->error('Unable to grant access.');
+            throw new \Exception('Error retrieving token.');
+        }
+
         $targetPublicFile = __DIR__.'/../../web/assets/token.auto.js';
         file_put_contents($targetPublicFile, 'var techEnv='.$result.';');
 

@@ -1,98 +1,153 @@
+<!-- Tabs -->
+<div ng-init="$parent.tabs = {}; $parent.currentModuleTab=false"></div>
+
 <div class="row card">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3"><a ng-click="currentEditing = 'all'; currentUnit = null">All Units</a></li>
-        <li class="tab col s3"><a class="active" ng-click="currentEditing = 'new'">New Unit</a></li>
-        <li class="tab col s3"><a ng-click="currentEditing = 'stats'">Stats</a></li>
+        <li class="tab col s3" ng-repeat="(key, tabName) in tabs">
+            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: $parent.currentModuleTab == key}">
+                {{ tabName }}
+            </a>
+        </li>
       </ul>
     </div>
-  </div>
-
-<div ng-if="currentEditing == 'new' || (!currentEditing && !data.units.length)">
-{% block %}
-    {% title %}Create a new unit{% endtitle %}
-    <form>
-        <input type="text" ng-model="data.newUnit.name" placeholder="Unit name" />
-        <input type="text" ng-model="data.newUnit.quantity" placeholder="Unit default quantity" />
-        <input type="text" ng-model="data.newUnit.picture" placeholder="Picture (prefixed with http://)" />
-        {% button %}Create this new unit{% endbutton %}
-    </form>
-{% endblock %}
 </div>
 
-<div ng-if="currentEditing == 'stats'">
-{% block %}
-    {% title %}Stats{% endtitle %}
+<div ng-if="data.error">
+    <div class="card red">
+        <div class="card-content white-text">
+            <i class="material-icons">error_outline</i> {{ data.error.message  }}
+        </div>
+    </div>
+</div>
+
+<div ng-init="tabs ? tabs.create = 'New Unit' : null"></div>
+
+<!-- Create a Unit -->
+<div ng-show="!tabs || currentModuleTab == 'create'">
+    {% block %}
+        {% title %}Create a new Unit {% endtitle %}
+        <form>
+            <input type="text" ng-model="data.newUnit.name" placeholder="Unit name" />
+            <input type="text" ng-model="data.newUnit.quantity" placeholder="Unit default quantity" />
+            <input type="text" ng-model="data.newUnit.picture" placeholder="Picture (prefixed with http://)" />
+            {% button %}Create this new Unit{% endbutton %}
+        </form>
+    {% endblock %}
+</div>
+
+<div ng-init="tabs ? tabs.edit = 'All units' : null"></div>
+
+<!-- Edit a Unit -->
+<div ng-show="(!tabs || currentModuleTab == 'edit') && data.units && data.units.length">
+    {% block %}
+        {% title %}units of your game{% endtitle %}
+        <ul class="collection">
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
+            </li>
+            <li ng-repeat="element in data.units" class="collection-item row">
+
+                <div class="col-md-3">
+                    <label>Name</label>
+                    <input type="text" ng-model="element.name" ng-change="post()" />
+                </div>
+                <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
+                    <label>{{ propertyName }}</label>
+                    <input type="text" ng-model="propertyValue" />
+                </div>
+                <div class="col-md-3">
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the stats of the Unit -->
+<a class="btn-floating btn-tiny waves-effect waves-light blue" ng-click="elementTab = 'stats'+element.id; data.statsElementUnit = element"><i class="fa fa-bar-chart"></i></a>
+</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the costs of the Unit -->
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'+element.id; data.costsElementUnit = element"><i class="fa fa-money"></i></a>
+</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Unit -->
+<a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeUnit = element.name;post();"><i class="tiny material-icons">delete</i></a>
+</span>
+                </div>
+                <div class="clearfix"><!-- Edit the stats of the Unit -->
+<div ng-if="data.statsElementUnit && elementTab == 'stats'+data.costsElementUnit.id">
+
     <ul class="collection">
-        <li class="collection-item row" ng-repeat="stat in data.unitStats">
-            <span class="col-md-4"><input type="text" ng-model="stat.name" /></span>
-            <span class="col-md-4"><input type="text" ng-model="stat.quantity" /></span>
+        <li class="collection-item row">
+            <div class="col-md-3">
+                <label>Create a new stat</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newStat.name" placeholder="Name of the stat" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newStat.quantity" placeholder="Default value for this stat" />
+            </div>
+            <div class="col-md-3">
+                <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
+            </div>
         </li>
-        <li class="collection-item">
-            <button class="btn" ng-click="post()">Update stats</button>
+        <li class="collection-item row" ng-repeat="stat in data.unitsStats">
+            <div ng-repeat="property in data.statsElementUnit.properties" ng-if="property.name == stat.name">
+                <div class="col-md-6">
+                    <label>{{ property.name }}</label>
+                </div/>
+                <div class="col-md-6">
+                    <input type="text" ng-model="property.value" ng-change="post()" />
+                </div>
+            </div>
         </li>
     </ul>
-    {% title %}New stat {% endtitle %}
+</div>
+</div>
+                <div class="clearfix"><!-- Edit the costs of the Unit -->
+<div ng-if="data.costsElementUnit && elementTab == 'costs'+data.costsElementUnit.id">
+    Costs
+    <ul class="collection">
+        <li ng-repeat="cost in data.costsElementUnit.costs" class="collection-item row">
+            <div class="col-md-6">
+                <label>{{ cost.cost.name }}</label/>
+            </div>
+            <div class="col-md-6">
+                <input type="text" ng-change="post()" ng-model="cost.quantity" />
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+            </li>
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
+            </li>
+        </ul>
+    {% endblock %}
+</div>
+
+<div ng-init="tabs ? tabs.stats = 'Stats' : null"></div>
+
+<div ng-if="currentModuleTab == 'stats'">
+{% block %}
+    {% title %}New stat{% endtitle %}
     <input type="text" placeholder="Name of the stat" ng-model="data.newStat.name" />
     <input type="text" placeholder="Default value of the stat" ng-model="data.newStat.quantity" />
     <button class="btn" ng-click="post()">Create this stat</button>
 {% endblock %}
-</div>
 
-<div ng-if="data.currentUnit && (currentEditing == 'all' || !currentEditing)">
+<div ng-if="data.unitsStats.length">
     {% block %}
-        {% block %}
-        {% title %}Properties of {{ data.currentUnit.name }}{% endtitle %}
+        {% title %}Stats{% endtitle %}
         <ul class="collection">
-            <li class="row collection-item" ng-repeat="property in data.currentUnit.properties" ng-if="property.name != 'isUnit'">
-                <span class="col-md-6">{{ property.name }}</span>
-                <span class="col-md-6"><input type="text" ng-model="property.value" /></span>
-            </li>
-        </ul>
-        <button class="btn" ng-click="post()">Save</button>
-        {% endblock %}
-        {% title %}Edit costs for {{ data.currentUnit.name }}{% endtitle %}
-        <ul class="collection">
-            <li class="collection-item row" ng-repeat="cost in data.currentUnit.costs">
-                <span class="col-md-4">{{ cost.cost.name }}</span>
+            <li class="collection-item row" ng-repeat="stat in data.unitsStats">
+                <span class="col-md-4"><input type="text" ng-model="stat.name" /></span>
+                <span class="col-md-4"><input type="text" ng-model="stat.quantity" /></span>
                 <span class="col-md-4">
-                    <input type="text" ng-model="cost.quantity" />
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">
+                        <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeUnitStat = stat;post();"><i class="tiny material-icons">delete</i></a>
+                    </span>
                 </span>
             </li>
-        </ul>
-        <button class="btn" ng-click="post()">Update costs</button>
-    {% endblock %}
-    {% block %}
-        {% title %}Edit stats for {{ data.currentUnit.name }}{% endtitle %}
-        <ul class="collection">
-            <li class="collection-item row" ng-repeat="stat in data.unitStats">
-                <span class="col-md-4">{{ stat.name }}</span>
-                <span class="col-md-4">
-                    <input ng-repeat="property in data.currentUnit.properties" ng-if="property.name == stat.name" type="text" ng-model="property.value" />
-                </span>
-            </li>
-        </ul>
-        <button class="btn" ng-click="post()">Update stats</button>
-    {% endblock %}
-</div>
-
-<div ng-if="!data.currentUnit && ((data.units && data.units.length && currentEditing == 'all') || (!currentEditing && data.units.length))">
-    {% block %}
-        {% title %}Units of your game{% endtitle %}
-        <ul class="collection">
-            <li ng-repeat="unit in data.units" class="collection-item row">
-                <div class="col-md-3">
-                    <label>Name</label>
-                    <input type="text" ng-model="unit.name" ng-change="post()" />
-                </div>
-                <div class="col-md-3" ng-repeat="property in unit.properties" ng-if="property.name == 'picture' || property.name == 'quantity'">
-                    <label>{{ property.name }}</label>
-                    <input type="text" ng-model="property.value"  ng-change="post()" />
-                </div>
-                <div class="col-md-3">
-                    <button class="btn" ng-click="data.currentUnit = unit">Edit</button>
-                </div>
+            <li class="collection-item">
+                <button class="btn" ng-click="post()">Update stats</button>
             </li>
         </ul>
     {% endblock %}
+    </div>
 </div>

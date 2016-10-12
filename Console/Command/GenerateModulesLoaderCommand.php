@@ -9,8 +9,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenerateModulesLoaderCommand extends Command
 {
-    private $helperSet;
-
     protected function configure()
     {
         $this
@@ -19,6 +17,9 @@ class GenerateModulesLoaderCommand extends Command
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
