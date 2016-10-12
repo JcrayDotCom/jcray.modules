@@ -6,20 +6,22 @@ if ($request->get('introduction')) {
     $module->set('introduction', false);
 }
 
-// Create Race if newRace is sent
-if (null !== $newRace = $game->createElementIfInRequest('newRace')) {
-    $newRace->set('isRace', true);
-}
+$newRace = null;
+$arrayReturn = [];
+
+$newRace = $game->createElementIfInRequest('newRace', [
+    'type' => 'Race',
+]);
 
 // Delete Race if removeRace is sent
 $game->deleteElementIfInRequest('removeRace');
 
 // Update races properties if is sent
-$game->updateElementsIfInRequest('units');
+$game->updateElementsIfInRequest('races');
 
-$races = $game->getElementsByProperties(['isRace' => true]);
+$races = $game->getElementsByProperties(['type' => 'Race']);
 
-$game->registerFilter('race');
+$game->registerFilter('Race');
 
 return [
     'races' => $races,

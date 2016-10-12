@@ -1,0 +1,28 @@
+/*
+* Edit costs of an %elementName%
+*/
+
+// Update costs of a %elementName%
+if ($request->get('costsElement%elementName%')) {
+    $current%elementName% = (array) $request->get('costsElement%elementName%');
+    $element%elementName% = $game->getElement($current%elementName%['id']);
+    foreach ($current%elementName%['costs'] as $costInfos) {
+        $costInfos = (array) $costInfos;
+        $costInfos['cost'] = (array) $costInfos['cost'];
+        $createdCosts[] = $element%elementName%->createCost($costInfos['cost']['id'], $costInfos['quantity']);
+    }
+     $arrayReturn['costsElement%elementName%'] = $request->get('costsElement%elementName%');
+}
+
+$elements = $game->getElementsByProperties(['type' => '%elementName%']);
+$moneys = $game->getElementsByProperties(['type' => 'Resource']);
+
+// Apply default costs to %elementsName%
+foreach ($elements as $element) {
+    $costs = $element->getCosts();
+    foreach ($moneys as $money) {
+        if (!$element->getCost($money)) {
+            $element->createCost($money, 0);
+        }
+    }
+}

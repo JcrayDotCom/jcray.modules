@@ -1,0 +1,7 @@
+<div ng-if="data.error">
+    <div class="card red">
+        <div class="card-content white-text">
+            <i class="material-icons">error_outline</i> {{ data.error.message  }}
+        </div>
+    </div>
+</div>

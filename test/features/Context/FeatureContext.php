@@ -2,23 +2,53 @@
 
 namespace Context;
 
+require_once __DIR__.'/../../../Console/Command/GenerateModulesLoaderCommand.php';
+require_once __DIR__.'/../../../Console/Command/CreateTechUserCommand.php';
+
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Sanpi\Behatch\Context\BaseContext;
 use Sanpi\Behatch\Context\RestContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Symfony\Component\Console\Application;
+use JcrayDotCom\Console\Command\GenerateModulesLoaderCommand;
+use JcrayDotCom\Console\Command\CreateTechUserCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class FeatureContext extends BaseContext implements Context
 {
+    /**
+     * @var RestContext
+     */
     private $restContext;
 
-    private $previous_nodes;
-
+    /**
+     *   @var string
+     */
     private $adminController;
+
+    /**
+     *   @var string
+     */
     private $adminTemplate;
+
+    /**
+     *   @var string
+     */
     private $gameController;
+
+    /**
+     *   @var string
+     */
     private $gameTemplate;
-    private $launched = [];
+
+    /**
+     * @var console
+     */
+    private $console;
 
     /**
      * @BeforeScenario
@@ -29,6 +59,44 @@ class FeatureContext extends BaseContext implements Context
     {
         $environment = $scope->getEnvironment();
         $this->restContext = $environment->getContext('Context\CustomRestContext');
+    }
+
+    public static function getConsole()
+    {
+        $console = new Application('JcrayTech', '0.1');
+
+        $generateModulesLoaderCommand = new GenerateModulesLoaderCommand();
+        $createTechUserCommand = new CreateTechUserCommand();
+
+        $console->add($generateModulesLoaderCommand);
+        $console->add($createTechUserCommand);
+        $console->setAutoExit(false);
+
+        return $console;
+    }
+
+    /**
+     * @param string $command
+     * @param array  $args
+     *
+     * @return $this
+     */
+    public static function execCommand($commandName, $args = [])
+    {
+        $input = new ArrayInput(array_merge(
+           ['command' => $commandName],
+           $args
+        ));
+
+        $output = new BufferedOutput(
+            OutputInterface::VERBOSITY_NORMAL,
+            true
+        );
+
+        self::getConsole()->run($input, $output);
+
+        $content = $output->fetch();
+        fwrite(STDOUT, $content);
     }
 
     /**
@@ -45,50 +113,45 @@ class FeatureContext extends BaseContext implements Context
     public function iUseTheModule($folderName)
     {
         $file = __DIR__.'/../../../modules/'.$folderName.'/';
-        $this->adminController = file_get_contents($file.'admin.php');
-        $this->adminTemplate = file_get_contents($file.'admin.tpl');
-        $this->gameController = file_get_contents($file.'game.php');
-        $this->gameTemplate = file_get_contents($file.'game.tpl');
+        $this->adminController = is_file($file.'admin.php') ? file_get_contents($file.'admin.php') : '';
+        $this->adminTemplate = is_file($file.'admin.tpl') ? file_get_contents($file.'admin.tpl') : '';
+        $this->gameController = is_file($file.'game.php') ? file_get_contents($file.'game.php') : '';
+        $this->gameTemplate = is_file($file.'game.tpl') ? file_get_contents($file.'game.tpl') : '';
     }
 
     private static function getToken($force = false)
     {
-        if (!$force && is_file('token.lock')) {
-            return file_get_contents('token.lock');
+        $targetPrivateFile = __DIR__.'/../../../token.auto.json';
+        if (!is_file($targetPrivateFile)) {
+            self::execCommand('jcray:tech:env');
         }
 
-        $url = 'http://jcray.tech/tech/token?'.time();
+        $data = json_decode(file_get_contents($targetPrivateFile));
 
-        $result = file_get_contents($url);
-
-        $token = json_decode($result)->token;
-        file_put_contents('token.lock', $token);
-
-        return $token;
+        return $data->token;
     }
 
+    public static function http_request($url, $opts = [])
+    {
+        $opts = array_merge([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ], $opts);
+
+        return file_get_contents($url, false, stream_context_create($opts));
+    }
      /**
       * @AfterSuite
       */
      public static function prepareModule($event)
      {
-         unlink('token.lock');
-         unlink('last_nodes');
-
-         $modules = [];
-         $p = opendir('modules');
-         while ($f = readdir($p)) {
-             if (is_dir('modules/'.$f) && $f != '.' && $f != '..') {
-                 $modules[$f] = [
-                     'admin_controller' => file_get_contents('modules/'.$f.'/admin.php'),
-                     'admin_template' => file_get_contents('modules/'.$f.'/admin.tpl'),
-                     'game_controller' => file_get_contents('modules/'.$f.'/game.php'),
-                     'game_template' => file_get_contents('modules/'.$f.'/game.tpl'),
-                 ];
-             }
+         if (is_file('last_nodes')) {
+             unlink('last_nodes');
          }
 
-         file_put_contents('web/assets/modules.auto.js', 'var modules = '.json_encode($modules).';');
+         return self::execCommand('jcray:modules:autoload');
      }
 
      /**
@@ -96,7 +159,7 @@ class FeatureContext extends BaseContext implements Context
       */
      public static function cleanTests($event)
      {
-         $url = 'http://api.jcray.tech/v8/games/tech/reset?'.time();
+         $url = 'https://api.jcray.tech/v8/games/tech/reset?'.time();
 
          $opts = array(
           'http' => array(
@@ -105,8 +168,7 @@ class FeatureContext extends BaseContext implements Context
           ),
         );
 
-         $context = stream_context_create($opts);
-         file_get_contents($url, false, $context);
+         self::http_request($url, $opts);
      }
 
     /**

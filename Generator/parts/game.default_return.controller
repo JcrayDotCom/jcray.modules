@@ -1,0 +1,5 @@
+if (isset($error)) {
+    $arrayReturn['error'] = $error;
+}
+
+return $arrayReturn;

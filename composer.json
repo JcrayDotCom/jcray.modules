@@ -8,7 +8,10 @@
         "behat/mink-selenium2-driver": "*",
         "behat/mink-sahi-driver": "*",
         "behat/mink-zombie-driver": "*",
-        "behatch/contexts": "*"
+        "behatch/contexts": "*",
+        "symfony/console": "*",
+        "symfony/yaml": "*",
+        "doctrine/inflector": "*"
     },
     "config": {
         "bin-dir": "bin/"
@@ -21,5 +24,8 @@
         }
     ],
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require": {
+        "friendsofphp/php-cs-fixer": "^1.12"
+    }
 }

@@ -7,16 +7,19 @@ var jcrayTech = angular.module('jcrayTech', ['ngCookies']);
 
 jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
     function ($scope, $templateCache, $http, $cookies) {
+        $scope.bearer;
         console.log('Waiting for credentials...');
-        $http.get('http://jcray.tech/tech/token').then(function(r){
-            $cookies.put('bearer', r.data.token);
-            console.log('Token granted:'+r.data.token)
-        });
+        if ($cookies.get('bearer')) {
+            $scope.bearer = $cookies.get('bearer');
+
+        }
+        $scope.bearer = techEnv.token;
+        $cookies.put('bearer', $scope.bearer );
 
         $scope.getDefaultHeaders = function(){
-            if ($cookies.get('bearer')) {
+            if ($scope.bearer) {
                 return {'headers': {
-                    'Authorization': 'Bearer '+$cookies.get('bearer'),
+                    'Authorization': 'Bearer '+($scope.mode == 'admin' ? techEnv.token : techEnv.player.token),
                     'X-Jcray-API': 1
                 }};
             }
@@ -38,24 +41,31 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
         $scope.data = {};
 
         $scope.setCurrentModule = function(name, module) {
-                $scope.renderable = false;
-                module.name = name;
-                $scope.currentModule = module;
-                $scope.renderModule();
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.src = 'assets/modules.auto.js';
+            $("head").append(s);
+            $scope.renderable = false;
+            module.name = name;
+            $scope.currentModule = module;
+            $scope.renderModule();
         };
 
         $scope.renderModule = function() {
-
             $scope.data.module_configuration = {
                 admin_controller: $scope.currentModule.admin_controller,
                 admin_template: $scope.currentModule.admin_template,
                 game_controller: $scope.currentModule.game_controller,
                 game_template: $scope.currentModule.game_template
             };
-
-            $http.post('http://api.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
+            $scope.data.error = null;
+            $http.post('https://'+($scope.mode == 'admin' ? 'api' : techEnv.game.slug)+'.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
+                if (r.data.error) {
+                    $scope.data.error = r.data.error;
+                }
                 console.log('Received data:');
                 console.log(r.data);
+
                 while ($scope.currentModule.admin_template.replace('{% button %}', '') != $scope.currentModule.admin_template) {
                     $scope.currentModule.admin_template = $scope.currentModule.admin_template.replace('{% button %}', '<button class="btn" ng-click="post()">');
                 }
@@ -75,8 +85,13 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                     $scope.currentModule.admin_template = $scope.currentModule.admin_template.replace('{% endtitle %}', '</div>');
                 }
                 $scope.data = r.data;
-                $templateCache.put($scope.mode+$scope.currentModule.name+'Template.html', $scope.currentModule.admin_template);
+                $templateCache.put($scope.mode+$scope.currentModule.name+'Template.html', $scope.mode == 'admin' ? $scope.currentModule.admin_template : $scope.currentModule.game_template);
                 $scope.renderable = true;
+            }, function(r){
+                if (r.data.error) {
+                    $scope.data.error = r.data.error;
+                    console.log('Error in controller: '+r.data.error.message);
+                }
             });
         };
 

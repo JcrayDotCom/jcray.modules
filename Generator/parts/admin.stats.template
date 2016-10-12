@@ -1,0 +1,30 @@
+<div ng-init="tabs ? tabs.stats = 'Stats' : null"></div>
+
+<div ng-if="currentModuleTab == 'stats'">
+{% block %}
+    {% title %}New stat{% endtitle %}
+    <input type="text" placeholder="Name of the stat" ng-model="data.newStat.name" />
+    <input type="text" placeholder="Default value of the stat" ng-model="data.newStat.quantity" />
+    <button class="btn" ng-click="post()">Create this stat</button>
+{% endblock %}
+
+<div ng-if="data.%elementsName%Stats.length">
+    {% block %}
+        {% title %}Stats{% endtitle %}
+        <ul class="collection">
+            <li class="collection-item row" ng-repeat="stat in data.%elementsName%Stats">
+                <span class="col-md-4"><input type="text" ng-model="stat.name" /></span>
+                <span class="col-md-4"><input type="text" ng-model="stat.quantity" /></span>
+                <span class="col-md-4">
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">
+                        <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.remove%elementName%Stat = stat;post();"><i class="tiny material-icons">delete</i></a>
+                    </span>
+                </span>
+            </li>
+            <li class="collection-item">
+                <button class="btn" ng-click="post()">Update stats</button>
+            </li>
+        </ul>
+    {% endblock %}
+    </div>
+</div>
