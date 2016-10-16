@@ -17,7 +17,7 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
         $cookies.put('bearer', $scope.bearer );
 
         $scope.getDefaultHeaders = function(){
-            if ($scope.bearer) {
+            if (techEnv) {
                 return {'headers': {
                     'Authorization': 'Bearer '+($scope.mode == 'admin' ? techEnv.token : techEnv.player.token),
                     'X-Jcray-API': 1
@@ -59,7 +59,7 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                 game_template: $scope.currentModule.game_template
             };
             $scope.data.error = null;
-            $http.post('https://'+($scope.mode == 'admin' ? 'api' : techEnv.game.slug)+'.jcray.tech/v8/modules/tech/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
+            $http.post('https://'+($scope.mode == 'admin' ? 'api' : techEnv.game.slug)+'.jcray.tech/v8/tech/modules/render', $scope.data, $scope.getDefaultHeaders()).then(function(r){
                 if (r.data.error) {
                     $scope.data.error = r.data.error;
                 }

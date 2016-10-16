@@ -159,7 +159,7 @@ class FeatureContext extends BaseContext implements Context
       */
      public static function cleanTests($event)
      {
-         $url = 'https://api.jcray.tech/v8/games/tech/reset?'.time();
+         $url = 'https://api.jcray.tech/v8/tech/reset?'.time();
 
          $opts = array(
           'http' => array(
@@ -176,7 +176,7 @@ class FeatureContext extends BaseContext implements Context
      */
     public function iSendARequestWith($arg1, PyStringNode $string)
     {
-        $url = '/modules/tech/render?'.time();
+        $url = '/tech/modules/render?'.time();
         $this->getRestContext()->iAddHeaderEqualTo('Authorization', 'Bearer '.$this->getToken());
         $this->getRestContext()->iAddHeaderEqualTo('Content-type', 'application/json');
 
