@@ -62,7 +62,6 @@ If you want to manuallay regenerate it (without running tests):
 $ bin/console jcray:tech:env
 ```
 
-
 ## Regenerating modules.auto.js
 If you just edited a module template, maybe you don't need to wait for all behat tests passing to regenerate the modules.auto.js file (which contains the controller and templates contents). You can use the bin/console executable to regenerate it manually:
 ``` bash
@@ -83,7 +82,6 @@ More documentation:
 - [About Behat tests](https://github.com/JcrayDotCom/jcray.modules/blob/master/doc/BehatTests.md)
 
 ## Todo:
-- Game side dev
 - Write tests for untested modules
 - Write tests for all game controllers
 - Write more recipes parts :)

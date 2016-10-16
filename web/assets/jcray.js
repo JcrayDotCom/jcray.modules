@@ -17,7 +17,7 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
         $cookies.put('bearer', $scope.bearer );
 
         $scope.getDefaultHeaders = function(){
-            if ($scope.bearer) {
+            if (techEnv) {
                 return {'headers': {
                     'Authorization': 'Bearer '+($scope.mode == 'admin' ? techEnv.token : techEnv.player.token),
                     'X-Jcray-API': 1
