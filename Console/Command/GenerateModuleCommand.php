@@ -132,6 +132,14 @@ class GenerateModuleCommand extends Command
             $io->text('Generated '.$moduleFolder.'/'.$filename);
         }
 
+        $translations = [
+            ucfirst(Inflector::camelize($elementName)).': '.$elementName,
+            ucfirst(Inflector::camelize($moduleName)).': '.$moduleName,
+        ];
+
+        file_put_contents($moduleFolder.'/translations.fr.yml', implode("\n", $translations));
+        file_put_contents($moduleFolder.'/translations.en.yml', implode("\n", $translations));
+
         shell_exec(__DIR__.'/../../bin/php-cs-fixer fix '.$moduleFolder);
         $io->success('Module created in '.$moduleFolder);
 

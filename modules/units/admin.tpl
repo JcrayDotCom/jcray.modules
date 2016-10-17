@@ -26,22 +26,22 @@
 <!-- Create a Unit -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}Create a new Unit {% endtitle %}
+        {% title %}{{ "Create a new Unit" | trans }} {% endtitle %}
         <form>
-            <input type="text" ng-model="data.newUnit.name" placeholder="Unit name" />
-            <input type="text" ng-model="data.newUnit.quantity" placeholder="Unit default quantity" />
-            <input type="text" ng-model="data.newUnit.picture" placeholder="Picture (prefixed with http://)" />
-            {% button %}Create this new Unit{% endbutton %}
+            <input type="text" ng-model="data.newUnit.name" placeholder="{{ "Unit name" | trans }}" />
+            <input type="text" ng-model="data.newUnit.quantity" placeholder="{{ "Unit default quantity" | trans }}" />
+            <input type="text" ng-model="data.newUnit.picture" placeholder="{ "Picture (prefixed with http://)" | trans }}"" />
+            {% button %}{{ "Create this new Unit" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.edit = 'All units' : null"></div>
+<div ng-init="tabs ? tabs.edit = 'All units' | trans : null"></div>
 
 <!-- Edit a Unit -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.units && data.units.length">
     {% block %}
-        {% title %}units of your game{% endtitle %}
+        {% title %}{{ 'units of your game' | trans }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
