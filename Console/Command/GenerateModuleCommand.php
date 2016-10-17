@@ -40,14 +40,28 @@ class GenerateModuleCommand extends Command
         $elementName = $io->ask('Please enter the singural name of elements used by this module', 'animal');
         $moduleName = Inflector::pluralize($elementName);
         $recipeData = Yaml::parse(file_get_contents($expectedFile));
-        $files = [];
+
+        $files = [
+            'translations.en.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.en')],
+            'translations.fr.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.fr')],
+        ];
+
         foreach ($recipeData['parts'] as $part) {
             $expectedFile = realpath(__DIR__.'/../../Generator/parts').'/'.str_replace(':', '.', $part);
             $expectedFileTests = realpath(__DIR__.'/../../Generator/parts').'/'.str_replace(':', '.', $part).'.feature';
+            $expectedFileTranslationsEn = $expectedFile.'.translation.en';
+            $expectedFileTranslationsFr = $expectedFile.'.translation.fr';
 
             if (!is_file($expectedFile)) {
                 $io->error('Part '.$part.' not found at path '.$expectedFile);
                 die();
+            }
+
+            if (is_file($expectedFileTranslationsEn)) {
+                $files['translations.en.yml'][] = file_get_contents($expectedFileTranslationsEn);
+            }
+            if (is_file($expectedFileTranslationsFr)) {
+                $files['translations.fr.yml'][] = file_get_contents($expectedFileTranslationsFr);
             }
 
             $partInfos = explode(':', $part);
@@ -58,36 +72,13 @@ class GenerateModuleCommand extends Command
                 $files[$targetFile] = [];
             }
 
-            $files[$targetFile][] = str_replace([
-                '%elementName%',
-                '%elementsName%',
-            ], [
-                ucfirst(Inflector::camelize($elementName)),
-                Inflector::camelize($moduleName),
-            ], file_get_contents($expectedFile));
-
             if (is_file($expectedFileTests)) {
                 if (!isset($files[$targetFileTest])) {
                     $files[$targetFileTest] = [
-                        str_replace([
-                            '%elementName%',
-                            '%elementsName%',
-                        ], [
-                            ucfirst(Inflector::camelize($elementName)),
-                            Inflector::camelize($moduleName),
-                        ],
-                        file_get_contents(__DIR__.'/../../Generator/parts/intro_'.$partInfos[0].'.feature')),
+                        file_get_contents(__DIR__.'/../../Generator/parts/intro_'.$partInfos[0].'.feature'),
                     ];
                 }
-
-                $files[$targetFileTest][] = str_replace([
-                    '%elementName%',
-                    '%elementsName%',
-                ], [
-                    ucfirst(Inflector::camelize($elementName)),
-                    Inflector::camelize($moduleName),
-                ],
-                file_get_contents($expectedFileTests));
+                $files[$targetFileTest][] = file_get_contents($expectedFileTests);
             }
         }
 
@@ -103,6 +94,15 @@ class GenerateModuleCommand extends Command
 
         foreach ($files as $filename => &$file) {
             $fileContent = implode("\n", $file);
+
+            $fileContent = str_replace([
+                '%elementName%',
+                '%elementsName%',
+            ], [
+                ucfirst(Inflector::camelize($elementName)),
+                Inflector::camelize($moduleName),
+            ], $fileContent);
+
             if (strpos($filename, '.php')) {
                 $fileContent = '<?php '."\n".$fileContent;
             }
@@ -131,14 +131,6 @@ class GenerateModuleCommand extends Command
             file_put_contents($moduleFolder.'/'.$filename, $fileContent);
             $io->text('Generated '.$moduleFolder.'/'.$filename);
         }
-
-        $translations = [
-            ucfirst(Inflector::camelize($elementName)).': '.$elementName,
-            ucfirst(Inflector::camelize($moduleName)).': '.$moduleName,
-        ];
-
-        file_put_contents($moduleFolder.'/translations.fr.yml', implode("\n", $translations));
-        file_put_contents($moduleFolder.'/translations.en.yml', implode("\n", $translations));
 
         shell_exec(__DIR__.'/../../bin/php-cs-fixer fix '.$moduleFolder);
         $io->success('Module created in '.$moduleFolder);
