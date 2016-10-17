@@ -66,11 +66,12 @@ class GenerateModuleCommand extends Command
 
             $partInfos = explode(':', $part);
             $targetFileTest = 'module.'.$partInfos[0].'.feature';
-
             $targetFile = $partInfos[0].($partInfos[2] == 'template' ? '.tpl' : '.php');
+
             if (!isset($files[$targetFile])) {
                 $files[$targetFile] = [];
             }
+            $files[$targetFile][] = file_get_contents($expectedFile);
 
             if (is_file($expectedFileTests)) {
                 if (!isset($files[$targetFileTest])) {
@@ -92,21 +93,13 @@ class GenerateModuleCommand extends Command
             mkdir($moduleFolder);
         }
 
-        foreach ($files as $filename => &$file) {
+        foreach ($files as $filename => $file) {
             $fileContent = implode("\n", $file);
-
-            $fileContent = str_replace([
-                '%elementName%',
-                '%elementsName%',
-            ], [
-                ucfirst(Inflector::camelize($elementName)),
-                Inflector::camelize($moduleName),
-            ], $fileContent);
 
             if (strpos($filename, '.php')) {
                 $fileContent = '<?php '."\n".$fileContent;
             }
-            $file = $fileContent;
+
             preg_match_all('|\%hook\:(.+)\:(.+)\%|', $fileContent, $matches);
             foreach ($matches[0] as $hook) {
                 if (isset($recipeData['ignore']) && in_array(str_replace('%', '', $hook), $recipeData['ignore'])) {
@@ -119,14 +112,16 @@ class GenerateModuleCommand extends Command
                     $io->error('Hook file '.$hookFile.' does not exist.');
                     die();
                 }
-                $fileContent = str_replace($hook, str_replace([
-                    '%elementName%',
-                    '%elementsName%',
-                ], [
-                    ucfirst(Inflector::camelize($elementName)),
-                    Inflector::camelize($moduleName),
-                ], file_get_contents($hookFile)), $fileContent);
+                $fileContent = str_replace($hook, file_get_contents($hookFile), $fileContent);
             }
+
+            $fileContent = str_replace([
+                '%elementName%',
+                '%elementsName%',
+            ], [
+                ucfirst(Inflector::camelize($elementName)),
+                Inflector::camelize($moduleName),
+            ], $fileContent);
 
             file_put_contents($moduleFolder.'/'.$filename, $fileContent);
             $io->text('Generated '.$moduleFolder.'/'.$filename);
