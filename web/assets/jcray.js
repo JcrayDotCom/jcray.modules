@@ -3,11 +3,21 @@ var jcrayApp = angular.module('jcrayApp', [
     'ngCookies'
 ]);
 
-var jcrayTech = angular.module('jcrayTech', ['ngCookies']);
+var Translator = {
+    trans: function(input){
+        return input;
+    }
+};
+var jcrayTech = angular.module('jcrayTech', ['ngCookies']).filter('trans', function() {
+    return function(input) {
+        return input;
+    };
+});
 
 jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
     function ($scope, $templateCache, $http, $cookies) {
         $scope.bearer;
+        $scope.Translator = Translator;
         console.log('Waiting for credentials...');
         if ($cookies.get('bearer')) {
             $scope.bearer = $cookies.get('bearer');

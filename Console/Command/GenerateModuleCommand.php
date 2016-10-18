@@ -40,54 +40,47 @@ class GenerateModuleCommand extends Command
         $elementName = $io->ask('Please enter the singural name of elements used by this module', 'animal');
         $moduleName = Inflector::pluralize($elementName);
         $recipeData = Yaml::parse(file_get_contents($expectedFile));
+
         $files = [];
+        $translations = [
+            'translations.en.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.en')],
+            'translations.fr.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.fr')],
+        ];
+
         foreach ($recipeData['parts'] as $part) {
             $expectedFile = realpath(__DIR__.'/../../Generator/parts').'/'.str_replace(':', '.', $part);
             $expectedFileTests = realpath(__DIR__.'/../../Generator/parts').'/'.str_replace(':', '.', $part).'.feature';
+            $expectedFileTranslationsEn = $expectedFile.'.translation.en';
+            $expectedFileTranslationsFr = $expectedFile.'.translation.fr';
 
             if (!is_file($expectedFile)) {
                 $io->error('Part '.$part.' not found at path '.$expectedFile);
                 die();
             }
 
+            if (is_file($expectedFileTranslationsEn)) {
+                $translations['translations.en.yml'][] = file_get_contents($expectedFileTranslationsEn);
+            }
+            if (is_file($expectedFileTranslationsFr)) {
+                $translations['translations.fr.yml'][] = file_get_contents($expectedFileTranslationsFr);
+            }
+
             $partInfos = explode(':', $part);
             $targetFileTest = 'module.'.$partInfos[0].'.feature';
-
             $targetFile = $partInfos[0].($partInfos[2] == 'template' ? '.tpl' : '.php');
+
             if (!isset($files[$targetFile])) {
                 $files[$targetFile] = [];
             }
-
-            $files[$targetFile][] = str_replace([
-                '%elementName%',
-                '%elementsName%',
-            ], [
-                ucfirst(Inflector::camelize($elementName)),
-                Inflector::camelize($moduleName),
-            ], file_get_contents($expectedFile));
+            $files[$targetFile][] = file_get_contents($expectedFile);
 
             if (is_file($expectedFileTests)) {
                 if (!isset($files[$targetFileTest])) {
                     $files[$targetFileTest] = [
-                        str_replace([
-                            '%elementName%',
-                            '%elementsName%',
-                        ], [
-                            ucfirst(Inflector::camelize($elementName)),
-                            Inflector::camelize($moduleName),
-                        ],
-                        file_get_contents(__DIR__.'/../../Generator/parts/intro_'.$partInfos[0].'.feature')),
+                        file_get_contents(__DIR__.'/../../Generator/parts/intro_'.$partInfos[0].'.feature'),
                     ];
                 }
-
-                $files[$targetFileTest][] = str_replace([
-                    '%elementName%',
-                    '%elementsName%',
-                ], [
-                    ucfirst(Inflector::camelize($elementName)),
-                    Inflector::camelize($moduleName),
-                ],
-                file_get_contents($expectedFileTests));
+                $files[$targetFileTest][] = file_get_contents($expectedFileTests);
             }
         }
 
@@ -101,12 +94,13 @@ class GenerateModuleCommand extends Command
             mkdir($moduleFolder);
         }
 
-        foreach ($files as $filename => &$file) {
+        foreach ($files as $filename => $file) {
             $fileContent = implode("\n", $file);
+
             if (strpos($filename, '.php')) {
                 $fileContent = '<?php '."\n".$fileContent;
             }
-            $file = $fileContent;
+
             preg_match_all('|\%hook\:(.+)\:(.+)\%|', $fileContent, $matches);
             foreach ($matches[0] as $hook) {
                 if (isset($recipeData['ignore']) && in_array(str_replace('%', '', $hook), $recipeData['ignore'])) {
@@ -119,14 +113,37 @@ class GenerateModuleCommand extends Command
                     $io->error('Hook file '.$hookFile.' does not exist.');
                     die();
                 }
-                $fileContent = str_replace($hook, str_replace([
-                    '%elementName%',
-                    '%elementsName%',
-                ], [
-                    ucfirst(Inflector::camelize($elementName)),
-                    Inflector::camelize($moduleName),
-                ], file_get_contents($hookFile)), $fileContent);
+                $fileContent = str_replace($hook, file_get_contents($hookFile), $fileContent);
+                $expectedHookFileTranslationsEn = $hookFile.'.translation.en';
+                $expectedHookFileTranslationsFr = $hookFile.'.translation.fr';
+                if (is_file($expectedHookFileTranslationsEn)) {
+                    $translations['translations.en.yml'][] = file_get_contents($expectedHookFileTranslationsEn);
+                }
+                if (is_file($expectedHookFileTranslationsFr)) {
+                    $translations['translations.fr.yml'][] = file_get_contents($expectedHookFileTranslationsFr);
+                }
             }
+
+            $fileContent = str_replace([
+                '%elementName%',
+                '%elementsName%',
+            ], [
+                ucfirst(Inflector::camelize($elementName)),
+                Inflector::camelize($moduleName),
+            ], $fileContent);
+
+            file_put_contents($moduleFolder.'/'.$filename, $fileContent);
+            $io->text('Generated '.$moduleFolder.'/'.$filename);
+        }
+        foreach ($translations as $filename => $file) {
+            $fileContent = implode("\n", $file);
+            $fileContent = str_replace([
+                '%elementName%',
+                '%elementsName%',
+            ], [
+                ucfirst(Inflector::camelize($elementName)),
+                Inflector::camelize($moduleName),
+            ], $fileContent);
 
             file_put_contents($moduleFolder.'/'.$filename, $fileContent);
             $io->text('Generated '.$moduleFolder.'/'.$filename);

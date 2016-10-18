@@ -16,32 +16,32 @@
 <div ng-if="data.error">
     <div class="card red">
         <div class="card-content white-text">
-            <i class="material-icons">error_outline</i> {{ data.error.message  }}
+            <i class="material-icons">error_outline</i> <span style="position: relative;top: -7px;">{{ data.error.message  }}</span>
         </div>
     </div>
 </div>
 
-<div ng-init="tabs ? tabs.create = 'New Unit' : null"></div>
+<div ng-init="tabs ? tabs.create = Translator.trans('New Unit') : null"></div>
 
 <!-- Create a Unit -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}Create a new Unit {% endtitle %}
+        {% title %}{{ "Create a new Unit" | trans }}{% endtitle %}
         <form>
-            <input type="text" ng-model="data.newUnit.name" placeholder="Unit name" />
-            <input type="text" ng-model="data.newUnit.quantity" placeholder="Unit default quantity" />
-            <input type="text" ng-model="data.newUnit.picture" placeholder="Picture (prefixed with http://)" />
-            {% button %}Create this new Unit{% endbutton %}
+            <input type="text" ng-model="data.newUnit.name" placeholder="{{ 'Unit name' | trans }}" />
+            <input type="text" ng-model="data.newUnit.quantity" placeholder="{{ 'Unit default quantity' | trans }}" />
+            <input type="text" ng-model="data.newUnit.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new Unit" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.edit = 'All units' : null"></div>
+<div ng-init="tabs ? tabs.edit = Translator.trans('All units') : null"></div>
 
 <!-- Edit a Unit -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.units && data.units.length">
     {% block %}
-        {% title %}units of your game{% endtitle %}
+        {% title %}{{ "units of your game" | trans }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
@@ -49,11 +49,11 @@
             <li ng-repeat="element in data.units" class="collection-item row">
 
                 <div class="col-md-3">
-                    <label>Name</label>
+                    <label>{{ "Name" | trans }}</label>
                     <input type="text" ng-model="element.name" ng-change="post()" />
                 </div>
                 <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
-                    <label>{{ propertyName }}</label>
+                    <label>{{ propertyName | trans }}</label>
                     <input type="text" ng-model="propertyValue" />
                 </div>
                 <div class="col-md-3">
@@ -73,13 +73,13 @@
     <ul class="collection">
         <li class="collection-item row">
             <div class="col-md-3">
-                <label>Create a new stat</label>
+                <label>{{ "Create a new stat" | trans }}</label>
             </div>
             <div class="col-md-3">
-                <input type="text" ng-model="data.newStat.name" placeholder="Name of the stat" />
+                <input type="text" ng-model="data.newStat.name" placeholder="{{ 'Name of the stat' | trans }}" />
             </div>
             <div class="col-md-3">
-                <input type="text" ng-model="data.newStat.quantity" placeholder="Default value for this stat" />
+                <input type="text" ng-model="data.newStat.quantity" placeholder="{{ 'Default value for this stat' | trans }}" />
             </div>
             <div class="col-md-3">
                 <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
@@ -121,19 +121,19 @@
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.stats = 'Stats' : null"></div>
+<div ng-init="tabs ? tabs.stats = Translator.trans('Stats') : null"></div>
 
 <div ng-if="currentModuleTab == 'stats'">
 {% block %}
     {% title %}New stat{% endtitle %}
-    <input type="text" placeholder="Name of the stat" ng-model="data.newStat.name" />
-    <input type="text" placeholder="Default value of the stat" ng-model="data.newStat.quantity" />
-    <button class="btn" ng-click="post()">Create this stat</button>
+    <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />
+    <input type="text" placeholder="{{ 'Default value of the stat' | trans }}" ng-model="data.newStat.quantity" />
+    <button class="btn" ng-click="post()">{{ 'Create this stat' | trans }}</button>
 {% endblock %}
 
 <div ng-if="data.unitsStats.length">
     {% block %}
-        {% title %}Stats{% endtitle %}
+        {% title %}{{ "Stats" | trans }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item row" ng-repeat="stat in data.unitsStats">
                 <span class="col-md-4"><input type="text" ng-model="stat.name" /></span>
@@ -145,7 +145,7 @@
                 </span>
             </li>
             <li class="collection-item">
-                <button class="btn" ng-click="post()">Update stats</button>
+                <button class="btn" ng-click="post()">{{ "Update stats" | trans }}</button>
             </li>
         </ul>
     {% endblock %}

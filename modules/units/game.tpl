@@ -17,7 +17,7 @@
 
             </div>
             <div class="col-md-4">
-                <input type="text" placeholder="How many to buy?" ng-model="playerElement.data" />
+                <input type="text" placeholder="{{ 'How many to buy?' | trans }}'" ng-model="playerElement.data" />
             </div>
             <div class="col-md-1">
                 <button class="btn" ng-click="post()">

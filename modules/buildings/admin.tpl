@@ -13,32 +13,32 @@
     </div>
 </div>
 
-<div ng-init="tabs ? tabs.create = Translator.trans('New Resource') : null"></div>
+<div ng-init="tabs ? tabs.create = Translator.trans('New Building') : null"></div>
 
-<!-- Create a Resource -->
+<!-- Create a Building -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}{{ "Create a new Resource" | trans }}{% endtitle %}
+        {% title %}{{ "Create a new Building" | trans }}{% endtitle %}
         <form>
-            <input type="text" ng-model="data.newResource.name" placeholder="{{ 'Resource name' | trans }}" />
-            <input type="text" ng-model="data.newResource.quantity" placeholder="{{ 'Resource default quantity' | trans }}" />
-            <input type="text" ng-model="data.newResource.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
-            {% button %}{{ "Create this new Resource" | trans }}{% endbutton %}
+            <input type="text" ng-model="data.newBuilding.name" placeholder="{{ 'Building name' | trans }}" />
+            <input type="text" ng-model="data.newBuilding.quantity" placeholder="{{ 'Building default quantity' | trans }}" />
+            <input type="text" ng-model="data.newBuilding.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new Building" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.edit = Translator.trans('All resources') : null"></div>
+<div ng-init="tabs ? tabs.edit = Translator.trans('All buildings') : null"></div>
 
-<!-- Edit a Resource -->
-<div ng-show="(!tabs || currentModuleTab == 'edit') && data.resources && data.resources.length">
+<!-- Edit a Building -->
+<div ng-show="(!tabs || currentModuleTab == 'edit') && data.buildings && data.buildings.length">
     {% block %}
-        {% title %}{{ "resources of your game" | trans }}{% endtitle %}
+        {% title %}{{ "buildings of your game" | trans }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
-            <li ng-repeat="element in data.resources" class="collection-item row">
+            <li ng-repeat="element in data.buildings" class="collection-item row">
 
                 <div class="col-md-3">
                     <label>{{ "Name" | trans }}</label>
@@ -51,12 +51,12 @@
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Resource -->
-<a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeResource = element.name;post();"><i class="tiny material-icons">delete</i></a>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Building -->
+<a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeBuilding = element.name;post();"><i class="tiny material-icons">delete</i></a>
 </span>
                 </div>
-                <div class="clearfix"><!-- Edit the stats of the Resource -->
-<div ng-if="data.statsElementResource && elementTab == 'stats'+data.costsElementResource.id">
+                <div class="clearfix"><!-- Edit the stats of the Building -->
+<div ng-if="data.statsElementBuilding && elementTab == 'stats'+data.costsElementBuilding.id">
 
     <ul class="collection">
         <li class="collection-item row">
@@ -73,8 +73,8 @@
                 <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
             </div>
         </li>
-        <li class="collection-item row" ng-repeat="stat in data.resourcesStats">
-            <div ng-repeat="property in data.statsElementResource.properties" ng-if="property.name == stat.name">
+        <li class="collection-item row" ng-repeat="stat in data.buildingsStats">
+            <div ng-repeat="property in data.statsElementBuilding.properties" ng-if="property.name == stat.name">
                 <div class="col-md-6">
                     <label>{{ property.name }}</label>
                 </div/>
@@ -86,11 +86,11 @@
     </ul>
 </div>
 </div>
-                <div class="clearfix"><!-- Edit the costs of the Resource -->
-<div ng-if="data.costsElementResource && elementTab == 'costs'+data.costsElementResource.id">
+                <div class="clearfix"><!-- Edit the costs of the Building -->
+<div ng-if="data.costsElementBuilding && elementTab == 'costs'+data.costsElementBuilding.id">
     Costs
     <ul class="collection">
-        <li ng-repeat="cost in data.costsElementResource.costs" class="collection-item row">
+        <li ng-repeat="cost in data.costsElementBuilding.costs" class="collection-item row">
             <div class="col-md-6">
                 <label>{{ cost.cost.name }}</label/>
             </div>

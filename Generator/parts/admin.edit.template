@@ -1,9 +1,9 @@
-<div ng-init="tabs ? tabs.edit = 'All %elementsName%' : null"></div>
+<div ng-init="tabs ? tabs.edit = Translator.trans('All %elementsName%') : null"></div>
 
 <!-- Edit a %elementName% -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.%elementsName% && data.%elementsName%.length">
     {% block %}
-        {% title %}%elementsName% of your game{% endtitle %}
+        {% title %}{{ "%elementsName% of your game" | trans }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
@@ -11,11 +11,11 @@
             <li ng-repeat="element in data.%elementsName%" class="collection-item row">
 
                 <div class="col-md-3">
-                    <label>Name</label>
+                    <label>{{ "Name" | trans }}</label>
                     <input type="text" ng-model="element.name" ng-change="post()" />
                 </div>
                 <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
-                    <label>{{ propertyName }}</label>
+                    <label>{{ propertyName | trans }}</label>
                     <input type="text" ng-model="propertyValue" />
                 </div>
                 <div class="col-md-3">

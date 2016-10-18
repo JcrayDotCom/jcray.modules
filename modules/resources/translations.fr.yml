@@ -1,0 +1,24 @@
+# translations for the resources module
+
+Resource : Resource
+resources : resources
+
+# Create
+Resource name: Nom de l'Resource
+Resource default quantity: Quantité par défaut
+"Picture (prefixed with http://)": "Image (préfixée par http://)"
+Create this new Resource: Créer
+Create a new Resource: Créer un(e) Resource
+New Resource: Nouvel(le) Resource
+
+# Edit
+resources of your game: resources de votre jeu
+All resources: Tous les resources
+Name: Nom
+quantity: quantité
+picture: image
+
+# Stats editor
+Create a new stat: Créer une nouvelle stat
+Name of the stat: Nom de la stat
+Default value for this stat: Valeur par défaut

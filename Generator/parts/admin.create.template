@@ -1,14 +1,14 @@
-<div ng-init="tabs ? tabs.create = 'New %elementName%' : null"></div>
+<div ng-init="tabs ? tabs.create = Translator.trans('New %elementName%') : null"></div>
 
 <!-- Create a %elementName% -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}Create a new %elementName% {% endtitle %}
+        {% title %}{{ "Create a new %elementName%" | trans }}{% endtitle %}
         <form>
-            <input type="text" ng-model="data.new%elementName%.name" placeholder="%elementName% name" />
-            <input type="text" ng-model="data.new%elementName%.quantity" placeholder="%elementName% default quantity" />
-            <input type="text" ng-model="data.new%elementName%.picture" placeholder="Picture (prefixed with http://)" />
-            {% button %}Create this new %elementName%{% endbutton %}
+            <input type="text" ng-model="data.new%elementName%.name" placeholder="{{ '%elementName% name' | trans }}" />
+            <input type="text" ng-model="data.new%elementName%.quantity" placeholder="{{ '%elementName% default quantity' | trans }}" />
+            <input type="text" ng-model="data.new%elementName%.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new %elementName%" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
