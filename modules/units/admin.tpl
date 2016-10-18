@@ -16,7 +16,7 @@
 <div ng-if="data.error">
     <div class="card red">
         <div class="card-content white-text">
-            <i class="material-icons">error_outline</i> {{ data.error.message  }}
+            <i class="material-icons">error_outline</i> <span style="position: relative;top: -7px;">{{ data.error.message  }}</span>
         </div>
     </div>
 </div>
@@ -26,12 +26,12 @@
 <!-- Create a Unit -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}{{ "Create a new Unit" | trans }}" {% endtitle %}
+        {% title %}{{ "Create a new Unit" | trans }}{% endtitle %}
         <form>
-            <input type="text" ng-model="data.newUnit.name" placeholder="{{ "Unit name" | trans }}" />
-            <input type="text" ng-model="data.newUnit.quantity" placeholder="{{ "Unit default quantity" | trans }}" />
-            <input type="text" ng-model="data.newUnit.picture" placeholder="{{ "Picture (prefixed with http://)" | trans }}" />
-            {% button %}{{ "Create this new Unit" | trans }}"{% endbutton %}
+            <input type="text" ng-model="data.newUnit.name" placeholder="{{ 'Unit name' | trans }}" />
+            <input type="text" ng-model="data.newUnit.quantity" placeholder="{{ 'Unit default quantity' | trans }}" />
+            <input type="text" ng-model="data.newUnit.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new Unit" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>

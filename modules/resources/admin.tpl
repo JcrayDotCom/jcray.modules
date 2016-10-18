@@ -13,27 +13,27 @@
     </div>
 </div>
 
-<div ng-init="tabs ? tabs.create = 'New Resource' : null"></div>
+<div ng-init="tabs ? tabs.create = Translator.trans('New Resource') : null"></div>
 
 <!-- Create a Resource -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}Create a new Resource {% endtitle %}
+        {% title %}{{ "Create a new Resource" | trans }}{% endtitle %}
         <form>
-            <input type="text" ng-model="data.newResource.name" placeholder="Resource name" />
-            <input type="text" ng-model="data.newResource.quantity" placeholder="Resource default quantity" />
-            <input type="text" ng-model="data.newResource.picture" placeholder="Picture (prefixed with http://)" />
-            {% button %}Create this new Resource{% endbutton %}
+            <input type="text" ng-model="data.newResource.name" placeholder="{{ 'Resource name' | trans }}" />
+            <input type="text" ng-model="data.newResource.quantity" placeholder="{{ 'Resource default quantity' | trans }}" />
+            <input type="text" ng-model="data.newResource.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new Resource" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.edit = 'All resources' : null"></div>
+<div ng-init="tabs ? tabs.edit = Translator.trans('All resources') : null"></div>
 
 <!-- Edit a Resource -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.resources && data.resources.length">
     {% block %}
-        {% title %}resources of your game{% endtitle %}
+        {% title %}{{ "resources of your game" | trans }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
@@ -41,11 +41,11 @@
             <li ng-repeat="element in data.resources" class="collection-item row">
 
                 <div class="col-md-3">
-                    <label>Name</label>
+                    <label>{{ "Name" | trans }}</label>
                     <input type="text" ng-model="element.name" ng-change="post()" />
                 </div>
                 <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
-                    <label>{{ propertyName }}</label>
+                    <label>{{ propertyName | trans }}</label>
                     <input type="text" ng-model="propertyValue" />
                 </div>
                 <div class="col-md-3">
@@ -61,13 +61,13 @@
     <ul class="collection">
         <li class="collection-item row">
             <div class="col-md-3">
-                <label>Create a new stat</label>
+                <label>{{ "Create a new stat" | trans }}</label>
             </div>
             <div class="col-md-3">
-                <input type="text" ng-model="data.newStat.name" placeholder="Name of the stat" />
+                <input type="text" ng-model="data.newStat.name" placeholder="{{ 'Name of the stat' | trans }} />
             </div>
             <div class="col-md-3">
-                <input type="text" ng-model="data.newStat.quantity" placeholder="Default value for this stat" />
+                <input type="text" ng-model="data.newStat.quantity" placeholder="{{ 'Default value for this stat' | trans }}" />
             </div>
             <div class="col-md-3">
                 <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>

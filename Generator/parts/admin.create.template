@@ -3,12 +3,12 @@
 <!-- Create a %elementName% -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}{{ "Create a new %elementName%" | trans }}" {% endtitle %}
+        {% title %}{{ "Create a new %elementName%" | trans }}{% endtitle %}
         <form>
-            <input type="text" ng-model="data.new%elementName%.name" placeholder="{{ "%elementName% name" | trans }}" />
-            <input type="text" ng-model="data.new%elementName%.quantity" placeholder="{{ "%elementName% default quantity" | trans }}" />
-            <input type="text" ng-model="data.new%elementName%.picture" placeholder="{{ "Picture (prefixed with http://)" | trans }}" />
-            {% button %}{{ "Create this new %elementName%" | trans }}"{% endbutton %}
+            <input type="text" ng-model="data.new%elementName%.name" placeholder="{{ '%elementName% name' | trans }}" />
+            <input type="text" ng-model="data.new%elementName%.quantity" placeholder="{{ '%elementName% default quantity' | trans }}" />
+            <input type="text" ng-model="data.new%elementName%.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new %elementName%" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
