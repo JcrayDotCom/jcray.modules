@@ -76,7 +76,7 @@
                 <label>{{ "Create a new stat" | trans }}</label>
             </div>
             <div class="col-md-3">
-                <input type="text" ng-model="data.newStat.name" placeholder="{{ 'Name of the stat' | trans }} />
+                <input type="text" ng-model="data.newStat.name" placeholder="{{ 'Name of the stat' | trans }}" />
             </div>
             <div class="col-md-3">
                 <input type="text" ng-model="data.newStat.quantity" placeholder="{{ 'Default value for this stat' | trans }}" />
@@ -126,9 +126,9 @@
 <div ng-if="currentModuleTab == 'stats'">
 {% block %}
     {% title %}New stat{% endtitle %}
-    <input type="text" placeholder='{{ "Name of the stat" | trans }}'' ng-model="data.newStat.name" />
-    <input type="text" placeholder='{{ "Default value of the stat" | trans }}'' ng-model="data.newStat.quantity" />
-    <button class="btn" ng-click="post()">{{ "Create this stat" | trans }}</button>
+    <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />
+    <input type="text" placeholder="{{ 'Default value of the stat' | trans }}" ng-model="data.newStat.quantity" />
+    <button class="btn" ng-click="post()">{{ 'Create this stat' | trans }}</button>
 {% endblock %}
 
 <div ng-if="data.unitsStats.length">

@@ -64,7 +64,7 @@
                 <label>{{ "Create a new stat" | trans }}</label>
             </div>
             <div class="col-md-3">
-                <input type="text" ng-model="data.newStat.name" placeholder="{{ 'Name of the stat' | trans }} />
+                <input type="text" ng-model="data.newStat.name" placeholder="{{ 'Name of the stat' | trans }}" />
             </div>
             <div class="col-md-3">
                 <input type="text" ng-model="data.newStat.quantity" placeholder="{{ 'Default value for this stat' | trans }}" />

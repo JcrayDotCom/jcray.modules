@@ -3,9 +3,9 @@
 <div ng-if="currentModuleTab == 'stats'">
 {% block %}
     {% title %}New stat{% endtitle %}
-    <input type="text" placeholder='{{ "Name of the stat" | trans }}'' ng-model="data.newStat.name" />
-    <input type="text" placeholder='{{ "Default value of the stat" | trans }}'' ng-model="data.newStat.quantity" />
-    <button class="btn" ng-click="post()">{{ "Create this stat" | trans }}</button>
+    <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />
+    <input type="text" placeholder="{{ 'Default value of the stat' | trans }}" ng-model="data.newStat.quantity" />
+    <button class="btn" ng-click="post()">{{ 'Create this stat' | trans }}</button>
 {% endblock %}
 
 <div ng-if="data.%elementsName%Stats.length">
