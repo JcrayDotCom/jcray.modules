@@ -1,3 +1,4 @@
+# Stats
 Stats: Stats
 Update stats: Mettre à jour les stats
 Name of the stat: Nom

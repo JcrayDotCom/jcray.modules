@@ -1,2 +1,4 @@
+# translations for the %elementsName% module
+
 %elementName% : %elementName%
-%elementsName% : %elementsName% 
+%elementsName% : %elementsName%

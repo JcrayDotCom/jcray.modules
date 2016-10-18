@@ -1,9 +1,34 @@
-Unit : Unit
-units : units 
+# translations for the units module
 
+Unit : Unit
+units : units
+
+# Create
 Unit name: Unit name
 Unit default quantity: Unit default quantity
 "Picture (prefixed with http://)": "Picture (prefixed with http://)"
 Create this new Unit: Create this new Unit
 Create a new Unit: Create a new Unit
 New Unit: New Unit
+
+# Edit
+units of your game: units of your game
+All units: All units
+Name: Name
+quantity: quantity
+picture: picture
+
+# Stats
+Stats: Stats
+Update stats: Update stats
+Name of the stat: Name of the stat
+Default value of the stat: Default value of the stat
+Create this stat: Create this stat
+
+# Listing
+How many to buy?: How many to buy?
+
+# Stats editor
+Create a new stat: Create a new stat
+Name of the stat: Name of the stat
+Default value for this stat: Default value for this stat

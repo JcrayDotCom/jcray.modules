@@ -41,7 +41,8 @@ class GenerateModuleCommand extends Command
         $moduleName = Inflector::pluralize($elementName);
         $recipeData = Yaml::parse(file_get_contents($expectedFile));
 
-        $files = [
+        $files = [];
+        $translations = [
             'translations.en.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.en')],
             'translations.fr.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.fr')],
         ];
@@ -58,10 +59,10 @@ class GenerateModuleCommand extends Command
             }
 
             if (is_file($expectedFileTranslationsEn)) {
-                $files['translations.en.yml'][] = file_get_contents($expectedFileTranslationsEn);
+                $translations['translations.en.yml'][] = file_get_contents($expectedFileTranslationsEn);
             }
             if (is_file($expectedFileTranslationsFr)) {
-                $files['translations.fr.yml'][] = file_get_contents($expectedFileTranslationsFr);
+                $translations['translations.fr.yml'][] = file_get_contents($expectedFileTranslationsFr);
             }
 
             $partInfos = explode(':', $part);
@@ -113,8 +114,29 @@ class GenerateModuleCommand extends Command
                     die();
                 }
                 $fileContent = str_replace($hook, file_get_contents($hookFile), $fileContent);
+                $expectedHookFileTranslationsEn = $hookFile.'.translation.en';
+                $expectedHookFileTranslationsFr = $hookFile.'.translation.fr';
+                if (is_file($expectedHookFileTranslationsEn)) {
+                    $translations['translations.en.yml'][] = file_get_contents($expectedHookFileTranslationsEn);
+                }
+                if (is_file($expectedHookFileTranslationsFr)) {
+                    $translations['translations.fr.yml'][] = file_get_contents($expectedHookFileTranslationsFr);
+                }
             }
 
+            $fileContent = str_replace([
+                '%elementName%',
+                '%elementsName%',
+            ], [
+                ucfirst(Inflector::camelize($elementName)),
+                Inflector::camelize($moduleName),
+            ], $fileContent);
+
+            file_put_contents($moduleFolder.'/'.$filename, $fileContent);
+            $io->text('Generated '.$moduleFolder.'/'.$filename);
+        }
+        foreach ($translations as $filename => $file) {
+            $fileContent = implode("\n", $file);
             $fileContent = str_replace([
                 '%elementName%',
                 '%elementsName%',

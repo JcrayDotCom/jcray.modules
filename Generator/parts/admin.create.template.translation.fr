@@ -1,3 +1,4 @@
+# Create
 %elementName% name: Nom de l'%elementName%
 %elementName% default quantity: Quantité par défaut
 "Picture (prefixed with http://)": "Image (préfixée par http://)"
