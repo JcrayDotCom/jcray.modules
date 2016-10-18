@@ -1,0 +1,5 @@
+%elementsName% of your game: %elementsName% de votre jeu
+All %elementsName%: Tous les %elementsName%
+Name: Nom
+quantity: quantité
+picture: image

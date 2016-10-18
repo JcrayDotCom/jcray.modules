@@ -1,0 +1,3 @@
+Create a new stat: Créer une nouvelle stat
+Name of the stat: Nom de la stat
+Default value for this stat: Valeur par défaut

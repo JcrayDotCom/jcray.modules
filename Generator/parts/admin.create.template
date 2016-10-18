@@ -1,4 +1,4 @@
-<div ng-init="tabs ? tabs.create = 'New %elementName%' : null"></div>
+<div ng-init="tabs ? tabs.create = Translator.trans('New %elementName%') : null"></div>
 
 <!-- Create a %elementName% -->
 <div ng-show="!tabs || currentModuleTab == 'create'">
