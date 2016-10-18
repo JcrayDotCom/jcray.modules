@@ -1,0 +1,24 @@
+# translations for the buildings module
+
+Building : Building
+buildings : buildings
+
+# Create
+Building name: Building name
+Building default quantity: Building default quantity
+"Picture (prefixed with http://)": "Picture (prefixed with http://)"
+Create this new Building: Create this new Building
+Create a new Building: Create a new Building
+New Building: New Building
+
+# Edit
+buildings of your game: buildings of your game
+All buildings: All buildings
+Name: Name
+quantity: quantity
+picture: picture
+
+# Stats editor
+Create a new stat: Create a new stat
+Name of the stat: Name of the stat
+Default value for this stat: Default value for this stat
