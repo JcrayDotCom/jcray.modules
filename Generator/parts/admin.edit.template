@@ -9,7 +9,6 @@
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
             <li ng-repeat="element in data.%elementsName%" class="collection-item row">
-
                 <div class="col-md-3">
                     <label>{{ "Name" | trans }}</label>
                     <input type="text" ng-model="element.name" ng-change="post()" />
@@ -21,8 +20,10 @@
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementStatsButton:template%</span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementCostsButton:template%</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementEffectsButton:template%</span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:delete:template%</span>
                 </div>
+                <div class="clearfix">%hook:elementEffectsEdit:template%</div>
                 <div class="clearfix">%hook:elementStatsEditor:template%</div>
                 <div class="clearfix">%hook:elementCostsEditor:template%</div>
             </li>

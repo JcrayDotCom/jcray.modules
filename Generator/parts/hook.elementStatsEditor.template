@@ -1,5 +1,5 @@
 <!-- Edit the stats of the %elementName% -->
-<div ng-if="data.statsElement%elementName% && elementTab == 'stats'+data.costsElement%elementName%.id">
+<div ng-if="data.statsElement%elementName% && elementTab == 'stats'+data.statsElement%elementName%.id">
 
     <ul class="collection">
         <li class="collection-item row">

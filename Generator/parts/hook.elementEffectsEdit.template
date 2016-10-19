@@ -1,0 +1,36 @@
+<!-- Edit the effects of the %elementName% -->
+<div ng-if="data.effectsElement%elementName% && elementTab == 'effects'+data.effectsElement%elementName%.id">
+    <h4>{{ 'Effects' | trans }}</h4>
+    <ul class="collection">
+        <li class="collection-item row">
+            <div class="col-md-3">
+                <label>{{ "Create a new effect" | trans }}</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newEffect.quantity" ng-model="Effect" />
+            </div>
+            <div class="col-md-3">
+                <select ng-model="data.newEffect.propertyName">
+                    <option disabled selected>( Select a property )</option>
+                    <option ng-repeat="property in data.properties" value="{{ property.name }}">
+                        {{ property.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
+            </div>
+        </li>
+        <li>
+            <div ng-if="data.effectsElement%elementName%.effects.length">
+                <ul class="collection">
+                    <li class="row collection-item" ng-repeat="effect in data.effectsElement%elementName%.effects">
+                        <span class="col-md-6">{{ effect.property_name }}</span>
+                        <span class="col-md-6"><input type="text" ng-model="effect.quantity" /></span>
+                    </li>
+                </ul>
+                <button class="btn" ng-click="post()">Save</button>
+            </div>
+        </li>
+    </ul>
+</div>

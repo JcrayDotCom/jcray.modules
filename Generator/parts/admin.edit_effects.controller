@@ -1,0 +1,9 @@
+if ($request->get('effectsElement%elementName%')) {
+    $object = $game->getElement($request->get('effectsElement%elementName%'));
+    foreach ($request->get('effectsElement%elementName%')['properties'] as $property) {
+        $object->set($property['name'], $property['value']);
+    }
+    if ($request->get('newEffect')) {
+        $effect = $object->createEffect($request->get('newEffect')['propertyName'], $request->get('newEffect')['quantity']);
+    }
+}

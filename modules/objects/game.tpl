@@ -1,29 +1,29 @@
-<div class="card horizontal" ng-repeat="object in data.playerObjects">
-    <div class="card-image">
-        <img ng-repeat="property in object.element.properties" ng-if="property.name == 'picture'" ng-src="{{ property.value }}">
-    </div>
-    <div class="card-content">
-        <div class="card-title">
-            {{ object.element.name }}
-            <span ng-repeat="property in object.properties" ng-if="property.name == 'quantity'">
-                ({{ property.value }})
-            </span>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                Effects: <br />
-                <div ng-repeat="effect in object.element.effects">
-                    <span ng-if="effect.quantity > 0">+</span> {{ effect.quantity }}
-                    {{ effect.property_name }}
-                </div>
-                <button class="btn" ng-click="data.currentObject = object; post()">Use it!</button>
+<!-- List objects of the player -->
+<div ng-if="data.playerElements.length">
+    <ul class="collection">
+        <li class="collection-item row" ng-repeat="playerElement in data.playerElements">
+            <div class="col-md-1">
+                <img ng-repeat="property in playerElement.element.properties" ng-if="property.name == 'picture'" ng-src="{{ property.value }}" alt="{{ element.name }}">
             </div>
             <div class="col-md-4">
-                <input type="text"  ng-model="object.data" placeholder="Quantity to buy" />
+                <h5>{{ playerElement.element.name }} <small ng-repeat="property in playerElement.properties" ng-if="property.name == 'quantity'">x{{ property.value }}</small></h5>
+                <!-- Stats for the playerElement -->
+<ul class="collection row">
+    <li ng-repeat="stat in data.objectsStats">
+        <span class="col-md-6">{{ stat.name }}</span>
+        <span class="col-md-6" ng-repeat="property in playerElement.properties" ng-if="property.name == stat.name">{{ property.value }}</span>
+    <li>
+</ul>
+
             </div>
             <div class="col-md-4">
-                <button class="btn" ng-click="post()">Buy!</button>
+                <input type="text" placeholder="{{ 'How many to buy?' | trans }}'" ng-model="playerElement.data" />
             </div>
-        </div>
-    </div>
+            <div class="col-md-1">
+                <button class="btn" ng-click="post()">
+                    <i class="material-icons">send</i>
+                </button>
+            </div>
+        </li>
+    </ul>
 </div>

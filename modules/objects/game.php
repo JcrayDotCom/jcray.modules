@@ -1,40 +1,56 @@
 <?php
 
-$game->registerMenu('Objets');
+$arrayReturn = [];
 
-if ($player) {
-    $objects = $game->getElementsByProperties([
-        'type' => 'Object',
-    ]);
+/*
+* Buy a Object
+*/
 
-    foreach ($objects as $object) {
-        if (!$player->getElement($object)) {
-            $player->createElement($object->id, 0);
-        }
-    }
-
-    if ($request->get('playerObjects')) {
-        foreach ($request->get('playerObjects') as $object) {
-            if (isset($object['data']) && $object['data']) {
-                $playerElement = $player->getElement($object['element']['id']);
-                $playerElement->set('quantity', $playerElement->get('quantity') + (int) $object['data']);
+if ($request->get('playerElements')) {
+    foreach ($request->get('playerElements') as $playerElement) {
+        if (isset($playerElement['data']) && (int) $playerElement['data'] > 0) {
+            $playerElementEntity = $player->getElement($playerElement['element']['id']);
+            try {
+                $playerElementEntity->set('quantity', (int) $playerElementEntity->get('quantity') + (int) $playerElement['data']);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
             }
         }
     }
-
-    if ($request->get('currentObject')) {
-        $playerElement = $player->getElement($request->get('currentObject')['element']['id']);
-        $playerElement->set('quantity', $playerElement->get('quantity') - 1);
-    }
-
-    $playerObjects = $player->getElementsByProperties([
-        'type' => 'Object',
-    ]);
-
-    return [
-        'objects' => $objects,
-        'playerObjects' => $playerObjects,
-    ];
 }
 
-return [];
+/*
+* Get the objects owned by the player
+*/
+
+$objects = $game->getElementsByProperties([
+    'type' => 'Object',
+]);
+
+$playerElements = [];
+
+if ($player) {
+    foreach ($objects as $element) {
+        $playerElement = $player->getElement($element->getId());
+        if (!$playerElement) {
+            $playerElement = $player->createElement($element->getId());
+        }
+        $playerElements[] = $playerElement;
+    }
+
+    $arrayReturn['playerElements'] = $playerElements;
+}
+
+$arrayReturn['objects'] = $objects;
+
+/*
+*   List stats of objects
+*/
+
+$arrayReturn['objectsStats'] = $game->get('objectsStats');
+
+if (isset($error)) {
+    $arrayReturn['error'] = $error;
+}
+
+return $arrayReturn;

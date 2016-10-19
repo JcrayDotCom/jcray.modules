@@ -34,3 +34,5 @@ ignore:
     - hook:elementCostsButton:template
     # Do not show the stats button on elements listing
     - hook:elementStatsButton:template
+    # Do not show the effects button
+    - hook:elementEffectsButton:template

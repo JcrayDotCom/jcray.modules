@@ -1,67 +1,159 @@
+<!-- Tabs -->
+<div ng-init="$parent.tabs = {}; $parent.currentModuleTab=false"></div>
+
 <div class="row card">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3"><a ng-click="currentTab = 'all'; currentObject = null">All Objects</a></li>
-        <li class="tab col s3"><a class="active" ng-click="currentTab = 'new'">New Object</a></li>
+        <li class="tab col s3" ng-repeat="(key, tabName) in tabs">
+            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: $parent.currentModuleTab == key}">
+                {{ tabName }}
+            </a>
+        </li>
       </ul>
     </div>
 </div>
 
-<div ng-if="currentTab == 'new' || (!data.objects.length && !currentTab)">
+<div ng-if="data.error">
+    <div class="card red">
+        <div class="card-content white-text">
+            <i class="material-icons">error_outline</i> <span style="position: relative;top: -7px;">{{ data.error.message  }}</span>
+        </div>
+    </div>
+</div>
+
+<div ng-init="tabs ? tabs.create = Translator.trans('New Object') : null"></div>
+
+<!-- Create a Object -->
+<div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
-        {% title %}New object{% endtitle %}
-        <input type="text" placeholder="Name of the object" ng-model="data.newObject.name" />
-        <input type="text" placeholder="Picture of the object" ng-model="data.newObject.picture" />
-        <button class="btn" ng-click="post()">Create this object</button>
+        {% title %}{{ "Create a new Object" | trans }}{% endtitle %}
+        <form>
+            <input type="text" ng-model="data.newObject.name" placeholder="{{ 'Object name' | trans }}" />
+            <input type="text" ng-model="data.newObject.quantity" placeholder="{{ 'Object default quantity' | trans }}" />
+            <input type="text" ng-model="data.newObject.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new Object" | trans }}{% endbutton %}
+        </form>
     {% endblock %}
 </div>
 
-<div ng-if="currentTab == 'all' || (!data.currentObject && data.objects.length && !currentTab)">
+<div ng-init="tabs ? tabs.edit = Translator.trans('All objects') : null"></div>
+
+<!-- Edit a Object -->
+<div ng-show="(!tabs || currentModuleTab == 'edit') && data.objects && data.objects.length">
     {% block %}
+        {% title %}{{ "objects of your game" | trans }}{% endtitle %}
+        <ul class="collection">
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
+            </li>
+            <li ng-repeat="element in data.objects" class="collection-item row">
+                <div class="col-md-3">
+                    <label>{{ "Name" | trans }}</label>
+                    <input type="text" ng-model="element.name" ng-change="post()" />
+                </div>
+                <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
+                    <label>{{ propertyName | trans }}</label>
+                    <input type="text" ng-model="propertyValue" />
+                </div>
+                <div class="col-md-3">
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the costs of the Object -->
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'+element.id; data.costsElementObject = element"><i class="fa fa-money"></i></a>
+</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the effects of the Object -->
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'effects'+element.id; data.effectssElementObject = element"><i class="fa fa-asterisk"></i></a>
+</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Object -->
+<a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeObject = element.name;post();"><i class="tiny material-icons">delete</i></a>
+</span>
+                </div>
+                <div class="clearfix"><!-- Edit the effects of the Object -->
+<div ng-if="data.effectsElementObject && elementTab == 'effects'+data.effectsElementObject.id">
+    <h4>{{ 'Effects' | trans }}</h4>
     <ul class="collection">
-        <li class="collection-item clear row" ng-repeat="object in data.objects">
-            <span class="col-md-6">{{ object.name }}</span>
-            <span class="col-md-6">
-                <button class="btn" ng-click="data.currentObject = object">Edit</button>
-            </span>
+        <li class="collection-item row">
+            <div class="col-md-3">
+                <label>{{ "Create a new effect" | trans }}</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newEffect.quantity" ng-model="Effect" />
+            </div>
+            <div class="col-md-3">
+                <select ng-model="data.newEffect.propertyName">
+                    <option disabled selected>( Select a property )</option>
+                    <option ng-repeat="property in data.properties" value="{{ property.name }}">
+                        {{ property.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
+            </div>
+        </li>
+        <li>
+            <div ng-if="data.effectsElementObject.effects.length">
+                <ul class="collection">
+                    <li class="row collection-item" ng-repeat="effect in data.effectsElementObject.effects">
+                        <span class="col-md-6">{{ effect.property_name }}</span>
+                        <span class="col-md-6"><input type="text" ng-model="effect.quantity" /></span>
+                    </li>
+                </ul>
+                <button class="btn" ng-click="post()">Save</button>
+            </div>
         </li>
     </ul>
-    <div class="clear"></div>
-    {% endblock %}
 </div>
+</div>
+                <div class="clearfix"><!-- Edit the stats of the Object -->
+<div ng-if="data.statsElementObject && elementTab == 'stats'+data.statsElementObject.id">
 
-<div ng-if="data.currentObject && (currentTab == 'all' || !currentTab)">
-    {% block %}
-        {% title %}Properties of {{ data.currentObject.name }}{% endtitle %}
-        <ul class="collection">
-            <li class="row collection-item" ng-repeat="property in data.currentObject.properties" ng-if="property.name != 'isObject'">
-                <span class="col-md-6">{{ property.name }}</span>
-                <span class="col-md-6"><input type="text" ng-model="property.value" /></span>
+    <ul class="collection">
+        <li class="collection-item row">
+            <div class="col-md-3">
+                <label>{{ "Create a new stat" | trans }}</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newStat.name" placeholder="{{ 'Name of the stat' | trans }}" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" ng-model="data.newStat.quantity" placeholder="{{ 'Default value for this stat' | trans }}" />
+            </div>
+            <div class="col-md-3">
+                <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
+            </div>
+        </li>
+        <li class="collection-item row" ng-repeat="stat in data.objectsStats">
+            <div ng-repeat="property in data.statsElementObject.properties" ng-if="property.name == stat.name">
+                <div class="col-md-6">
+                    <label>{{ property.name }}</label>
+                </div/>
+                <div class="col-md-6">
+                    <input type="text" ng-model="property.value" ng-change="post()" />
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+                <div class="clearfix"><!-- Edit the costs of the Object -->
+<div ng-if="data.costsElementObject && elementTab == 'costs'+data.costsElementObject.id">
+    Costs
+    <ul class="collection">
+        <li ng-repeat="cost in data.costsElementObject.costs" class="collection-item row">
+            <div class="col-md-6">
+                <label>{{ cost.cost.name }}</label/>
+            </div>
+            <div class="col-md-6">
+                <input type="text" ng-change="post()" ng-model="cost.quantity" />
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+            </li>
+            <li class="collection-item">
+                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
         </ul>
-        <button class="btn" ng-click="post()">Save</button>
-    {% endblock %}
-    {% block %}
-        <div ng-if="data.currentObject.effects.length">
-            {% title %}Effects of {{ data.currentObject.name }}{% endtitle %}
-            <ul class="collection">
-                <li class="row collection-item" ng-repeat="effect in data.currentObject.effects">
-                    <span class="col-md-6">{{ effect.property_name }}</span>
-                    <span class="col-md-6"><input type="text" ng-model="effect.quantity" /></span>
-                </li>
-            </ul>
-            <button class="btn" ng-click="post()">Save</button>
-        </div>
-    {% endblock %}
-    {% block %}
-        {% title %}New effect{% endtitle %}
-        <select ng-model="data.newEffect.propertyName">
-            <option disabled selected>( Select a property )</option>
-            <option ng-repeat="property in data.properties" value="{{ property.name }}">
-                {{ property.name }}
-            </option>
-        </select>
-        <input type="text" ng-model="data.newEffect.quantity" ng-model="Effect" />
-        <button class="btn" ng-click="post()">Create effect</button>
     {% endblock %}
 </div>

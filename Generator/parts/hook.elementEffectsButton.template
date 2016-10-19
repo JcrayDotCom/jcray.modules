@@ -1,0 +1,2 @@
+<!-- Button for edit the effects of the %elementName% -->
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'effects'+element.id; data.effectssElement%elementName% = element"><i class="fa fa-asterisk"></i></a>
