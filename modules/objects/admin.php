@@ -47,15 +47,18 @@ foreach ($elements as $element) {
     }
 }
 
-if ($request->get('effectsElementObject')) {
-    $object = $game->getElement($request->get('effectsElementObject'));
-    foreach ($request->get('effectsElementObject')['properties'] as $property) {
-        $object->set($property['name'], $property['value']);
-    }
+/*
+* Edit effects of an Object
+*/
+
+if ($request->get('effectsElementObject') && $request->get('newEffect')) {
+    $object = $game->getElement($request->get('effectsElementObject')['id']);
     if ($request->get('newEffect')) {
         $effect = $object->createEffect($request->get('newEffect')['propertyName'], $request->get('newEffect')['quantity']);
     }
 }
+
+$arrayReturn['properties'] = $game->getElementsProperties();
 
 /*
 * Edit an existant Object

@@ -1,1 +1,3 @@
 Effects: Effets
+Effect quantity: Quantité de l'effet
+Select a property: Propriété affectée

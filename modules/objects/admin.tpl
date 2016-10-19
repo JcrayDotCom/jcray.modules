@@ -61,7 +61,7 @@
 <a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'+element.id; data.costsElementObject = element"><i class="fa fa-money"></i></a>
 </span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the effects of the Object -->
-<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'effects'+element.id; data.effectssElementObject = element"><i class="fa fa-asterisk"></i></a>
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'effects'+element.id; data.effectsElementObject  = element"><i class="fa fa-asterisk"></i></a>
 </span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Object -->
 <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeObject = element.name;post();"><i class="tiny material-icons">delete</i></a>
@@ -76,11 +76,11 @@
                 <label>{{ "Create a new effect" | trans }}</label>
             </div>
             <div class="col-md-3">
-                <input type="text" ng-model="data.newEffect.quantity" ng-model="Effect" />
+                <input type="text" ng-model="data.newEffect.quantity" ng-model="Effect" placeholder="{{ 'Effect quantity' | trans }}" />
             </div>
             <div class="col-md-3">
-                <select ng-model="data.newEffect.propertyName">
-                    <option disabled selected>( Select a property )</option>
+                <select ng-model="data.newEffect.propertyName" style="display: block">
+                    <option disabled selected>( {{ "Select a property" | trans }} )</option>
                     <option ng-repeat="property in data.properties" value="{{ property.name }}">
                         {{ property.name }}
                     </option>
