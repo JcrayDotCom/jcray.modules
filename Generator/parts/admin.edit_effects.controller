@@ -6,6 +6,7 @@ if ($request->get('effectsElement%elementName%') && $request->get('newEffect')) 
     $object = $game->getElement($request->get('effectsElement%elementName%')['id']);
     if ($request->get('newEffect')) {
         $effect = $object->createEffect($request->get('newEffect')['propertyName'], $request->get('newEffect')['quantity']);
+        $effect->setType($request->get('newEffect')['type'] ?? 'global');
     }
 }
 

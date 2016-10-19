@@ -12,10 +12,12 @@
             <div class="col-md-3">
                 <select ng-model="data.newEffect.propertyName" style="display: block">
                     <option disabled selected>( {{ "Select a property" | trans }} )</option>
-                    <option ng-repeat="property in data.properties" value="{{ property.name }}">
+                    <option ng-repeat="property in data.properties" value="{{ property.name }}" ng-if="property.name != 'picture' && property.name != 'type'">
                         {{ property.name }}
                     </option>
                 </select>
+                <input type="radio" model="data.newEffect.type" value="global" /> {{ "Apply evertyime" | trans }}
+                <input type="radio" model="data.newEffect.type" value="oneTime" /> {{ "Apply when used" | trans }}
             </div>
             <div class="col-md-3">
                 <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
