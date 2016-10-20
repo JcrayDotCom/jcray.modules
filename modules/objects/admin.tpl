@@ -81,10 +81,12 @@
             <div class="col-md-3">
                 <select ng-model="data.newEffect.propertyName" style="display: block">
                     <option disabled selected>( {{ "Select a property" | trans }} )</option>
-                    <option ng-repeat="property in data.properties" value="{{ property.name }}">
+                    <option ng-repeat="property in data.properties" value="{{ property.name }}" ng-if="property.name != 'picture' && property.name != 'type' && property.name != 'quantity'">
                         {{ property.name }}
                     </option>
                 </select>
+                <input type="radio" style="position:relative; left: 0px; opacity: 100" model="data.newEffect.type" value="global" /> {{ "Apply evertyime" | trans }}
+                <input type="radio"  style="position:relative; left: 0px; opacity: 100" model="data.newEffect.type" value="oneTime" /> {{ "Apply when used" | trans }}
             </div>
             <div class="col-md-3">
                 <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
@@ -94,8 +96,11 @@
             <div ng-if="data.effectsElementObject.effects.length">
                 <ul class="collection">
                     <li class="row collection-item" ng-repeat="effect in data.effectsElementObject.effects">
-                        <span class="col-md-6">{{ effect.property_name }}</span>
-                        <span class="col-md-6"><input type="text" ng-model="effect.quantity" /></span>
+                        <span class="col-md-4">{{ effect.property_name }}</span>
+                        <span class="col-md-4"><input type="text" ng-model="effect.quantity" /></span>
+                        <span class="col-md-4">
+                            <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeEffectObject = effect;post();"><i class="tiny material-icons">delete</i></a>
+                        </span>
                     </li>
                 </ul>
                 <button class="btn" ng-click="post()">Save</button>

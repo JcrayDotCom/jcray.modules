@@ -55,8 +55,22 @@ if ($request->get('effectsElementObject') && $request->get('newEffect')) {
     $object = $game->getElement($request->get('effectsElementObject')['id']);
     if ($request->get('newEffect')) {
         $effect = $object->createEffect($request->get('newEffect')['propertyName'], $request->get('newEffect')['quantity']);
+        $effect->setType($request->get('newEffect')['type'] ?? 'global');
+        $arrayReturn['created_effects'] = [$effect];
     }
 }
+
+/*
+* Delete an effect
+*/
+if ($request->get('removeEffectObject') && $request->get('effectsElementObject')) {
+    $object = $game->getElement($request->get('effectsElementObject')['id']);
+    $object->removeEffect($request->get('removeEffectObject')['id']);
+}
+
+$arrayReturn['objects'] = $game->getElementsByProperties([
+    'type' => 'Object',
+]);
 
 $arrayReturn['properties'] = $game->getElementsProperties();
 

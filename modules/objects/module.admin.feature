@@ -50,6 +50,73 @@ Scenario: Successfully create another Object
       | objects[1].properties.quantity | 10        |
       | objects[1].properties.type  | Object      |
 
+Scenario: Successfully retrieve objects
+  When I send a "POST" request with:
+  """
+  {
+
+  }
+  """
+  Then the response status code should be 200
+
+Scenario: Successfully create an effect on an Object
+  When I send a "POST" request with:
+  """
+  {
+      "effectsElementObject": {
+          "id": {previous_nodes.objects[0].id}
+      },
+      "newEffect": {
+          "propertyName": "testProperty",
+          "quantity": "3",
+          "type": "global"
+      }
+  }
+  """
+  Then the response status code should be 200
+  Then the JSON nodes should be equal to:
+      | objects[0].effects[0].property_name  | testProperty   |
+      | objects[0].effects[0].quantity       | 3            |
+
+
+Scenario: Successfully create an other effect
+  When I send a "POST" request with:
+  """
+    {
+        "effectsElementObject": {
+            "id": {previous_nodes.objects[0].id}
+        },
+        "newEffect": {
+            "propertyName": "testProperty2",
+            "quantity": "3",
+            "type": "global"
+        }
+    }
+  """
+  Then the response status code should be 200
+  And the JSON nodes should be equal to:
+      | objects[0].effects[0].property_name  | testProperty   |
+      | objects[0].effects[0].quantity       | 3            |
+      | objects[0].effects[1].property_name  | testProperty2   |
+      | objects[0].effects[1].quantity       | 3               |
+  And the JSON node "objects[0].effects" should have 2 elements
+
+
+Scenario: Successfully remove an effect
+  When I send a "POST" request with:
+  """
+    {
+        "effectsElementObject": {
+            "id": {previous_nodes.objects[0].id}
+        },
+        "removeEffectObject": {
+            "id": {previous_nodes.created_effects[0].id}
+        }
+    }
+  """
+  Then the response status code should be 200
+  And the JSON node "objects[0].effects" should have 1 element
+
 Scenario: Successfully edit a Object
   When I send a "POST" request with:
   """
