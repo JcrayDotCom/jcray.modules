@@ -1,0 +1,26 @@
+/*
+* Edit effects of an %elementName%
+*/
+
+if ($request->get('effectsElement%elementName%') && $request->get('newEffect')) {
+    $object = $game->getElement($request->get('effectsElement%elementName%')['id']);
+    if ($request->get('newEffect')) {
+        $effect = $object->createEffect($request->get('newEffect')['propertyName'], $request->get('newEffect')['quantity']);
+        $effect->setType($request->get('newEffect')['type'] ?? 'global');
+        $arrayReturn['created_effects'] = [$effect];
+    }
+}
+
+/*
+* Delete an effect
+*/
+if ($request->get('removeEffect%elementName%') && $request->get('effectsElement%elementName%') ) {
+    $object = $game->getElement($request->get('effectsElement%elementName%')['id']);
+    $object->removeEffect($request->get('removeEffect%elementName%')['id']);
+}
+
+$arrayReturn['%elementsName%'] = $game->getElementsByProperties([
+    'type' => '%elementName%',
+]);
+
+$arrayReturn['properties'] = $game->getElementsProperties();

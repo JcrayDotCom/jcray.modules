@@ -1,0 +1,4 @@
+Effects: Effets
+Effect quantity: Quantité de l'effet
+Select a property: Propriété affectée
+Create a new effect: Nouvel effet

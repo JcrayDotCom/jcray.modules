@@ -1,0 +1,32 @@
+# translations for the objects module
+
+Object : Object
+objects : objects
+
+# Create
+Object name: Nom de l'Object
+Object default quantity: Quantité par défaut
+"Picture (prefixed with http://)": "Image (préfixée par http://)"
+Create this new Object: Créer
+Create a new Object: Créer un(e) Object
+New Object: Nouvel(le) Object
+
+# Edit
+objects of your game: objects de votre jeu
+All objects: Tous les objects
+Name: Nom
+quantity: quantité
+picture: image
+
+# Listing
+How many to buy?: Quantité à acheter?
+
+Effects: Effets
+Effect quantity: Quantité de l'effet
+Select a property: Propriété affectée
+Create a new effect: Nouvel effet
+
+# Stats editor
+Create a new stat: Créer une nouvelle stat
+Name of the stat: Nom de la stat
+Default value for this stat: Valeur par défaut
