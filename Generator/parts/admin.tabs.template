@@ -4,7 +4,7 @@
 <div class="row card">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3" ng-repeat="(key, tabName) in tabs">
+        <li class="tab col s3" ng-repeat="(key, tabName) in $parent.tabs">
             <a ng-click="$parent.currentModuleTab = key" ng-class="{active: $parent.currentModuleTab == key}">
                 {{ tabName }}
             </a>

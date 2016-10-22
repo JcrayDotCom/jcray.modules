@@ -4,7 +4,7 @@
 <div class="row card">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3" ng-repeat="(key, tabName) in tabs">
+        <li class="tab col s3" ng-repeat="(key, tabName) in $parent.tabs">
             <a ng-click="$parent.currentModuleTab = key" ng-class="{active: $parent.currentModuleTab == key}">
                 {{ tabName }}
             </a>
@@ -21,25 +21,29 @@
     </div>
 </div>
 
-<div ng-init="tabs ? tabs.create = Translator.trans('New Unit') : null"></div>
+<div ng-init="$parent.tabs ? $parent.tabs.create = Translator.trans('New Unit') : null"></div>
 
 <!-- Create a Unit -->
-<div ng-show="!tabs || currentModuleTab == 'create'">
+<div ng-show="!$parent.tabs || $parent.currentModuleTab == 'create'">
     {% block %}
         {% title %}{{ "Create a new Unit" | trans }}{% endtitle %}
         <form>
             <input type="text" ng-model="data.newUnit.name" placeholder="{{ 'Unit name' | trans }}" />
+            <input type="text" ng-model="data.newUnit.description" placeholder="{{ 'Unit description' | trans }}" />
+
             <input type="text" ng-model="data.newUnit.quantity" placeholder="{{ 'Unit default quantity' | trans }}" />
+
+
             <input type="text" ng-model="data.newUnit.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
             {% button %}{{ "Create this new Unit" | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.edit = Translator.trans('All units') : null"></div>
+<div ng-init="$parent.tabs ? $parent.tabs.edit = Translator.trans('All units') : null"></div>
 
 <!-- Edit a Unit -->
-<div ng-show="(!tabs || currentModuleTab == 'edit') && data.units && data.units.length">
+<div ng-show="(!$parent.tabs || $parent.currentModuleTab == 'edit') && data.units && data.units.length">
     {% block %}
         {% title %}{{ "units of your game" | trans }}{% endtitle %}
         <ul class="collection">
@@ -47,7 +51,6 @@
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
             <li ng-repeat="element in data.units" class="collection-item row">
-
                 <div class="col-md-3">
                     <label>{{ "Name" | trans }}</label>
                     <input type="text" ng-model="element.name" ng-change="post()" />
@@ -63,12 +66,14 @@
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the costs of the Unit -->
 <a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'+element.id; data.costsElementUnit = element"><i class="fa fa-money"></i></a>
 </span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Unit -->
 <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeUnit = element.name;post();"><i class="tiny material-icons">delete</i></a>
 </span>
                 </div>
+                <div class="clearfix"></div>
                 <div class="clearfix"><!-- Edit the stats of the Unit -->
-<div ng-if="data.statsElementUnit && elementTab == 'stats'+data.costsElementUnit.id">
+<div ng-if="data.statsElementUnit && elementTab == 'stats'+data.statsElementUnit.id">
 
     <ul class="collection">
         <li class="collection-item row">
@@ -121,9 +126,9 @@
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.stats = Translator.trans('Stats') : null"></div>
+<div ng-init="$parent.tabs ? $parent.tabs.stats = Translator.trans('Stats') : null"></div>
 
-<div ng-if="currentModuleTab == 'stats'">
+<div ng-if="!$parent.tabs || $parent.currentModuleTab == 'stats'">
 {% block %}
     {% title %}New stat{% endtitle %}
     <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />

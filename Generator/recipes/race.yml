@@ -1,40 +1,39 @@
 ###
 #   Jcray v8 - Tech
 #
-#   This recipe is the default recipe.
-#   It creates, edits, and deletes elements.
+#   This recipe is the races recipe.
+#   It creates, edits, and deletes elements, and set a filter on the Race property
 #
-#   It does not allow to manage costs or stats on elements
-#
-#   Modules: Resources
+#   Modules: race
 ##
 parts:
-    # admin
-    - admin:tabs:template
+    # Admin controller
     - admin:default_vars:controller
-    - admin:create_menu:controller
     - admin:create:controller
-    - admin:create:template
+    - admin:edit_stats:controller
     - admin:edit:controller
-    - admin:edit:template
+    - admin:create_filter:controller
     - admin:delete:controller
     - admin:list:controller
     - admin:default_return:controller
+    # Admin template
+    - admin:tabs:template
+    - admin:error:template
+    - admin:create:template
+    - admin:edit:template
+    - admin:stats:template
 
     # Game controller
+    - game:chose_filter:controller
     - game:default_vars:controller
     - game:create_default_values:controller
+    - game:listing_stats:controller
     - game:default_return:controller
-
-    # Game template
-    - game:listing_light:template
 
 ignore:
     # Do not show the costs button on elements listing
     - hook:elementCostsButton:template
-    # Do not show the stats button on elements listing
-    - hook:elementStatsButton:template
     # Do not show the effects button
     - hook:elementEffectsButton:template
-    # Do not show the description field
-    - hook:elementDescriptionField:template
+    # Do not show the quantity field
+    - hook:elementQuantityField:template

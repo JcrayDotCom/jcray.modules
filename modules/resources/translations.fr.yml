@@ -10,6 +10,7 @@ Resource default quantity: Quantité par défaut
 Create this new Resource: Créer
 Create a new Resource: Créer un(e) Resource
 New Resource: Nouvel(le) Resource
+Resource description: Description
 
 # Edit
 resources of your game: resources de votre jeu
@@ -17,6 +18,11 @@ All resources: Tous les resources
 Name: Nom
 quantity: quantité
 picture: image
+
+Effects: Effets
+Effect quantity: Quantité de l'effet
+Select a property: Propriété affectée
+Create a new effect: Nouvel effet
 
 # Stats editor
 Create a new stat: Créer une nouvelle stat

@@ -1,0 +1,37 @@
+# translations for the races module
+
+Race : Race
+races : races
+
+# Create
+Race name: Nom de l'Race
+Race default quantity: Quantité par défaut
+"Picture (prefixed with http://)": "Image (préfixée par http://)"
+Create this new Race: Créer
+Create a new Race: Créer un(e) Race
+New Race: Nouvel(le) Race
+Race description: Description
+
+# Edit
+races of your game: races de votre jeu
+All races: Tous les races
+Name: Nom
+quantity: quantité
+picture: image
+
+# Stats
+Stats: Stats
+Update stats: Mettre à jour les stats
+Name of the stat: Nom
+Default value of the stat: Valeur par défaut
+Create this stat: Créer cette stat
+
+Effects: Effets
+Effect quantity: Quantité de l'effet
+Select a property: Propriété affectée
+Create a new effect: Nouvel effet
+
+# Stats editor
+Create a new stat: Créer une nouvelle stat
+Name of the stat: Nom de la stat
+Default value for this stat: Valeur par défaut

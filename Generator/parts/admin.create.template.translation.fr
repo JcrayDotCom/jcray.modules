@@ -5,3 +5,4 @@
 Create this new %elementName%: Créer
 Create a new %elementName%: Créer un(e) %elementName%
 New %elementName%: Nouvel(le) %elementName%
+%elementName% description: Description
