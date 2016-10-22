@@ -1,7 +1,11 @@
 var jcrayApp = angular.module('jcrayApp', [
     'jcrayTech',
     'ngCookies'
-]);
+]).filter('ucfirst', function(){
+    return function(input, optional1, optional2) {
+        return input.charAt(0).toUpperCase() + input.slice(1);
+    };
+});
 
 var Translator = {
     trans: function(input){

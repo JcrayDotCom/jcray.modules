@@ -45,7 +45,7 @@
 <!-- Edit a Object -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.objects && data.objects.length">
     {% block %}
-        {% title %}{{ "objects of your game" | trans }}{% endtitle %}
+        {% title %}{{ "objects of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>

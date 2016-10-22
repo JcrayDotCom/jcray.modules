@@ -44,7 +44,7 @@
 <!-- Edit a Race -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.races && data.races.length">
     {% block %}
-        {% title %}{{ "races of your game" | trans }}{% endtitle %}
+        {% title %}{{ "races of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
