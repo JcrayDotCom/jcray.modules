@@ -1,5 +1,5 @@
 <!-- Tabs -->
-<div ng-init="$parent.tabs = {}; $parent.currentModuleTab=false"></div>
+<div ng-init="tabs = {}; currentModuleTab=false"></div>
 
 <div class="row card">
     <div class="col s12">
