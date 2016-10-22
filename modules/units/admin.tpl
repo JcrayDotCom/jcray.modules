@@ -45,7 +45,7 @@
 <!-- Edit a Unit -->
 <div ng-show="(!tabs || currentModuleTab == 'edit') && data.units && data.units.length">
     {% block %}
-        {% title %}{{ "units of your game" | trans }}{% endtitle %}
+        {% title %}{{ "units of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item">
                 <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
