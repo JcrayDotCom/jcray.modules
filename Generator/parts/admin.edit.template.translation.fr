@@ -1,6 +1,6 @@
 # Edit
 %elementsName% of your game: %elementsName% de votre jeu
-All %elementsName%: Tous les %elementsName%
+All %elementsName%: Tou(te)s les %elementsName%
 Name: Nom
 quantity: quantité
 picture: image
