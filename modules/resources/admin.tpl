@@ -4,19 +4,19 @@
 <div class="row card">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3" ng-repeat="(key, tabName) in $parent.tabs">
-            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: $parent.currentModuleTab == key}">
-                {{ tabName }}
+        <li class="tab col s3" ng-repeat="(key, tabName) in tabs">
+            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: currentModuleTab == key}">
+                {{ tabName | trans }}
             </a>
         </li>
       </ul>
     </div>
 </div>
 
-<div ng-init="$parent.tabs ? $parent.tabs.create = Translator.trans('New Resource') : null"></div>
+<div ng-init="tabs ? tabs.create = 'New Resource' : null"></div>
 
 <!-- Create a Resource -->
-<div ng-show="!$parent.tabs || $parent.currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
         {% title %}{{ "Create a new Resource" | trans }}{% endtitle %}
         <form>
@@ -31,10 +31,10 @@
     {% endblock %}
 </div>
 
-<div ng-init="$parent.tabs ? $parent.tabs.edit = Translator.trans('All resources') : null"></div>
+<div ng-init="tabs ? tabs.edit = 'All resources' : null"></div>
 
 <!-- Edit a Resource -->
-<div ng-show="(!$parent.tabs || $parent.currentModuleTab == 'edit') && data.resources && data.resources.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit') && data.resources && data.resources.length">
     {% block %}
         {% title %}{{ "resources of your game" | trans }}{% endtitle %}
         <ul class="collection">

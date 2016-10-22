@@ -4,9 +4,9 @@
 <div class="row card">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3" ng-repeat="(key, tabName) in $parent.tabs">
-            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: $parent.currentModuleTab == key}">
-                {{ tabName }}
+        <li class="tab col s3" ng-repeat="(key, tabName) in tabs">
+            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: currentModuleTab == key}">
+                {{ tabName | trans }}
             </a>
         </li>
       </ul>
@@ -21,10 +21,10 @@
     </div>
 </div>
 
-<div ng-init="$parent.tabs ? $parent.tabs.create = Translator.trans('New Race') : null"></div>
+<div ng-init="tabs ? tabs.create = 'New Race' : null"></div>
 
 <!-- Create a Race -->
-<div ng-show="!$parent.tabs || $parent.currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
         {% title %}{{ "Create a new Race" | trans }}{% endtitle %}
         <form>
@@ -39,10 +39,10 @@
     {% endblock %}
 </div>
 
-<div ng-init="$parent.tabs ? $parent.tabs.edit = Translator.trans('All races') : null"></div>
+<div ng-init="tabs ? tabs.edit = 'All races' : null"></div>
 
 <!-- Edit a Race -->
-<div ng-show="(!$parent.tabs || $parent.currentModuleTab == 'edit') && data.races && data.races.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit') && data.races && data.races.length">
     {% block %}
         {% title %}{{ "races of your game" | trans }}{% endtitle %}
         <ul class="collection">
@@ -164,9 +164,9 @@
     {% endblock %}
 </div>
 
-<div ng-init="$parent.tabs ? $parent.tabs.stats = Translator.trans('Stats') : null"></div>
+<div ng-init="tabs ? tabs.stats = 'Stats' : null"></div>
 
-<div ng-if="!$parent.tabs || $parent.currentModuleTab == 'stats'">
+<div ng-if="!tabs || currentModuleTab == 'stats'">
 {% block %}
     {% title %}New stat{% endtitle %}
     <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />
