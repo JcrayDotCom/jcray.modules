@@ -4,9 +4,9 @@
 <div class="row card">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3" ng-repeat="(key, tabName) in $parent.tabs">
-            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: $parent.currentModuleTab == key}">
-                {{ tabName }}
+        <li class="tab col s3" ng-repeat="(key, tabName) in tabs">
+            <a ng-click="$parent.currentModuleTab = key" ng-class="{active: currentModuleTab == key}">
+                {{ tabName | trans }}
             </a>
         </li>
       </ul>
@@ -21,10 +21,10 @@
     </div>
 </div>
 
-<div ng-init="$parent.tabs ? $parent.tabs.create = Translator.trans('New Object') : null"></div>
+<div ng-init="tabs ? tabs.create = 'New Object' : null"></div>
 
 <!-- Create a Object -->
-<div ng-show="!$parent.tabs || $parent.currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
         {% title %}{{ "Create a new Object" | trans }}{% endtitle %}
         <form>
@@ -40,10 +40,10 @@
     {% endblock %}
 </div>
 
-<div ng-init="$parent.tabs ? $parent.tabs.edit = Translator.trans('All objects') : null"></div>
+<div ng-init="tabs ? tabs.edit = 'All objects' : null"></div>
 
 <!-- Edit a Object -->
-<div ng-show="(!$parent.tabs || $parent.currentModuleTab == 'edit') && data.objects && data.objects.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit') && data.objects && data.objects.length">
     {% block %}
         {% title %}{{ "objects of your game" | trans }}{% endtitle %}
         <ul class="collection">

@@ -1,7 +1,7 @@
-<div ng-init="$parent.tabs ? $parent.tabs.create = Translator.trans('New %elementName%') : null"></div>
+<div ng-init="tabs ? tabs.create = 'New %elementName%' : null"></div>
 
 <!-- Create a %elementName% -->
-<div ng-show="!$parent.tabs || $parent.currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create'">
     {% block %}
         {% title %}{{ "Create a new %elementName%" | trans }}{% endtitle %}
         <form>
