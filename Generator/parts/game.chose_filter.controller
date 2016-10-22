@@ -1,0 +1,15 @@
+/*
+* Filter on %elementName% :
+* If Player chose a %elementName%
+*/
+
+if ($request->get('chosen%elementName%')) {
+    $player->set('%elementName%', $request->get('chosen%elementName%')['id']);
+}
+
+$player%elementName% = $player->get('%elementName%');
+if ($player%elementName%) {
+    $player%elementName% = $game->getElement($player%elementName%);
+}
+
+$arrayReturn['player%elementName%'] = $player%elementName%;

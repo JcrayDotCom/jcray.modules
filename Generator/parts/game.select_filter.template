@@ -1,0 +1,16 @@
+<div ng-repeat="element in data.%elementsName%" class="card horizontal">
+    <div class="card-image">
+        <img ng-repeat="property in element.properties" ng-if="property.name == 'picture'" ng-src="{{ property.value }}" />
+    </div>
+    <div class="card-content">
+        <div class="card-title">
+            {{ element.name }}
+            <p>{{ element.description }}</p>
+            <button class="btn" ng-click="data.chosen%elementsName% = element; post()">I want to be a {{ element.name }}!</button>
+        </div>
+    </div>
+</div>
+</div>
+<div ng-if="data.player%elementsName%">
+You are a {{ data.player%elementsName%.name }}
+</div>

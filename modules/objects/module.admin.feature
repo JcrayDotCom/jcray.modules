@@ -79,7 +79,7 @@ Scenario: Successfully create an effect on an Object
       | objects[0].effects[0].quantity       | 3            |
 
 
-Scenario: Successfully create an other effect
+Scenario: Successfully create an other effect on an Object
   When I send a "POST" request with:
   """
     {
@@ -102,7 +102,7 @@ Scenario: Successfully create an other effect
   And the JSON node "objects[0].effects" should have 2 elements
 
 
-Scenario: Successfully remove an effect
+Scenario: Successfully remove an effect on an Object
   When I send a "POST" request with:
   """
     {

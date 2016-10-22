@@ -1,0 +1,6 @@
+/*
+* Create filter on %elementName% :
+* Player has to chose a %elementName%
+*/
+
+$game->registerFilter('%elementName%');

@@ -1,7 +1,7 @@
-<div ng-init="tabs ? tabs.edit = Translator.trans('All %elementsName%') : null"></div>
+<div ng-init="$parent.tabs ? $parent.tabs.edit = Translator.trans('All %elementsName%') : null"></div>
 
 <!-- Edit a %elementName% -->
-<div ng-show="(!tabs || currentModuleTab == 'edit') && data.%elementsName% && data.%elementsName%.length">
+<div ng-show="(!$parent.tabs || $parent.currentModuleTab == 'edit') && data.%elementsName% && data.%elementsName%.length">
     {% block %}
         {% title %}{{ "%elementsName% of your game" | trans }}{% endtitle %}
         <ul class="collection">

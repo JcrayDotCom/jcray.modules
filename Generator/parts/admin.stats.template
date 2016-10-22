@@ -1,6 +1,6 @@
-<div ng-init="tabs ? tabs.stats = Translator.trans('Stats') : null"></div>
+<div ng-init="$parent.tabs ? $parent.tabs.stats = Translator.trans('Stats') : null"></div>
 
-<div ng-if="currentModuleTab == 'stats'">
+<div ng-if="!$parent.tabs || $parent.currentModuleTab == 'stats'">
 {% block %}
     {% title %}New stat{% endtitle %}
     <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />

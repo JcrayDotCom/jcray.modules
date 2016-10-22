@@ -1,20 +1,20 @@
-# translations for the units module
+# translations for the races module
 
-Unit : Unit
-units : units
+Race : Race
+races : races
 
 # Create
-Unit name: Unit name
-Unit default quantity: Unit default quantity
+Race name: Race name
+Race default quantity: Race default quantity
 "Picture (prefixed with http://)": "Picture (prefixed with http://)"
-Create this new Unit: Create this new Unit
-Create a new Unit: Create a new Unit
-New Unit: New Unit
-Unit description: Unit description
+Create this new Race: Create this new Race
+Create a new Race: Create a new Race
+New Race: New Race
+Race description: Race description
 
 # Edit
-units of your game: units of your game
-All units: All units
+races of your game: races of your game
+All races: All races
 Name: Name
 quantity: quantity
 picture: picture
@@ -26,8 +26,10 @@ Name of the stat: Name of the stat
 Default value of the stat: Default value of the stat
 Create this stat: Create this stat
 
-# Listing
-How many to buy?: How many to buy?
+Effects: Effects
+Effect quantity: Effect quantity
+Select a property: Select a property
+Create a new effect: Create a new effect
 
 # Stats editor
 Create a new stat: Create a new stat
