@@ -93,7 +93,7 @@
         <li class="collection-item row" ng-repeat="stat in data.unitsStats">
             <div ng-repeat="(propertyName, propertyValue) in data.statsElementUnit.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
-                    <label>{{ propertyValue }}</label>
+                    <label>{{ propertyName }}</label>
                 </div/>
                 <div class="col-md-6">
                     <input type="text" ng-model="propertyValue" ng-change="post()" />
