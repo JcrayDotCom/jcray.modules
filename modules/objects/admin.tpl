@@ -47,17 +47,14 @@
     {% block %}
         {% title %}{{ "objects of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">
-            <li class="collection-item">
-                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
-            </li>
             <li ng-repeat="element in data.objects" class="collection-item row">
                 <div class="col-md-3">
                     <label>{{ "Name" | trans }}</label>
-                    <input type="text" ng-model="element.name" ng-change="post()" />
+                    <input type="text" ng-model="element.name" ng-change="silentPost()" />
                 </div>
                 <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
                     <label>{{ propertyName | trans }}</label>
-                    <input type="text" ng-model="propertyValue" />
+                    <input type="text" ng-model="element.properties[propertyName]" />
                 </div>
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
@@ -132,12 +129,12 @@
             </div>
         </li>
         <li class="collection-item row" ng-repeat="stat in data.objectsStats">
-            <div ng-repeat="property in data.statsElementObject.properties" ng-if="property.name == stat.name">
+            <div ng-repeat="(propertyName, propertyValue) in data.statsElementObject.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
-                    <label>{{ property.name }}</label>
+                    <label>{{ propertyName }}</label>
                 </div/>
                 <div class="col-md-6">
-                    <input type="text" ng-model="property.value" ng-change="post()" />
+                    <input type="text" ng-model="data.statsElementObject.properties[propertyName]" ng-change="silentPost()" />
                 </div>
             </div>
         </li>
@@ -146,22 +143,19 @@
 </div>
                 <div class="clearfix"><!-- Edit the costs of the Object -->
 <div ng-if="data.costsElementObject && elementTab == 'costs'+data.costsElementObject.id">
-    Costs
+    {{ 'Costs' | trans }}
     <ul class="collection">
         <li ng-repeat="cost in data.costsElementObject.costs" class="collection-item row">
             <div class="col-md-6">
                 <label>{{ cost.cost.name }}</label/>
             </div>
             <div class="col-md-6">
-                <input type="text" ng-change="post()" ng-model="cost.quantity" />
+                <input type="text" ng-model="cost.quantity" ng-change="silentPost" />
             </div>
         </li>
     </ul>
 </div>
 </div>
-            </li>
-            <li class="collection-item">
-                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
         </ul>
     {% endblock %}

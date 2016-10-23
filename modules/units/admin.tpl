@@ -47,17 +47,14 @@
     {% block %}
         {% title %}{{ "units of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">
-            <li class="collection-item">
-                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
-            </li>
             <li ng-repeat="element in data.units" class="collection-item row">
                 <div class="col-md-3">
                     <label>{{ "Name" | trans }}</label>
-                    <input type="text" ng-model="element.name" ng-change="post()" />
+                    <input type="text" ng-model="element.name" ng-change="silentPost()" />
                 </div>
                 <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
                     <label>{{ propertyName | trans }}</label>
-                    <input type="text" ng-model="propertyValue" />
+                    <input type="text" ng-model="element.properties[propertyName]" />
                 </div>
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the stats of the Unit -->
@@ -118,9 +115,6 @@
     </ul>
 </div>
 </div>
-            </li>
-            <li class="collection-item">
-                <div class="btn pull-right" ng-click="post()"><i class="material-icons">send</i></div>
             </li>
         </ul>
     {% endblock %}
