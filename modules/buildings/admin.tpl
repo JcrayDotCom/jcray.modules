@@ -24,7 +24,7 @@
 <div ng-init="tabs ? tabs.create = 'New Building' : null"></div>
 
 <!-- Create a Building -->
-<div ng-show="!tabs || currentModuleTab == 'create' || !data.buildings.length">
+<div ng-show="!tabs || currentModuleTab == 'create' || (!data.buildings.length && !currentModuleTab)">
     {% block %}
         {% title %}{{ "Create a new Building" | trans }}{% endtitle %}
         <form>
@@ -43,7 +43,7 @@
 <div ng-init="tabs ? tabs.edit = 'All buildings' : null"></div>
 
 <!-- Edit a Building -->
-<div ng-show="(!tabs || currentModuleTab == 'edit') && data.buildings && data.buildings.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit' || (data.buildings.length && !currentModuleTab)) && data.buildings && data.buildings.length">
     {% block %}
         {% title %}{{ "buildings of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">

@@ -24,7 +24,7 @@
 <div ng-init="tabs ? tabs.create = 'New Unit' : null"></div>
 
 <!-- Create a Unit -->
-<div ng-show="!tabs || currentModuleTab == 'create' || !data.units.length">
+<div ng-show="!tabs || currentModuleTab == 'create' || (!data.units.length && !currentModuleTab)">
     {% block %}
         {% title %}{{ "Create a new Unit" | trans }}{% endtitle %}
         <form>
@@ -43,7 +43,7 @@
 <div ng-init="tabs ? tabs.edit = 'All units' : null"></div>
 
 <!-- Edit a Unit -->
-<div ng-show="(!tabs || currentModuleTab == 'edit') && data.units && data.units.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit' || (data.units.length && !currentModuleTab)) && data.units && data.units.length">
     {% block %}
         {% title %}{{ "units of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">

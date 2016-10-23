@@ -16,7 +16,7 @@
 <div ng-init="tabs ? tabs.create = 'New Resource' : null"></div>
 
 <!-- Create a Resource -->
-<div ng-show="!tabs || currentModuleTab == 'create' || !data.resources.length">
+<div ng-show="!tabs || currentModuleTab == 'create' || (!data.resources.length && !currentModuleTab)">
     {% block %}
         {% title %}{{ "Create a new Resource" | trans }}{% endtitle %}
         <form>
@@ -34,7 +34,7 @@
 <div ng-init="tabs ? tabs.edit = 'All resources' : null"></div>
 
 <!-- Edit a Resource -->
-<div ng-show="(!tabs || currentModuleTab == 'edit') && data.resources && data.resources.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit' || (data.resources.length && !currentModuleTab)) && data.resources && data.resources.length">
     {% block %}
         {% title %}{{ "resources of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">

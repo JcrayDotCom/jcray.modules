@@ -24,7 +24,7 @@
 <div ng-init="tabs ? tabs.create = 'New Race' : null"></div>
 
 <!-- Create a Race -->
-<div ng-show="!tabs || currentModuleTab == 'create' || !data.races.length">
+<div ng-show="!tabs || currentModuleTab == 'create' || (!data.races.length && !currentModuleTab)">
     {% block %}
         {% title %}{{ "Create a new Race" | trans }}{% endtitle %}
         <form>
@@ -42,7 +42,7 @@
 <div ng-init="tabs ? tabs.edit = 'All races' : null"></div>
 
 <!-- Edit a Race -->
-<div ng-show="(!tabs || currentModuleTab == 'edit') && data.races && data.races.length">
+<div ng-show="(!tabs || currentModuleTab == 'edit' || (data.races.length && !currentModuleTab)) && data.races && data.races.length">
     {% block %}
         {% title %}{{ "races of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">

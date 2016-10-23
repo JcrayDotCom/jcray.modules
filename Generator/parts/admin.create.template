@@ -1,7 +1,7 @@
 <div ng-init="tabs ? tabs.create = 'New %elementName%' : null"></div>
 
 <!-- Create a %elementName% -->
-<div ng-show="!tabs || currentModuleTab == 'create' || !data.%elementsName%.length">
+<div ng-show="!tabs || currentModuleTab == 'create' || (!data.%elementsName%.length && !currentModuleTab)">
     {% block %}
         {% title %}{{ "Create a new %elementName%" | trans }}{% endtitle %}
         <form>
