@@ -3,12 +3,6 @@
 $arrayReturn = [];
 
 /*
-* Add module resources to the game menu
-*/
-
-$game->registerMenu('resources');
-
-/*
 * Create a new Resource
 */
 

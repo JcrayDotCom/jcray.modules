@@ -1,17 +1,17 @@
 ###
 #   Jcray v8 - Tech
 #
-#   This recipe is the default recipe.
+#   This recipe is the resources recipe.
 #   It creates, edits, and deletes elements.
 #
-#   It does not allow to manage costs or stats on elements
+#   It does not allow to manage costs or stats on elements and don't create a menu entry
 #
+#   Modules: Resources
 ##
 parts:
     # admin
     - admin:tabs:template
     - admin:default_vars:controller
-    - admin:create_menu:controller
     - admin:create:controller
     - admin:create:template
     - admin:edit:controller
