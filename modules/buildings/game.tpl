@@ -3,10 +3,10 @@
     <ul class="collection">
         <li class="collection-item row" ng-repeat="playerElement in data.playerElements">
             <div class="col-md-1">
-                <img ng-repeat="property in playerElement.element.properties" ng-if="property.name == 'picture'" ng-src="{{ property.value }}" alt="{{ element.name }}">
+                <img ng-src="{{ playerElement.element.properties.picture }}" alt="{{ playerElement.element.name }}">
             </div>
             <div class="col-md-4">
-                <h5>{{ playerElement.element.name }} <small ng-repeat="property in playerElement.properties" ng-if="property.name == 'quantity'">x{{ property.value }}</small></h5>
+                <h5>{{ playerElement.element.name }} <small>x{{ playerElement.properties.quantity }}</small></h5>
                 <!-- Stats for the playerElement -->
 <ul class="collection row">
     <li ng-repeat="stat in data.buildingsStats">
