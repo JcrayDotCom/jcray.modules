@@ -11,7 +11,7 @@
 <ul class="collection row">
     <li ng-repeat="stat in data.unitsStats">
         <span class="col-md-6">{{ stat.name }}</span>
-        <span class="col-md-6" ng-repeat="property in playerElement.properties" ng-if="property.name == stat.name">{{ property.value }}</span>
+        <span class="col-md-6" ng-repeat="(propertyName, propertyValue) in playerElement.properties" ng-if="propertyName == stat.name">{{ propertyValue }}</span>
     <li>
 </ul>
 
