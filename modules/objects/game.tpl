@@ -1,3 +1,11 @@
+<div ng-if="data.error">
+    <div class="card red">
+        <div class="card-content white-text">
+            <i class="material-icons">error_outline</i> <span style="position: relative;top: -7px;">{{ data.error }}</span>
+        </div>
+    </div>
+</div>
+
 <!-- List objects of the player -->
 <div ng-if="data.playerobjects.length">
     <ul class="collection">

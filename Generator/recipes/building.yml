@@ -29,6 +29,7 @@ parts:
     - game:listing_stats:controller
     - game:default_return:controller
     # Game template
+    - game:error:template
     - game:listing_full:template
 
 ignore:
