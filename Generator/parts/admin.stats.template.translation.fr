@@ -4,3 +4,4 @@ Update stats: Mettre à jour les stats
 Name of the stat: Nom
 Default value of the stat: Valeur par défaut
 Create this stat: Créer cette stat
+New stat: Nouvelle statistique

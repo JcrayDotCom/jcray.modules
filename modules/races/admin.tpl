@@ -129,12 +129,12 @@
             </div>
         </li>
         <li class="collection-item row" ng-repeat="stat in data.racesStats">
-            <div ng-repeat="property in data.statsElementRace.properties" ng-if="property.name == stat.name">
+            <div ng-repeat="(propertyName, propertyValue) in data.statsElementRace.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
-                    <label>{{ property.name }}</label>
+                    <label>{{ propertyValue }}</label>
                 </div/>
                 <div class="col-md-6">
-                    <input type="text" ng-model="property.value" ng-change="post()" />
+                    <input type="text" ng-model="propertyValue" ng-change="post()" />
                 </div>
             </div>
         </li>
@@ -143,7 +143,7 @@
 </div>
                 <div class="clearfix"><!-- Edit the costs of the Race -->
 <div ng-if="data.costsElementRace && elementTab == 'costs'+data.costsElementRace.id">
-    Costs
+    {{ 'Costs' | trans }}
     <ul class="collection">
         <li ng-repeat="cost in data.costsElementRace.costs" class="collection-item row">
             <div class="col-md-6">
@@ -168,7 +168,7 @@
 
 <div ng-if="!tabs || currentModuleTab == 'stats'">
 {% block %}
-    {% title %}New stat{% endtitle %}
+    {% title %}{{ 'New stat' | trans }}{% endtitle %}
     <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />
     <input type="text" placeholder="{{ 'Default value of the stat' | trans }}" ng-model="data.newStat.quantity" />
     <button class="btn" ng-click="post()">{{ 'Create this stat' | trans }}</button>

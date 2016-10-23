@@ -17,12 +17,12 @@
             </div>
         </li>
         <li class="collection-item row" ng-repeat="stat in data.%elementsName%Stats">
-            <div ng-repeat="property in data.statsElement%elementName%.properties" ng-if="property.name == stat.name">
+            <div ng-repeat="(propertyName, propertyValue) in data.statsElement%elementName%.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
-                    <label>{{ property.name }}</label>
+                    <label>{{ propertyValue }}</label>
                 </div/>
                 <div class="col-md-6">
-                    <input type="text" ng-model="property.value" ng-change="post()" />
+                    <input type="text" ng-model="propertyValue" ng-change="post()" />
                 </div>
             </div>
         </li>

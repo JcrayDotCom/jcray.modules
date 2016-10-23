@@ -119,12 +119,12 @@
             </div>
         </li>
         <li class="collection-item row" ng-repeat="stat in data.resourcesStats">
-            <div ng-repeat="property in data.statsElementResource.properties" ng-if="property.name == stat.name">
+            <div ng-repeat="(propertyName, propertyValue) in data.statsElementResource.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
-                    <label>{{ property.name }}</label>
+                    <label>{{ propertyValue }}</label>
                 </div/>
                 <div class="col-md-6">
-                    <input type="text" ng-model="property.value" ng-change="post()" />
+                    <input type="text" ng-model="propertyValue" ng-change="post()" />
                 </div>
             </div>
         </li>
@@ -133,7 +133,7 @@
 </div>
                 <div class="clearfix"><!-- Edit the costs of the Resource -->
 <div ng-if="data.costsElementResource && elementTab == 'costs'+data.costsElementResource.id">
-    Costs
+    {{ 'Costs' | trans }}
     <ul class="collection">
         <li ng-repeat="cost in data.costsElementResource.costs" class="collection-item row">
             <div class="col-md-6">

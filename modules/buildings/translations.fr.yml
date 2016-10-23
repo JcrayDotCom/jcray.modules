@@ -10,15 +10,23 @@ Building default quantity: Quantité par défaut
 Create this new Building: Créer
 Create a new Building: Créer un(e) Building
 New Building: Nouvel(le) Building
+Building description: Description
 
 # Edit
 buildings of your game: buildings de votre jeu
-All buildings: Tous les buildings
+All buildings: Tou(te)s les buildings
 Name: Nom
 quantity: quantité
 picture: image
+
+Effects: Effets
+Effect quantity: Quantité de l'effet
+Select a property: Propriété affectée
+Create a new effect: Nouvel effet
 
 # Stats editor
 Create a new stat: Créer une nouvelle stat
 Name of the stat: Nom de la stat
 Default value for this stat: Valeur par défaut
+
+Costs: Coûts

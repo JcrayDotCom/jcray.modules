@@ -25,6 +25,7 @@ Update stats: Update stats
 Name of the stat: Name of the stat
 Default value of the stat: Default value of the stat
 Create this stat: Create this stat
+New stat: New stat
 
 # Listing
 How many to buy?: How many to buy?
@@ -33,3 +34,5 @@ How many to buy?: How many to buy?
 Create a new stat: Create a new stat
 Name of the stat: Name of the stat
 Default value for this stat: Default value for this stat
+
+Costs: Costs

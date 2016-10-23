@@ -1,6 +1,6 @@
 <!-- Edit the costs of the %elementName% -->
 <div ng-if="data.costsElement%elementName% && elementTab == 'costs'+data.costsElement%elementName%.id">
-    Costs
+    {{ 'Costs' | trans }}
     <ul class="collection">
         <li ng-repeat="cost in data.costsElement%elementName%.costs" class="collection-item row">
             <div class="col-md-6">

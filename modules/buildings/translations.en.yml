@@ -10,6 +10,7 @@ Building default quantity: Building default quantity
 Create this new Building: Create this new Building
 Create a new Building: Create a new Building
 New Building: New Building
+Building description: Building description
 
 # Edit
 buildings of your game: buildings of your game
@@ -18,7 +19,14 @@ Name: Name
 quantity: quantity
 picture: picture
 
+Effects: Effects
+Effect quantity: Effect quantity
+Select a property: Select a property
+Create a new effect: Create a new effect
+
 # Stats editor
 Create a new stat: Create a new stat
 Name of the stat: Name of the stat
 Default value for this stat: Default value for this stat
+
+Costs: Costs
