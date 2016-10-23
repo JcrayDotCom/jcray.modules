@@ -38,10 +38,10 @@ if ($player) {
         $playerElements[] = $playerElement;
     }
 
-    $arrayReturn['playerElements'] = $playerElements;
+    $arrayReturn['playerobjects'] = $playerElements;
 }
 
-$arrayReturn['objects'] = $objects;
+$arrayReturn['playerobjects'] = $objects;
 
 /*
 *   List stats of objects

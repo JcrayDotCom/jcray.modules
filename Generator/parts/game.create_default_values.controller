@@ -9,6 +9,7 @@ $%elementsName% = $game->getElementsByProperties([
 $playerElements = [];
 
 if ($player) {
+
     foreach ($%elementsName% as $element) {
         $playerElement = $player->getElement($element->getId());
         if (!$playerElement) {
@@ -17,7 +18,7 @@ if ($player) {
         $playerElements[] = $playerElement;
     }
 
-    $arrayReturn['playerElements'] = $playerElements;
+    $arrayReturn['player%elementsName%'] = $playerElements;
 }
 
-$arrayReturn['%elementsName%'] = $%elementsName%;
+$arrayReturn['player%elementsName%'] = $%elementsName%;

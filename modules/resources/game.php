@@ -21,10 +21,10 @@ if ($player) {
         $playerElements[] = $playerElement;
     }
 
-    $arrayReturn['playerElements'] = $playerElements;
+    $arrayReturn['playerresources'] = $playerElements;
 }
 
-$arrayReturn['resources'] = $resources;
+$arrayReturn['playerresources'] = $resources;
 
 if (isset($error)) {
     $arrayReturn['error'] = $error;

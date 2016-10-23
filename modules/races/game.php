@@ -37,10 +37,10 @@ if ($player) {
         $playerElements[] = $playerElement;
     }
 
-    $arrayReturn['playerElements'] = $playerElements;
+    $arrayReturn['playerraces'] = $playerElements;
 }
 
-$arrayReturn['races'] = $races;
+$arrayReturn['playerraces'] = $races;
 
 if (isset($error)) {
     $arrayReturn['error'] = $error;

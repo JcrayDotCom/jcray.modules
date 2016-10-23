@@ -38,10 +38,10 @@ if ($player) {
         $playerElements[] = $playerElement;
     }
 
-    $arrayReturn['playerElements'] = $playerElements;
+    $arrayReturn['playerunits'] = $playerElements;
 }
 
-$arrayReturn['units'] = $units;
+$arrayReturn['playerunits'] = $units;
 
 /*
 *   List stats of units

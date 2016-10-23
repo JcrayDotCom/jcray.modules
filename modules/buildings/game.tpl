@@ -1,7 +1,7 @@
 <!-- List buildings of the player -->
 <div ng-if="data.playerElements.length">
     <ul class="collection">
-        <li class="collection-item row" ng-repeat="playerElement in data.playerElements">
+        <li class="collection-item row" ng-repeat="playerElement in data.playerbuildings">
             <div class="col-md-1">
                 <img ng-src="{{ playerElement.element.properties.picture }}" alt="{{ playerElement.element.name }}">
             </div>
