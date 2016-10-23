@@ -19,14 +19,6 @@ Name: Name
 quantity: quantity
 picture: picture
 
-# Stats
-Stats: Stats
-Update stats: Update stats
-Name of the stat: Name of the stat
-Default value of the stat: Default value of the stat
-Create this stat: Create this stat
-New stat: New stat
-
 Effects: Effects
 Effect quantity: Effect quantity
 Select a property: Select a property

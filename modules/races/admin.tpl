@@ -56,9 +56,7 @@
                     <input type="text" ng-model="element.properties[propertyName]" ng-change="silentPost()"/>
                 </div>
                 <div class="col-md-3">
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the stats of the Race -->
-<a class="btn-floating btn-tiny waves-effect waves-light blue" ng-click="elementTab = 'stats'+element.id; data.statsElementRace = element"><i class="fa fa-bar-chart"></i></a>
-</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Race -->
@@ -156,32 +154,4 @@
             </li>
         </ul>
     {% endblock %}
-</div>
-
-<div ng-init="tabs ? tabs.stats = 'Stats' : null"></div>
-
-<div ng-if="!tabs || currentModuleTab == 'stats'">
-{% block %}
-    {% title %}{{ 'New stat' | trans }}{% endtitle %}
-    <input type="text" placeholder="{{ 'Name of the stat' | trans }}" ng-model="data.newStat.name" />
-    <input type="text" placeholder="{{ 'Default value of the stat' | trans }}" ng-model="data.newStat.quantity" />
-    <button class="btn" ng-click="post()">{{ 'Create this stat' | trans }}</button>
-{% endblock %}
-
-<div ng-if="data.racesStats.length">
-    {% block %}
-        {% title %}{{ "Stats" | trans }}{% endtitle %}
-        <ul class="collection">
-            <li class="collection-item row" ng-repeat="stat in data.racesStats">
-                <span class="col-md-4"><input type="text" ng-model="stat.name" ng-change="silentPost()" /></span>
-                <span class="col-md-4"><input type="text" ng-model="stat.quantity" ng-change="silentPost()" /></span>
-                <span class="col-md-4">
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 10px;">
-                        <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeRaceStat = stat;post();"><i class="tiny material-icons">delete</i></a>
-                    </span>
-                </span>
-            </li>
-        </ul>
-    {% endblock %}
-    </div>
 </div>

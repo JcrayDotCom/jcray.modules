@@ -42,12 +42,6 @@ if ($player) {
 
 $arrayReturn['races'] = $races;
 
-/*
-*   List stats of races
-*/
-
-$arrayReturn['racesStats'] = $game->get('racesStats');
-
 if (isset($error)) {
     $arrayReturn['error'] = $error;
 }

@@ -10,7 +10,6 @@ parts:
     # Admin controller
     - admin:default_vars:controller
     - admin:create:controller
-    - admin:edit_stats:controller
     - admin:edit:controller
     - admin:create_filter:controller
     - admin:delete:controller
@@ -21,13 +20,11 @@ parts:
     - admin:error:template
     - admin:create:template
     - admin:edit:template
-    - admin:stats:template
 
     # Game controller
     - game:chose_filter:controller
     - game:default_vars:controller
     - game:create_default_values:controller
-    - game:listing_stats:controller
     - game:default_return:controller
 
 ignore:
@@ -37,3 +34,5 @@ ignore:
     - hook:elementEffectsButton:template
     # Do not show the quantity field
     - hook:elementQuantityField:template
+    # Do not show the stats button on elements listing
+    - hook:elementStatsButton:template
