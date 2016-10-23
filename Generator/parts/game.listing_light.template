@@ -1,5 +1,5 @@
 <!-- List %elementsName% of the player -->
-<div ng-if="data.%elementsName%.length">
+<div ng-if="data.player%elementsName%.length">
     <div class="chip" ng-repeat="playerElement in data.player%elementsName%">
         <img ng-src="{{ playerElement.element.properties.picture }}" alt="{{ playerElement.element.name }}">
         <span>

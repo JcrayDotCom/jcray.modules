@@ -1,5 +1,5 @@
 <!-- List objects of the player -->
-<div ng-if="data.playerElements.length">
+<div ng-if="data.playerobjects.length">
     <ul class="collection">
         <li class="collection-item row" ng-repeat="playerElement in data.playerobjects">
             <div class="col-md-1">
