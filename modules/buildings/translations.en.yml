@@ -19,6 +19,9 @@ Name: Name
 quantity: quantity
 picture: picture
 
+# Listing
+How many to buy?: How many to buy?
+
 Effects: Effects
 Effect quantity: Effect quantity
 Select a property: Select a property

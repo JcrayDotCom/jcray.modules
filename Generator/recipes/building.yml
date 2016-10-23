@@ -1,10 +1,10 @@
 ###
 #   Jcray v8 - Tech
 #
-#   This recipe is the object recipe.
-#   It creates, edits, and deletes elements, and allow to manage costs or effects on elements.
+#   This recipe is the building recipe.
+#   It creates, edits, and deletes elements, and allow to manage costs on elements.
 #
-#   Modules: objects
+#   Modules: buldings
 ##
 parts:
     # Admin controller
@@ -12,7 +12,6 @@ parts:
     - admin:create_menu:controller
     - admin:create:controller
     - admin:edit_costs:controller
-    - admin:edit_effects:controller
     - admin:edit:controller
     - admin:delete:controller
     - admin:list:controller
@@ -35,3 +34,5 @@ parts:
 ignore:
     # Do not show the stats button on elements listing
     - hook:elementStatsButton:template
+    # Do not show the effects button
+    - hook:elementEffectsButton:template

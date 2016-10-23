@@ -13,6 +13,14 @@
     </div>
 </div>
 
+<div ng-if="data.error">
+    <div class="card red">
+        <div class="card-content white-text">
+            <i class="material-icons">error_outline</i> <span style="position: relative;top: -7px;">{{ data.error.message  }}</span>
+        </div>
+    </div>
+</div>
+
 <div ng-init="tabs ? tabs.create = 'New Building' : null"></div>
 
 <!-- Create a Building -->
@@ -21,7 +29,8 @@
         {% title %}{{ "Create a new Building" | trans }}{% endtitle %}
         <form>
             <input type="text" ng-model="data.newBuilding.name" placeholder="{{ 'Building name' | trans }}" />
-            
+            <input type="text" ng-model="data.newBuilding.description" placeholder="{{ 'Building description' | trans }}" />
+
             <input type="text" ng-model="data.newBuilding.quantity" placeholder="{{ 'Building default quantity' | trans }}" />
 
 
@@ -52,7 +61,9 @@
                 </div>
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the costs of the Building -->
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'+element.id; data.costsElementBuilding = element"><i class="fa fa-money"></i></a>
+</span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Building -->
 <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeBuilding = element.name;post();"><i class="tiny material-icons">delete</i></a>
@@ -121,10 +132,10 @@
         <li class="collection-item row" ng-repeat="stat in data.buildingsStats">
             <div ng-repeat="(propertyName, propertyValue) in data.statsElementBuilding.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
-                    <label>{{ propertyValue }}</label>
+                    <label>{{ propertyName }}</label>
                 </div/>
                 <div class="col-md-6">
-                    <input type="text" ng-model="propertyValue" ng-change="post()" />
+                    <input type="text" ng-model="data.statsElementBuilding.properties[propertyName]" ng-change="silentPost()" />
                 </div>
             </div>
         </li>
@@ -140,7 +151,7 @@
                 <label>{{ cost.cost.name }}</label/>
             </div>
             <div class="col-md-6">
-                <input type="text" ng-change="post()" ng-model="cost.quantity" />
+                <input type="text" ng-model="cost.quantity" ng-change="silentPost" />
             </div>
         </li>
     </ul>

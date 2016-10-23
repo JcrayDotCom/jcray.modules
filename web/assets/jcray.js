@@ -65,7 +65,7 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
             $scope.renderModule();
         };
 
-        $scope.renderModule = function() {
+        $scope.renderModule = function(silent) {
             $scope.data.module_configuration = {
                 admin_controller: $scope.currentModule.admin_controller,
                 admin_template: $scope.currentModule.admin_template,
@@ -79,7 +79,9 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
                 }
                 console.log('Received data:');
                 console.log(r.data);
-
+                if (typeof silent != 'undefined' && silent) {
+                    return;
+                }
                 while ($scope.currentModule.admin_template.replace('{% button %}', '') != $scope.currentModule.admin_template) {
                     $scope.currentModule.admin_template = $scope.currentModule.admin_template.replace('{% button %}', '<button class="btn" ng-click="post()">');
                 }
@@ -113,6 +115,11 @@ jcrayApp.controller('appCtrl', ['$scope', '$templateCache', '$http', '$cookies',
             console.log('Sending data');
             console.log($scope.data);
             $scope.renderModule();
+        };
+        $scope.silentPost = function() {
+            console.log('Sending data');
+            console.log($scope.data);
+            $scope.renderModule(1);
         };
 
     }

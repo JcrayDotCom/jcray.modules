@@ -19,6 +19,9 @@ Name: Nom
 quantity: quantité
 picture: image
 
+# Listing
+How many to buy?: Quantité à acheter?
+
 Effects: Effets
 Effect quantity: Quantité de l'effet
 Select a property: Propriété affectée

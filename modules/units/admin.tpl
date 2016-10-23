@@ -91,16 +91,14 @@
             </div>
         </li>
         <li class="collection-item row" ng-repeat="stat in data.unitsStats">
-            <button class="btn" ng-click="post()"><i class="material-icons">send</i></button>
             <div ng-repeat="(propertyName, propertyValue) in data.statsElementUnit.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
                     <label>{{ propertyName }}</label>
                 </div/>
                 <div class="col-md-6">
-                    <input type="text" ng-model="propertyValue" />
+                    <input type="text" ng-model="data.statsElementUnit.properties[propertyName]" ng-change="silentPost()" />
                 </div>
             </div>
-            <button class="btn" ng-click="post()"><i class="material-icons">send</i></button>
         </li>
     </ul>
 </div>
@@ -108,18 +106,16 @@
                 <div class="clearfix"><!-- Edit the costs of the Unit -->
 <div ng-if="data.costsElementUnit && elementTab == 'costs'+data.costsElementUnit.id">
     {{ 'Costs' | trans }}
-    <button class="btn" ng-click="post()"><i class="material-icons">send</i></button>
     <ul class="collection">
         <li ng-repeat="cost in data.costsElementUnit.costs" class="collection-item row">
             <div class="col-md-6">
                 <label>{{ cost.cost.name }}</label/>
             </div>
             <div class="col-md-6">
-                <input type="text" ng-model="cost.quantity" />
+                <input type="text" ng-model="cost.quantity" ng-change="silentPost" />
             </div>
         </li>
     </ul>
-    <button class="btn" ng-click="post()"><i class="material-icons">send</i></button>
 </div>
 </div>
             </li>
