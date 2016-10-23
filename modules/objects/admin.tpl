@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-md-3" ng-repeat="(propertyName, propertyValue) in element.properties" ng-if="propertyName == 'picture' || propertyName == 'quantity'">
                     <label>{{ propertyName | trans }}</label>
-                    <input type="text" ng-model="element.properties[propertyName]" />
+                    <input type="text" ng-model="element.properties[propertyName]" ng-change="silentPost()"/>
                 </div>
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
