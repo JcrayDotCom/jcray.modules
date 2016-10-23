@@ -18,8 +18,8 @@
                 <!-- Costs for the playerElement -->
 <ul class="collection row">
     <li ng-repeat="cost in playerElement.element.costs">
-        <span class="col-md-6"><img ng-src="cost.cost.properties.picture" /></span>
-        <span class="col-md-6">{{ cost.cost.quantity }}</span>
+        <span class="col-md-6"><img ng-src="{{ cost.cost.properties.picture }}" /></span>
+        <span class="col-md-6">{{ cost.quantity }}</span>
     <li>
 </ul>
 
