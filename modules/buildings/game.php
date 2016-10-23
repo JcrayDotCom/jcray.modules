@@ -41,7 +41,7 @@ if ($player) {
     $arrayReturn['playerbuildings'] = $playerElements;
 }
 
-$arrayReturn['playerbuildings'] = $buildings;
+$arrayReturn['buildings'] = $buildings;
 
 /*
 *   List stats of buildings

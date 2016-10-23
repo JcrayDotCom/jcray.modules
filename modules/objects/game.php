@@ -41,7 +41,7 @@ if ($player) {
     $arrayReturn['playerobjects'] = $playerElements;
 }
 
-$arrayReturn['playerobjects'] = $objects;
+$arrayReturn['objects'] = $objects;
 
 /*
 *   List stats of objects

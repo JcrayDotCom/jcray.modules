@@ -41,7 +41,7 @@ if ($player) {
     $arrayReturn['playerunits'] = $playerElements;
 }
 
-$arrayReturn['playerunits'] = $units;
+$arrayReturn['units'] = $units;
 
 /*
 *   List stats of units

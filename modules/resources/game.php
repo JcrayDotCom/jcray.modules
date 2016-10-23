@@ -24,7 +24,7 @@ if ($player) {
     $arrayReturn['playerresources'] = $playerElements;
 }
 
-$arrayReturn['playerresources'] = $resources;
+$arrayReturn['resources'] = $resources;
 
 if (isset($error)) {
     $arrayReturn['error'] = $error;

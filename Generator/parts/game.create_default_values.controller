@@ -21,4 +21,4 @@ if ($player) {
     $arrayReturn['player%elementsName%'] = $playerElements;
 }
 
-$arrayReturn['player%elementsName%'] = $%elementsName%;
+$arrayReturn['%elementsName%'] = $%elementsName%;
