@@ -13,16 +13,13 @@
         {% title %}{{ "Stats" | trans }}{% endtitle %}
         <ul class="collection">
             <li class="collection-item row" ng-repeat="stat in data.%elementsName%Stats">
-                <span class="col-md-4"><input type="text" ng-model="stat.name" /></span>
-                <span class="col-md-4"><input type="text" ng-model="stat.quantity" /></span>
+                <span class="col-md-4"><input type="text" ng-model="stat.name" ng-change="silentPost()" /></span>
+                <span class="col-md-4"><input type="text" ng-model="stat.quantity" ng-change="silentPost()" /></span>
                 <span class="col-md-4">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">
                         <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.remove%elementName%Stat = stat;post();"><i class="tiny material-icons">delete</i></a>
                     </span>
                 </span>
-            </li>
-            <li class="collection-item">
-                <button class="btn" ng-click="post()">{{ "Update stats" | trans }}</button>
             </li>
         </ul>
     {% endblock %}

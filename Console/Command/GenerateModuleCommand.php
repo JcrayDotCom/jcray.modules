@@ -19,6 +19,7 @@ class GenerateModuleCommand extends Command
             ->setName('jcray:modules:generate')
             ->setDescription('Generate a new module with basic code')
             ->addArgument('recipe', InputArgument::OPTIONAL, 'Recipe of module to generate', 'default')
+            ->addArgument('singularName', InputArgument::OPTIONAL, 'Singular name for element', false)
         ;
     }
 
@@ -37,7 +38,7 @@ class GenerateModuleCommand extends Command
             return;
         }
 
-        $elementName = $io->ask('Please enter the singural name of elements used by this module', 'animal');
+        $elementName = $input->getArgument('singularName') ?? $io->ask('Please enter the singural name of elements used by this module', 'animal');
         $moduleName = Inflector::pluralize($elementName);
         $recipeData = Yaml::parse(file_get_contents($expectedFile));
 
@@ -86,7 +87,7 @@ class GenerateModuleCommand extends Command
 
         $moduleFolder = realpath(__DIR__.'/../../modules').'/'.Inflector::camelize($moduleName);
         if (is_dir($moduleFolder)) {
-            if (!$io->confirm('Destination folder already exists. Overwrite?', false)) {
+            if (!$input->getArgument('singularName') && !$io->confirm('Destination folder already exists. Overwrite?', false)) {
                 $io->error('Aborted.');
                 die();
             }
