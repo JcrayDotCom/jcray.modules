@@ -1,14 +1,16 @@
 <!-- Edit the costs of the %elementName% -->
 <div ng-if="data.costsElement%elementName% && elementTab == 'costs'+data.costsElement%elementName%.id">
     {{ 'Costs' | trans }}
+    <button class="btn" ng-click="post()"><i class="material-icons">send</i></button>
     <ul class="collection">
         <li ng-repeat="cost in data.costsElement%elementName%.costs" class="collection-item row">
             <div class="col-md-6">
                 <label>{{ cost.cost.name }}</label/>
             </div>
             <div class="col-md-6">
-                <input type="text" ng-change="post()" ng-model="cost.quantity" />
+                <input type="text" ng-model="cost.quantity" />
             </div>
         </li>
     </ul>
+    <button class="btn" ng-click="post()"><i class="material-icons">send</i></button>
 </div>
