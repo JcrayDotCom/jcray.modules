@@ -6,8 +6,8 @@ $arrayReturn = [];
 * Buy a Object
 */
 
-if ($request->get('playerElements')) {
-    foreach ($request->get('playerElements') as $playerElement) {
+if ($request->get('playerobjects')) {
+    foreach ($request->get('playerobjects') as $playerElement) {
         if (isset($playerElement['data']) && (int) $playerElement['data'] > 0) {
             $playerElementEntity = $player->getElement($playerElement['element']['id']);
             try {
