@@ -19,8 +19,8 @@
 <ul class="collection row">
     <li>
         <span ng-repeat="cost in playerElement.element.costs" class="pull-left">
-            <img ng-src="{{ cost.cost.properties.picture }}" width="30" alt="{{ cost.cost.name }}" /></span>
-            {{ cost.quantity }}</span>
+            <img ng-src="{{ cost.cost.properties.picture }}" width="30" alt="{{ cost.cost.name }}" />
+            &nbsp; {{ cost.quantity }}
         </span>
     <li>
 </ul>
