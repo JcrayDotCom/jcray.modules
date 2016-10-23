@@ -15,9 +15,19 @@
     <li>
 </ul>
 
+                <!-- Costs for the playerElement -->
+<ul class="collection row">
+    <li>
+        <span ng-repeat="cost in playerElement.element.costs" class="pull-left">
+            <img ng-src="{{ cost.cost.properties.picture }}" width="30" alt="{{ cost.cost.name }}" />
+            &nbsp; {{ cost.quantity }}
+        </span>
+    <li>
+</ul>
+
             </div>
             <div class="col-md-4">
-                <input type="text" placeholder="{{ 'How many to buy?' | trans }}'" ng-model="playerElement.data" />
+                <input type="text" placeholder="{{ 'How many to buy?' | trans }}" ng-model="playerElement.data" />
             </div>
             <div class="col-md-1">
                 <button class="btn" ng-click="post()">

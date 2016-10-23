@@ -8,9 +8,10 @@
             <div class="col-md-4">
                 <h5>{{ playerElement.element.name }} <small>x{{ playerElement.properties.quantity }}</small></h5>
                 %hook:gameElementStats:template%
+                %hook:gameElementCosts:template%
             </div>
             <div class="col-md-4">
-                <input type="text" placeholder="{{ 'How many to buy?' | trans }}'" ng-model="playerElement.data" />
+                <input type="text" placeholder="{{ 'How many to buy?' | trans }}" ng-model="playerElement.data" />
             </div>
             <div class="col-md-1">
                 <button class="btn" ng-click="post()">
