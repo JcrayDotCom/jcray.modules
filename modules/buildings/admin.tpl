@@ -24,7 +24,7 @@
 <div ng-init="tabs ? tabs.create = 'New Building' : null"></div>
 
 <!-- Create a Building -->
-<div ng-show="!tabs || currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create' || !data.buildings.length">
     {% block %}
         {% title %}{{ "Create a new Building" | trans }}{% endtitle %}
         <form>

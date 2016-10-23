@@ -16,7 +16,7 @@
 <div ng-init="tabs ? tabs.create = 'New Resource' : null"></div>
 
 <!-- Create a Resource -->
-<div ng-show="!tabs || currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create' || !data.resources.length">
     {% block %}
         {% title %}{{ "Create a new Resource" | trans }}{% endtitle %}
         <form>

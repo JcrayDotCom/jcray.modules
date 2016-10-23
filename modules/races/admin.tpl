@@ -24,7 +24,7 @@
 <div ng-init="tabs ? tabs.create = 'New Race' : null"></div>
 
 <!-- Create a Race -->
-<div ng-show="!tabs || currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create' || !data.races.length">
     {% block %}
         {% title %}{{ "Create a new Race" | trans }}{% endtitle %}
         <form>
@@ -176,7 +176,7 @@
                 <span class="col-md-4"><input type="text" ng-model="stat.name" ng-change="silentPost()" /></span>
                 <span class="col-md-4"><input type="text" ng-model="stat.quantity" ng-change="silentPost()" /></span>
                 <span class="col-md-4">
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 10px;">
                         <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeRaceStat = stat;post();"><i class="tiny material-icons">delete</i></a>
                     </span>
                 </span>

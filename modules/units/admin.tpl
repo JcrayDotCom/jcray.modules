@@ -24,7 +24,7 @@
 <div ng-init="tabs ? tabs.create = 'New Unit' : null"></div>
 
 <!-- Create a Unit -->
-<div ng-show="!tabs || currentModuleTab == 'create'">
+<div ng-show="!tabs || currentModuleTab == 'create' || !data.units.length">
     {% block %}
         {% title %}{{ "Create a new Unit" | trans }}{% endtitle %}
         <form>
@@ -138,7 +138,7 @@
                 <span class="col-md-4"><input type="text" ng-model="stat.name" ng-change="silentPost()" /></span>
                 <span class="col-md-4"><input type="text" ng-model="stat.quantity" ng-change="silentPost()" /></span>
                 <span class="col-md-4">
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 10px;">
                         <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeUnitStat = stat;post();"><i class="tiny material-icons">delete</i></a>
                     </span>
                 </span>
