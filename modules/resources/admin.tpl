@@ -137,7 +137,7 @@
                 <label>{{ cost.cost.name }}</label/>
             </div>
             <div class="col-md-6">
-                <input type="text" ng-model="cost.quantity" ng-change="silentPost" />
+                <input type="text" ng-model="cost.quantity" ng-change="silentPost()" />
             </div>
         </li>
     </ul>
