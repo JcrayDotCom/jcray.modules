@@ -19,16 +19,6 @@ var jcrayTech = angular.module('jcrayTech', ['ngCookies']).filter('trans', funct
     };
 }).filter('simpleQuote', function(){
     return function(input, optional1, optional2) {
-        if (Translator.locale != 'fr') {
-            return input;
-        }
-        var letters = ['e', 'a', 'u', 'i', 'y', o];
-        for (var i = 0; i < letters.length; i++) {
-            var firstLetter = letters[i];
-            for (var j = 0; j < letters.length; j++)  {
-                input = input.replace(firstLetter+' '+letters[j], firstLetter+"'"+letters[j]);
-            }
-        }
         return input;
     };
 });
