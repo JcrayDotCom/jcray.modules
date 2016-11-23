@@ -26,6 +26,7 @@ $newObject = $game->createElementIfInRequest('newObject', [
 if ($request->get('costsElementObject')) {
     $currentObject = (array) $request->get('costsElementObject');
     $elementObject = $game->getElement($currentObject['id']);
+    $createdCosts = [];
     foreach ($currentObject['costs'] as $costInfos) {
         $costInfos = (array) $costInfos;
         $costInfos['cost'] = (array) $costInfos['cost'];
@@ -45,6 +46,29 @@ foreach ($elements as $element) {
             $element->createCost($money, 0);
         }
     }
+}
+
+/*
+* Edit requirements of an Object
+*/
+
+// Update requirements of a Object
+if ($request->get('requirementsElementObject')) {
+    $currentObject = (array) $request->get('requirementsElementObject');
+    $elementObject = $game->getElement($currentObject['id']);
+    $createdRequirements = [];
+    foreach ($currentObject['requirements'] as $requirementInfo) {
+        $requirementInfo = (array) $requirementInfo;
+        $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
+        $createdRequirements[] = $elementObject->createRequirement($requirementInfo['required_element']['id'], $costInfos['ratio']);
+    }
+    $arrayReturn['costsElementObject'] = $request->get('costsElementObject');
+}
+
+// Delete a requirement of an Object
+if ($request->get('removeObjectRequirement')) {
+    $currentObject = (array) $request->get('removeObjectRequirement');
+    $this->removeRequirement($currentObject);
 }
 
 /*

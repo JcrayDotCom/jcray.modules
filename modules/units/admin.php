@@ -75,6 +75,7 @@ foreach ($gameStats as $stat) {
 if ($request->get('costsElementUnit')) {
     $currentUnit = (array) $request->get('costsElementUnit');
     $elementUnit = $game->getElement($currentUnit['id']);
+    $createdCosts = [];
     foreach ($currentUnit['costs'] as $costInfos) {
         $costInfos = (array) $costInfos;
         $costInfos['cost'] = (array) $costInfos['cost'];
@@ -94,6 +95,29 @@ foreach ($elements as $element) {
             $element->createCost($money, 0);
         }
     }
+}
+
+/*
+* Edit requirements of an Unit
+*/
+
+// Update requirements of a Unit
+if ($request->get('requirementsElementUnit')) {
+    $currentUnit = (array) $request->get('requirementsElementUnit');
+    $elementUnit = $game->getElement($currentUnit['id']);
+    $createdRequirements = [];
+    foreach ($currentUnit['requirements'] as $requirementInfo) {
+        $requirementInfo = (array) $requirementInfo;
+        $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
+        $createdRequirements[] = $elementUnit->createRequirement($requirementInfo['required_element']['id'], $costInfos['ratio']);
+    }
+    $arrayReturn['costsElementUnit'] = $request->get('costsElementUnit');
+}
+
+// Delete a requirement of an Unit
+if ($request->get('removeUnitRequirement')) {
+    $currentUnit = (array) $request->get('removeUnitRequirement');
+    $this->removeRequirement($currentUnit);
 }
 
 /*

@@ -6,6 +6,7 @@
 if ($request->get('costsElement%elementName%')) {
     $current%elementName% = (array) $request->get('costsElement%elementName%');
     $element%elementName% = $game->getElement($current%elementName%['id']);
+    $createdCosts = [];
     foreach ($current%elementName%['costs'] as $costInfos) {
         $costInfos = (array) $costInfos;
         $costInfos['cost'] = (array) $costInfos['cost'];

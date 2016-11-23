@@ -42,7 +42,10 @@ class GenerateModuleCommand extends Command
         $moduleName = Inflector::pluralize($elementName);
         $recipeData = Yaml::parse(file_get_contents($expectedFile));
 
-        $files = [];
+        $files = [
+            '.recipe' => [json_encode(['recipe' => $recipe, 'singularName' => $elementName])],
+        ];
+
         $translations = [
             'translations.en.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.en')],
             'translations.fr.yml' => [file_get_contents(__DIR__.'/../../Generator/parts/base.translation.fr')],

@@ -26,6 +26,7 @@ $newBuilding = $game->createElementIfInRequest('newBuilding', [
 if ($request->get('costsElementBuilding')) {
     $currentBuilding = (array) $request->get('costsElementBuilding');
     $elementBuilding = $game->getElement($currentBuilding['id']);
+    $createdCosts = [];
     foreach ($currentBuilding['costs'] as $costInfos) {
         $costInfos = (array) $costInfos;
         $costInfos['cost'] = (array) $costInfos['cost'];
@@ -45,6 +46,29 @@ foreach ($elements as $element) {
             $element->createCost($money, 0);
         }
     }
+}
+
+/*
+* Edit requirements of an Building
+*/
+
+// Update requirements of a Building
+if ($request->get('requirementsElementBuilding')) {
+    $currentBuilding = (array) $request->get('requirementsElementBuilding');
+    $elementBuilding = $game->getElement($currentBuilding['id']);
+    $createdRequirements = [];
+    foreach ($currentBuilding['requirements'] as $requirementInfo) {
+        $requirementInfo = (array) $requirementInfo;
+        $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
+        $createdRequirements[] = $elementBuilding->createRequirement($requirementInfo['required_element']['id'], $costInfos['ratio']);
+    }
+    $arrayReturn['costsElementBuilding'] = $request->get('costsElementBuilding');
+}
+
+// Delete a requirement of an Building
+if ($request->get('removeBuildingRequirement')) {
+    $currentBuilding = (array) $request->get('removeBuildingRequirement');
+    $this->removeRequirement($currentBuilding);
 }
 
 /*

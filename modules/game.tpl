@@ -6,10 +6,10 @@
     </div>
 </div>
 
-<!-- List objects of the player -->
-<div ng-if="data.playerobjects.length">
+<!-- List  of the player -->
+<div ng-if="data.player.length">
     <ul class="collection">
-        <li class="collection-item row" ng-repeat="playerElement in data.playerobjects">
+        <li class="collection-item row" ng-repeat="playerElement in data.player">
             <div class="col-md-4">
                 <img ng-src="{{ playerElement.element.properties.picture }}" alt="{{ playerElement.element.name }}">
             </div>
@@ -17,7 +17,7 @@
                 <h5>{{ playerElement.element.name }} <small>x{{ playerElement.properties.quantity }}</small></h5>
                 <!-- Stats for the playerElement -->
 <ul class="collection row">
-    <li ng-repeat="stat in data.objectsStats">
+    <li ng-repeat="stat in data.Stats">
         <span class="col-md-6">{{ stat.name }}</span>
         <span class="col-md-6" ng-repeat="(propertyName, propertyValue) in playerElement.properties" ng-if="propertyName == stat.name">{{ propertyValue }}</span>
     <li>

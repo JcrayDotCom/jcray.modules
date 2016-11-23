@@ -34,7 +34,9 @@ if ($player) {
         if (!$playerElement) {
             $playerElement = $player->createElement($element->getId());
         }
-        $playerElements[] = $playerElement;
+        if ($player->canHave($element->getId())) {
+            $playerElements[] = $playerElement;
+        }
     }
 
     $arrayReturn['playerraces'] = $playerElements;
