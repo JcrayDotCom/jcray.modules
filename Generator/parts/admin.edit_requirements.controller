@@ -2,6 +2,9 @@
 * Edit requirements of an %elementName%
 */
 
+// List all requirable elements of the game
+$arrayReturn['requirableElements'] = $game->getElementsByProperties(['requirable' => 1]);
+
 // Update requirements of a %elementName%
 if ($request->get('requirementsElement%elementName%')) {
     $current%elementName% = (array) $request->get('requirementsElement%elementName%');
@@ -10,13 +13,14 @@ if ($request->get('requirementsElement%elementName%')) {
     foreach ($current%elementName%['requirements'] as $requirementInfo) {
         $requirementInfo = (array) $requirementInfo;
         $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
-        $createdRequirements[] = $element%elementName%->createRequirement($requirementInfo['required_element']['id'], $costInfos['ratio']);
+        $createdRequirements[] = $element%elementName%->createRequirement($requirementInfo['required_element']['id'], $requirementInfo['ratio']);
     }
-     $arrayReturn['costsElement%elementName%'] = $request->get('costsElement%elementName%');
+     $arrayReturn['requirementsElement%elementName%'] = $request->get('requirementsElement%elementName%');
 }
 
 // Delete a requirement of an %elementName%
 if ($request->get('remove%elementName%Requirement')) {
     $current%elementName% = (array) $request->get('remove%elementName%Requirement');
-    $this->removeRequirement($current%elementName%);
+    $element%elementName% = $game->getElement($current%elementName%['id']);
+    $element%elementName%->removeRequirement($current%elementName%);
 }

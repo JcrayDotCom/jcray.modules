@@ -5,6 +5,6 @@
 
 $new%elementName% = null;
 
-$new%elementName% = $game->createElementIfInRequest('new%elementName%', [
+$new%elementName% = $game->createElementIfInRequest('new%elementName%', array_merge($defaultProperties, [
     'type' => '%elementName%',
-]);
+]));

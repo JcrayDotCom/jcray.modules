@@ -1,6 +1,7 @@
 <?php
 
 $arrayReturn = [];
+$defaultProperties = [];
 
 /*
 * Create a new Resource
@@ -8,9 +9,9 @@ $arrayReturn = [];
 
 $newResource = null;
 
-$newResource = $game->createElementIfInRequest('newResource', [
+$newResource = $game->createElementIfInRequest('newResource', array_merge($defaultProperties, [
     'type' => 'Resource',
-]);
+]));
 
 /*
 * Edit an existant Resource

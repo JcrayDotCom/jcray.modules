@@ -33,3 +33,7 @@ Name of the stat: Nom de la stat
 Default value for this stat: Valeur par défaut
 
 Costs: Coûts
+
+# Requirements editor
+Requirements: Conditions
+ratio: ratio

@@ -1,6 +1,7 @@
 <?php
 
 $arrayReturn = [];
+$defaultProperties = [];
 
 /*
 * Add module objects to the game menu
@@ -14,9 +15,9 @@ $game->registerMenu('objects');
 
 $newObject = null;
 
-$newObject = $game->createElementIfInRequest('newObject', [
+$newObject = $game->createElementIfInRequest('newObject', array_merge($defaultProperties, [
     'type' => 'Object',
-]);
+]));
 
 /*
 * Edit costs of an Object
@@ -52,6 +53,9 @@ foreach ($elements as $element) {
 * Edit requirements of an Object
 */
 
+// List all requirable elements of the game
+$arrayReturn['requirableElements'] = $game->getElementsByProperties(['requirable' => 1]);
+
 // Update requirements of a Object
 if ($request->get('requirementsElementObject')) {
     $currentObject = (array) $request->get('requirementsElementObject');
@@ -60,15 +64,16 @@ if ($request->get('requirementsElementObject')) {
     foreach ($currentObject['requirements'] as $requirementInfo) {
         $requirementInfo = (array) $requirementInfo;
         $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
-        $createdRequirements[] = $elementObject->createRequirement($requirementInfo['required_element']['id'], $costInfos['ratio']);
+        $createdRequirements[] = $elementObject->createRequirement($requirementInfo['required_element']['id'], $requirementInfo['ratio']);
     }
-    $arrayReturn['costsElementObject'] = $request->get('costsElementObject');
+    $arrayReturn['requirementsElementObject'] = $request->get('requirementsElementObject');
 }
 
 // Delete a requirement of an Object
 if ($request->get('removeObjectRequirement')) {
     $currentObject = (array) $request->get('removeObjectRequirement');
-    $this->removeRequirement($currentObject);
+    $elementObject = $game->getElement($currentObject['id']);
+    $elementObject->removeRequirement($currentObject);
 }
 
 /*

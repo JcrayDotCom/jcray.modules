@@ -64,6 +64,12 @@
 <a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'+element.id; data.costsElementUnit = element"><i class="fa fa-money"></i></a>
 </span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the requirements of the Unit -->
+<a class="btn-floating btn-tiny waves-effect waves-light green"
+    ng-click="elementTab = 'requirements'+element.id; data.requirementsElementUnit  = element">
+        <i class="fa fa-check-circle-o"></i>
+</a>
+</span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Unit -->
 <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeUnit = element.name;post();"><i class="tiny material-icons">delete</i></a>
 </span>
@@ -110,6 +116,24 @@
             </div>
             <div class="col-md-6">
                 <input type="text" ng-model="cost.quantity" ng-change="silentPost()" />
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+                <div class="clearfix"><!-- Edit the requirements of the Unit -->
+<div ng-if="data.requirementsElementUnit && elementTab == 'requirements'+data.requirementsElementUnit.id">
+    <h4>{{ 'Requirements' | trans }}</h4>
+    <ul class="collection">
+        <li class="collection-item row" ng-repeat="item in data.requirableElements">
+            <div class="col-md-2" ng-if="item.properties.picture">
+                <img src="{{ item.properties.picture }}" alt="{{ item.name }}" width="64" />
+            </div>
+            <div class="col-md-5">
+                <label>{{ item.name }} <i>({{ item.properties.type | trans }})</i></label/>
+            </div>
+            <div class="col-md-5">
+                <input alt="{{ "ratio" | trans}}" type="text" ng-model="requirement.ratio" ng-change="silentPost()" />
             </div>
         </li>
     </ul>

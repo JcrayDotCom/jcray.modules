@@ -9,6 +9,7 @@
 parts:
     # Admin controller
     - admin:default_vars:controller
+    - admin:requirableProperty:controller
     - admin:create_menu:controller
     - admin:create:controller
     - admin:edit_costs:controller

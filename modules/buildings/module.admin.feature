@@ -6,6 +6,27 @@ Feature:
   Background:
     Given I use the "buildings" module
 
+Scenario: Successfully create a Building with requirable property
+  When I send a "POST" request with:
+  """
+  {
+      "newBuilding": {
+          "name": "Sample Building",
+          "properties": {
+              "quantity": 1000,
+              "picture": "blah"
+          }
+      }
+  }
+  """
+  Then the response status code should be 200
+  Then the JSON nodes should be equal to:
+      | buildings[0].name                      | Sample Building   |
+      | buildings[0].properties.picture        | blah                   |
+      | buildings[0].properties.quantity       | 1000                   |
+      | buildings[0].properties.type           | Building          |
+      | buildings[0].properties.requirable     | 1                      |
+
 Scenario: Successfully create a Building
   When I send a "POST" request with:
   """
@@ -19,7 +40,6 @@ Scenario: Successfully create a Building
       }
   }
   """
-  Then print last response
   Then the response status code should be 200
   Then the JSON nodes should be equal to:
       | buildings[0].name                | Sample Building   |
@@ -51,6 +71,13 @@ Scenario: Successfully create another Building
       | buildings[1].properties.quantity | 10        |
       | buildings[1].properties.type  | Building      |
 
+Scenario: Successfully list all Building
+  When I send a "POST" request with:
+  """
+  {}
+  """
+  Then the response status code should be 200
+
 Scenario: Successfully create a Building requirement
     When I send a "POST" request with:
     """
@@ -58,12 +85,15 @@ Scenario: Successfully create a Building requirement
         "requirementsElementBuilding": {
                 "id": {previous_nodes.buildings[0].id},
                 "requirements": [{
-                    "required_element": "{previous_nodes.buildings[1].id}",
+                    "required_element": {
+                        "id": "{previous_nodes.buildings[1].id}"
+                    },
                     "ratio": 10
                 }]
         }
     }
     """
+    Then print last response
     Then the response status code should be 200
     Then the JSON nodes should be equal to:
         | buildings[0].requirements[0]['ratio']    | 10   |
@@ -74,7 +104,9 @@ Scenario: Successfully edit a Building requirement
           "requirementsElementBuilding": {
                   "id": {previous_nodes.buildings[0].id},
                   "requirements": [{
-                      "required_element": "{previous_nodes.buildings[1].id}",
+                      "required_element": {
+                          "id": "{previous_nodes.buildings[1].id}"
+                      },
                       "ratio": 20
                   }]
           }

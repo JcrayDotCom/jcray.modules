@@ -1,6 +1,9 @@
 <?php
 
 $arrayReturn = [];
+$defaultProperties = [];
+
+$defaultProperties['requirable'] = 1;
 
 /*
 * Add module units to the game menu
@@ -14,9 +17,9 @@ $game->registerMenu('units');
 
 $newUnit = null;
 
-$newUnit = $game->createElementIfInRequest('newUnit', [
+$newUnit = $game->createElementIfInRequest('newUnit', array_merge($defaultProperties, [
     'type' => 'Unit',
-]);
+]));
 
 /*
 * Edit stats of units
@@ -101,6 +104,9 @@ foreach ($elements as $element) {
 * Edit requirements of an Unit
 */
 
+// List all requirable elements of the game
+$arrayReturn['requirableElements'] = $game->getElementsByProperties(['requirable' => 1]);
+
 // Update requirements of a Unit
 if ($request->get('requirementsElementUnit')) {
     $currentUnit = (array) $request->get('requirementsElementUnit');
@@ -109,15 +115,16 @@ if ($request->get('requirementsElementUnit')) {
     foreach ($currentUnit['requirements'] as $requirementInfo) {
         $requirementInfo = (array) $requirementInfo;
         $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
-        $createdRequirements[] = $elementUnit->createRequirement($requirementInfo['required_element']['id'], $costInfos['ratio']);
+        $createdRequirements[] = $elementUnit->createRequirement($requirementInfo['required_element']['id'], $requirementInfo['ratio']);
     }
-    $arrayReturn['costsElementUnit'] = $request->get('costsElementUnit');
+    $arrayReturn['requirementsElementUnit'] = $request->get('requirementsElementUnit');
 }
 
 // Delete a requirement of an Unit
 if ($request->get('removeUnitRequirement')) {
     $currentUnit = (array) $request->get('removeUnitRequirement');
-    $this->removeRequirement($currentUnit);
+    $elementUnit = $game->getElement($currentUnit['id']);
+    $elementUnit->removeRequirement($currentUnit);
 }
 
 /*

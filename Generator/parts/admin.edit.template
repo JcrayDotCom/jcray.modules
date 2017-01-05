@@ -18,11 +18,13 @@
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementStatsButton:template%</span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementCostsButton:template%</span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementEffectsButton:template%</span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:elementRequirementsButton:template%</span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;">%hook:delete:template%</span>
                 </div>
                 <div class="clearfix">%hook:elementEffectsEdit:template%</div>
                 <div class="clearfix">%hook:elementStatsEditor:template%</div>
                 <div class="clearfix">%hook:elementCostsEditor:template%</div>
+                <div class="clearfix">%hook:elementRequirementsEditor:template%</div>
             </li>
         </ul>
     {% endblock %}
