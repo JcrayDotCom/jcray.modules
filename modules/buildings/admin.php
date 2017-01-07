@@ -57,18 +57,41 @@ foreach ($elements as $element) {
 
 // List all requirable elements of the game
 $arrayReturn['requirableElements'] = $game->getElementsByProperties(['requirable' => 1]);
+$arrayReturn['haveRequirableElements'] = (bool) count($arrayReturn['requirableElements']);
+
+$createdRequirements = [];
+
+$buildings = $game->getElementsByProperties([
+    'type' => 'Building',
+]);
+$settedElements = [];
+
+// Set default requirement (0)
+foreach ($buildings as $element) {
+    foreach ($element->getRequirements() as $requirement) {
+        $settedElements[] = $requirement->getRequiredElement()->getId();
+    }
+
+    foreach ($arrayReturn['requirableElements'] as $requirableElement) {
+        if (!in_array($requirableElement->getId(), $settedElements)) {
+            $createdRequirements[] = $element->createRequirement($requirableElement->getId(), 0);
+        }
+    }
+}
 
 // Update requirements of a Building
 if ($request->get('requirementsElementBuilding')) {
     $currentBuilding = (array) $request->get('requirementsElementBuilding');
     $elementBuilding = $game->getElement($currentBuilding['id']);
-    $createdRequirements = [];
     foreach ($currentBuilding['requirements'] as $requirementInfo) {
         $requirementInfo = (array) $requirementInfo;
+        if (!isset($requirementInfo['required_element'])) {
+            continue;
+        }
         $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
         $createdRequirements[] = $elementBuilding->createRequirement($requirementInfo['required_element']['id'], $requirementInfo['ratio']);
     }
-    $arrayReturn['requirementsElementBuilding'] = $request->get('requirementsElementBuilding');
+    $arrayReturn['requirementsElementBuilding'] = $createdRequirements;
 }
 
 // Delete a requirement of an Building

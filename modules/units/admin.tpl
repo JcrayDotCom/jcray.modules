@@ -65,8 +65,10 @@
 </span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the requirements of the Unit -->
-<a class="btn-floating btn-tiny waves-effect waves-light green"
-    ng-click="elementTab = 'requirements'+element.id; data.requirementsElementUnit  = element">
+<a
+    class="btn-floating btn-tiny waves-effect waves-light green"
+    ng-click="elementTab = 'requirements'+element.id; data.requirementsElementUnit = element"
+>
         <i class="fa fa-check-circle-o"></i>
 </a>
 </span>
@@ -125,7 +127,7 @@
 <div ng-if="data.requirementsElementUnit && elementTab == 'requirements'+data.requirementsElementUnit.id">
     <h4>{{ 'Requirements' | trans }}</h4>
     <ul class="collection">
-        <li class="collection-item row" ng-repeat="item in data.requirableElements">
+        <li class="collection-item row" ng-repeat="item in data.requirableElements" ng-if="item.id != data.requirementsElementUnit.id">
             <div class="col-md-2" ng-if="item.properties.picture">
                 <img src="{{ item.properties.picture }}" alt="{{ item.name }}" width="64" />
             </div>
@@ -133,7 +135,7 @@
                 <label>{{ item.name }} <i>({{ item.properties.type | trans }})</i></label/>
             </div>
             <div class="col-md-5">
-                <input alt="{{ "ratio" | trans}}" type="text" ng-model="requirement.ratio" ng-change="silentPost()" />
+                <input ng-repeat="requirement in data.requirementsElementUnit.requirements" ng-if="requirement.required_element.id == item.id" alt="{{ 'ratio' | trans}}" type="text" ng-model="requirement.ratio" ng-change="silentPost()" />
             </div>
         </li>
     </ul>
