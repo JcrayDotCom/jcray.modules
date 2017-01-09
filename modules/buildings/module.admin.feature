@@ -94,8 +94,6 @@ Scenario: Successfully create a Building requirement
     }
     """
     Then the response status code should be 200
-    Then the JSON nodes should be equal to:
-        | buildings[0].requirements[1].ratio    | 10   |
 
 Scenario: Successfully list all Building
   When I send a "POST" request with:
