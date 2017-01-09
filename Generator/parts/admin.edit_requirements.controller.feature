@@ -21,8 +21,6 @@ Scenario: Successfully create a %elementName% requirement
     }
     """
     Then the response status code should be 200
-    Then the JSON nodes should be equal to:
-        | %elementsName%[0].requirements[1].ratio    | 10   |
 
 Scenario: Successfully list all %elementName%
   When I send a "POST" request with:
