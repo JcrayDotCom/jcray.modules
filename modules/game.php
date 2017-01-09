@@ -1,13 +1,12 @@
-<?php
-
+<?php 
 $arrayReturn = [];
 
 /*
-* Buy a Building
+* Buy a 
 */
 
-if ($request->get('playerbuildings')) {
-    foreach ($request->get('playerbuildings') as $playerElement) {
+if ($request->get('player')) {
+    foreach ($request->get('player') as $playerElement) {
         if (isset($playerElement['data']) && (int) $playerElement['data'] > 0) {
             $playerElementEntity = $player->getElement($playerElement['element']['id']);
             try {
@@ -20,17 +19,17 @@ if ($request->get('playerbuildings')) {
 }
 
 /*
-* Get the buildings owned by the player
+* Get the  owned by the player
 */
 
-$buildings = $game->getElementsByProperties([
-    'type' => 'Building',
+$ = $game->getElementsByProperties([
+    'type' => '',
 ]);
 
 $playerElements = [];
 
 if ($player) {
-    foreach ($buildings as $element) {
+    foreach ($ as $element) {
         $playerElement = $player->getElement($element->getId());
         if (!$playerElement) {
             $playerElement = $player->createElement($element->getId());
@@ -40,16 +39,16 @@ if ($player) {
         }
     }
 
-    $arrayReturn['playerbuildings'] = $playerElements;
+    $arrayReturn['player'] = $playerElements;
 }
 
-$arrayReturn['buildings'] = $buildings;
+$arrayReturn[''] = $;
 
 /*
-*   List stats of buildings
+*   List stats of 
 */
 
-$arrayReturn['buildingsStats'] = $game->get('buildingsStats');
+$arrayReturn['Stats'] = $game->get('Stats');
 
 if (isset($error)) {
     $arrayReturn['error'] = $error;

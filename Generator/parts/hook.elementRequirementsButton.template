@@ -1,0 +1,7 @@
+<!-- Button for edit the requirements of the %elementName% -->
+<a
+    class="btn-floating btn-tiny waves-effect waves-light green"
+    ng-click="elementTab = 'requirements'+element.id; data.requirementsElement%elementName% = element"
+>
+        <i class="fa fa-check-circle-o"></i>
+</a>

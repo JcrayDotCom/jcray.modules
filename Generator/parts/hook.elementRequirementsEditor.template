@@ -1,0 +1,17 @@
+<!-- Edit the requirements of the %elementName% -->
+<div ng-if="data.requirementsElement%elementName% && elementTab == 'requirements'+data.requirementsElement%elementName%.id">
+    <h4>{{ 'Requirements' | trans }}</h4>
+    <ul class="collection">
+        <li class="collection-item row" ng-repeat="item in data.requirableElements" ng-if="item.id != data.requirementsElement%elementName%.id">
+            <div class="col-md-2" ng-if="item.properties.picture">
+                <img src="{{ item.properties.picture }}" alt="{{ item.name }}" width="64" />
+            </div>
+            <div class="col-md-5">
+                <label>{{ item.name }} <i>({{ item.properties.type | trans }})</i></label/>
+            </div>
+            <div class="col-md-5">
+                <input ng-repeat="requirement in data.requirementsElement%elementName%.requirements" ng-if="requirement.required_element.id == item.id" alt="{{ 'ratio' | trans}}" type="text" ng-model="requirement.ratio" ng-change="silentPost()" />
+            </div>
+        </li>
+    </ul>
+</div>

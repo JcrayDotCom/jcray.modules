@@ -21,32 +21,33 @@
     </div>
 </div>
 
-<div ng-init="tabs ? tabs.create = 'New Race' : null"></div>
+<div ng-init="tabs ? tabs.create = 'New ' : null"></div>
 
-<!-- Create a Race -->
-<div ng-show="!tabs || currentModuleTab == 'create' || (!data.races.length && !currentModuleTab)">
+<!-- Create a  -->
+<div ng-show="!tabs || currentModuleTab == 'create' || (!data..length && !currentModuleTab)">
     {% block %}
-        {% title %}{{ "Create a new Race" | trans }}{% endtitle %}
+        {% title %}{{ "Create a new " | trans }}{% endtitle %}
         <form>
-            <input type="text" ng-model="data.newRace.name" placeholder="{{ 'Race name' | trans }}" />
-            <input type="text" ng-model="data.newRace.description" placeholder="{{ 'Race description' | trans }}" />
+            <input type="text" ng-model="data.new.name" placeholder="{{ ' name' | trans }}" />
+            <input type="text" ng-model="data.new.description" placeholder="{{ ' description' | trans }}" />
 
-            
+            <input type="text" ng-model="data.new.quantity" placeholder="{{ ' default quantity' | trans }}" />
 
-            <input type="text" ng-model="data.newRace.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
-            {% button %}{{ "Create this new Race" | trans }}{% endbutton %}
+
+            <input type="text" ng-model="data.new.picture" placeholder="{{ 'Picture (prefixed with http://)' | trans }}" />
+            {% button %}{{ "Create this new " | trans }}{% endbutton %}
         </form>
     {% endblock %}
 </div>
 
-<div ng-init="tabs ? tabs.edit = 'All races' : null"></div>
+<div ng-init="tabs ? tabs.edit = 'All ' : null"></div>
 
-<!-- Edit a Race -->
-<div ng-show="(!tabs || currentModuleTab == 'edit' || (data.races.length && !currentModuleTab)) && data.races && data.races.length">
+<!-- Edit a  -->
+<div ng-show="(!tabs || currentModuleTab == 'edit' || (data..length && !currentModuleTab)) && data. && data..length">
     {% block %}
-        {% title %}{{ "races of your game" | trans | ucfirst }}{% endtitle %}
+        {% title %}{{ " of your game" | trans | ucfirst }}{% endtitle %}
         <ul class="collection">
-            <li ng-repeat="element in data.races" class="collection-item row">
+            <li ng-repeat="element in data." class="collection-item row">
                 <div class="col-md-3">
                     <label>{{ "Name" | trans }}</label>
                     <input type="text" ng-model="element.name" ng-change="silentPost()" />
@@ -57,22 +58,16 @@
                 </div>
                 <div class="col-md-3">
                     <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the requirements of the Race -->
-<a
-    class="btn-floating btn-tiny waves-effect waves-light green"
-    ng-click="elementTab = 'requirements'+element.id; data.requirementsElementRace = element"
->
-        <i class="fa fa-check-circle-o"></i>
-</a>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Button for edit the costs of the  -->
+<a class="btn-floating btn-tiny waves-effect waves-light green" ng-click="elementTab = 'costs'+element.id; data.costsElement = element"><i class="fa fa-money"></i></a>
 </span>
-                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the Race -->
-<a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeRace = element.name;post();"><i class="tiny material-icons">delete</i></a>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"></span>
+                    <span class="pull-right" style="margin-right: 10px;margin-top: 25px;"><!-- Delete the  -->
+<a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.remove = element.name;post();"><i class="tiny material-icons">delete</i></a>
 </span>
                 </div>
-                <div class="clearfix"><!-- Edit the effects of the Race -->
-<div ng-if="data.effectsElementRace && elementTab == 'effects'+data.effectsElementRace.id">
+                <div class="clearfix"><!-- Edit the effects of the  -->
+<div ng-if="data.effectsElement && elementTab == 'effects'+data.effectsElement.id">
     <h4>{{ 'Effects' | trans }}</h4>
     <ul class="collection">
         <li class="collection-item row">
@@ -97,13 +92,13 @@
             </div>
         </li>
         <li>
-            <div ng-if="data.effectsElementRace.effects.length">
+            <div ng-if="data.effectsElement.effects.length">
                 <ul class="collection">
-                    <li class="row collection-item" ng-repeat="effect in data.effectsElementRace.effects">
+                    <li class="row collection-item" ng-repeat="effect in data.effectsElement.effects">
                         <span class="col-md-4">{{ effect.property_name }}</span>
                         <span class="col-md-4"><input type="text" ng-model="effect.quantity" /></span>
                         <span class="col-md-4">
-                            <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeEffectRace = effect;post();"><i class="tiny material-icons">delete</i></a>
+                            <a class="btn-floating btn-tiny waves-effect waves-light red" ng-click="data.removeEffect = effect;post();"><i class="tiny material-icons">delete</i></a>
                         </span>
                     </li>
                 </ul>
@@ -113,8 +108,8 @@
     </ul>
 </div>
 </div>
-                <div class="clearfix"><!-- Edit the stats of the Race -->
-<div ng-if="data.statsElementRace && elementTab == 'stats'+data.statsElementRace.id">
+                <div class="clearfix"><!-- Edit the stats of the  -->
+<div ng-if="data.statsElement && elementTab == 'stats'+data.statsElement.id">
 
     <ul class="collection">
         <li class="collection-item row">
@@ -131,47 +126,29 @@
                 <button ng-click="post()" class="waves-effect waves-light btn"><i class="material-icons">send</i></button>
             </div>
         </li>
-        <li class="collection-item row" ng-repeat="stat in data.racesStats">
-            <div ng-repeat="(propertyName, propertyValue) in data.statsElementRace.properties" ng-if="propertyName == stat.name">
+        <li class="collection-item row" ng-repeat="stat in data.Stats">
+            <div ng-repeat="(propertyName, propertyValue) in data.statsElement.properties" ng-if="propertyName == stat.name">
                 <div class="col-md-6">
                     <label>{{ propertyName }}</label>
                 </div/>
                 <div class="col-md-6">
-                    <input type="text" ng-model="data.statsElementRace.properties[propertyName]" ng-change="silentPost()" />
+                    <input type="text" ng-model="data.statsElement.properties[propertyName]" ng-change="silentPost()" />
                 </div>
             </div>
         </li>
     </ul>
 </div>
 </div>
-                <div class="clearfix"><!-- Edit the costs of the Race -->
-<div ng-if="data.costsElementRace && elementTab == 'costs'+data.costsElementRace.id">
+                <div class="clearfix"><!-- Edit the costs of the  -->
+<div ng-if="data.costsElement && elementTab == 'costs'+data.costsElement.id">
     {{ 'Costs' | trans }}
     <ul class="collection">
-        <li ng-repeat="cost in data.costsElementRace.costs" class="collection-item row">
+        <li ng-repeat="cost in data.costsElement.costs" class="collection-item row">
             <div class="col-md-6">
                 <label>{{ cost.cost.name }}</label/>
             </div>
             <div class="col-md-6">
                 <input type="text" ng-model="cost.quantity" ng-change="silentPost()" />
-            </div>
-        </li>
-    </ul>
-</div>
-</div>
-                <div class="clearfix"><!-- Edit the requirements of the Race -->
-<div ng-if="data.requirementsElementRace && elementTab == 'requirements'+data.requirementsElementRace.id">
-    <h4>{{ 'Requirements' | trans }}</h4>
-    <ul class="collection">
-        <li class="collection-item row" ng-repeat="item in data.requirableElements" ng-if="item.id != data.requirementsElementRace.id">
-            <div class="col-md-2" ng-if="item.properties.picture">
-                <img src="{{ item.properties.picture }}" alt="{{ item.name }}" width="64" />
-            </div>
-            <div class="col-md-5">
-                <label>{{ item.name }} <i>({{ item.properties.type | trans }})</i></label/>
-            </div>
-            <div class="col-md-5">
-                <input ng-repeat="requirement in data.requirementsElementRace.requirements" ng-if="requirement.required_element.id == item.id" alt="{{ 'ratio' | trans}}" type="text" ng-model="requirement.ratio" ng-change="silentPost()" />
             </div>
         </li>
     </ul>

@@ -1,23 +1,26 @@
-# translations for the races module
+# translations for the  module
 
-Race : Race
-races : races
+ : 
+ : 
 
 # Create
-Race name: Nom de l'Race
-Race default quantity: Quantité par défaut
+ name: Nom de l'
+ default quantity: Quantité par défaut
 "Picture (prefixed with http://)": "Image (préfixée par http://)"
-Create this new Race: Créer
-Create a new Race: Créer un(e) Race
-New Race: Nouvel(le) Race
-Race description: Description
+Create this new : Créer
+Create a new : Créer un(e) 
+New : Nouvel(le) 
+ description: Description
 
 # Edit
-races of your game: races de votre jeu
-All races: Tou(te)s les races
+ of your game:  de votre jeu
+All : Tou(te)s les 
 Name: Nom
 quantity: quantité
 picture: image
+
+# Listing
+How many to buy?: Quantité à acheter?
 
 Effects: Effets
 Effect quantity: Quantité de l'effet
@@ -30,7 +33,3 @@ Name of the stat: Nom de la stat
 Default value for this stat: Valeur par défaut
 
 Costs: Coûts
-
-# Requirements editor
-Requirements: Conditions
-ratio: ratio

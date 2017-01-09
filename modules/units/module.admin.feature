@@ -6,6 +6,27 @@ Feature:
   Background:
     Given I use the "units" module
 
+Scenario: Successfully create a Unit with requirable property
+  When I send a "POST" request with:
+  """
+  {
+      "newUnit": {
+          "name": "Sample Unit",
+          "properties": {
+              "quantity": 1000,
+              "picture": "blah"
+          }
+      }
+  }
+  """
+  Then the response status code should be 200
+  Then the JSON nodes should be equal to:
+      | units[0].name                      | Sample Unit   |
+      | units[0].properties.picture        | blah                   |
+      | units[0].properties.quantity       | 1000                   |
+      | units[0].properties.type           | Unit          |
+      | units[0].properties.requirable     | 1                      |
+
 Scenario: Successfully create a Unit
   When I send a "POST" request with:
   """
@@ -112,6 +133,51 @@ Scenario: Successfully edit a stat
   Then the JSON nodes should be equal to:
     | unitsStats[0].name                | A stat   |
     | unitsStats[0].quantity            | 11       |
+
+Scenario: Successfully list all Unit
+  When I send a "POST" request with:
+  """
+  {}
+  """
+  Then the response status code should be 200
+
+Scenario: Successfully create a Unit requirement
+    When I send a "POST" request with:
+    """
+    {
+        "requirementsElementUnit": {
+                "id": {previous_nodes.units[0].id},
+                "requirements": [{
+                    "required_element": {
+                        "id": "{previous_nodes.units[1].id}"
+                    },
+                    "ratio": 10
+                }]
+        }
+    }
+    """
+    Then print last response
+    Then the response status code should be 200
+    Then the JSON nodes should be equal to:
+        | units[0].requirements[0]['ratio']    | 10   |
+
+Scenario: Successfully edit a Unit requirement
+      """
+      {
+          "requirementsElementUnit": {
+                  "id": {previous_nodes.units[0].id},
+                  "requirements": [{
+                      "required_element": {
+                          "id": "{previous_nodes.units[1].id}"
+                      },
+                      "ratio": 20
+                  }]
+          }
+      }
+      """
+      Then the response status code should be 200
+      Then the JSON nodes should be equal to:
+          | units[0].requirements[0]['ratio']    | 20   |
 
 Scenario: Successfully edit a Unit
   When I send a "POST" request with:

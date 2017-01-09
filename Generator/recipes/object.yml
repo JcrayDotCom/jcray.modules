@@ -12,6 +12,7 @@ parts:
     - admin:create_menu:controller
     - admin:create:controller
     - admin:edit_costs:controller
+    - admin:edit_requirements:controller
     - admin:edit_effects:controller
     - admin:edit:controller
     - admin:delete:controller

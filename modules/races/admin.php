@@ -1,6 +1,7 @@
 <?php
 
 $arrayReturn = [];
+$defaultProperties = [];
 
 /*
 * Create a new Race
@@ -8,9 +9,9 @@ $arrayReturn = [];
 
 $newRace = null;
 
-$newRace = $game->createElementIfInRequest('newRace', [
+$newRace = $game->createElementIfInRequest('newRace', array_merge($defaultProperties, [
     'type' => 'Race',
-]);
+]));
 
 /*
 * Edit an existant Race

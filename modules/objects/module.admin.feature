@@ -50,6 +50,51 @@ Scenario: Successfully create another Object
       | objects[1].properties.quantity | 10        |
       | objects[1].properties.type  | Object      |
 
+Scenario: Successfully list all Object
+  When I send a "POST" request with:
+  """
+  {}
+  """
+  Then the response status code should be 200
+
+Scenario: Successfully create a Object requirement
+    When I send a "POST" request with:
+    """
+    {
+        "requirementsElementObject": {
+                "id": {previous_nodes.objects[0].id},
+                "requirements": [{
+                    "required_element": {
+                        "id": "{previous_nodes.objects[1].id}"
+                    },
+                    "ratio": 10
+                }]
+        }
+    }
+    """
+    Then print last response
+    Then the response status code should be 200
+    Then the JSON nodes should be equal to:
+        | objects[0].requirements[0]['ratio']    | 10   |
+
+Scenario: Successfully edit a Object requirement
+      """
+      {
+          "requirementsElementObject": {
+                  "id": {previous_nodes.objects[0].id},
+                  "requirements": [{
+                      "required_element": {
+                          "id": "{previous_nodes.objects[1].id}"
+                      },
+                      "ratio": 20
+                  }]
+          }
+      }
+      """
+      Then the response status code should be 200
+      Then the JSON nodes should be equal to:
+          | objects[0].requirements[0]['ratio']    | 20   |
+
 Scenario: Successfully retrieve objects
   When I send a "POST" request with:
   """
