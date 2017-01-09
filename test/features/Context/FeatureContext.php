@@ -209,12 +209,17 @@ class FeatureContext extends BaseContext implements Context
         }
 
         $this->previous_nodes = json_decode(file_get_contents('last_nodes'));
-        preg_match_all('%\{previous_nodes\.(.+)\[(.+)\]\.(.+)\}%', $requestBody, $matches);
-        for ($i = 0; $i < count($matches[0]); ++$i) {
-            foreach ($this->previous_nodes as $k => $v) {
-                if ($k == $matches[1][$i]) {
-                    $property = $matches[3][$i];
-                    $requestBody = str_replace($matches[0][$i], $v[(int) $matches[2][$i]]->$property, $requestBody);
+        preg_match_all('%\{previous_nodes\.(.*)\}%', $requestBody, $matches);
+        unset($matches[0]);
+
+        foreach ($matches as $match) {
+            foreach ($match as $baseExpr) {
+                try {
+                    $expr = str_replace('.', '->', sprintf('return $this->previous_nodes->%s;', $baseExpr));
+                    $value = eval($expr);
+                    $requestBody = str_replace(sprintf('{previous_nodes.%s}', $baseExpr), $value, $requestBody);
+                } catch (\Exception $e) {
+                    $requestBody = str_replace(sprintf('{previous_nodes.%s}', $baseExpr), '""', $requestBody);
                 }
             }
         }
