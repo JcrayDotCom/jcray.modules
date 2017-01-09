@@ -149,35 +149,41 @@ Scenario: Successfully create a Unit requirement
                 "id": {previous_nodes.units[0].id},
                 "requirements": [{
                     "required_element": {
-                        "id": "{previous_nodes.units[1].id}"
+                        "id": {previous_nodes.units[1].id}
                     },
                     "ratio": 10
                 }]
         }
     }
     """
-    Then print last response
     Then the response status code should be 200
-    Then the JSON nodes should be equal to:
-        | units[0].requirements[0]['ratio']    | 10   |
+
+Scenario: Successfully list all Unit
+  When I send a "POST" request with:
+  """
+  {}
+  """
+  Then the response status code should be 200
+
 
 Scenario: Successfully edit a Unit requirement
-      """
-      {
-          "requirementsElementUnit": {
-                  "id": {previous_nodes.units[0].id},
-                  "requirements": [{
-                      "required_element": {
-                          "id": "{previous_nodes.units[1].id}"
-                      },
-                      "ratio": 20
-                  }]
-          }
-      }
-      """
-      Then the response status code should be 200
-      Then the JSON nodes should be equal to:
-          | units[0].requirements[0]['ratio']    | 20   |
+    When I send a "POST" request with:
+    """
+    {
+        "requirementsElementUnit": {
+                "id": {previous_nodes.units[0].id},
+                "requirements": [{
+                    "required_element": {
+                        "id": {previous_nodes.units[0].requirements[1].required_element.id}
+                    },
+                    "ratio": 20
+                }]
+        }
+    }
+    """
+    Then the response status code should be 200
+    Then the JSON nodes should be equal to:
+      | units[0].requirements[1].ratio    | 20   |
 
 Scenario: Successfully edit a Unit
   When I send a "POST" request with:

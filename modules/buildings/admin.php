@@ -79,17 +79,19 @@ foreach ($buildings as $element) {
     }
 }
 
+$arrayReturn['requirementsElementBuilding'] = [];
 // Update requirements of a Building
 if ($request->get('requirementsElementBuilding')) {
     $currentBuilding = (array) $request->get('requirementsElementBuilding');
-    $elementBuilding = $game->getElement($currentBuilding['id']);
+    $elementBuilding = $game->getElement((int) $currentBuilding['id']);
     foreach ($currentBuilding['requirements'] as $requirementInfo) {
         $requirementInfo = (array) $requirementInfo;
         if (!isset($requirementInfo['required_element'])) {
             continue;
         }
+
         $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
-        $createdRequirements[] = $elementBuilding->createRequirement($requirementInfo['required_element']['id'], $requirementInfo['ratio']);
+        $createdRequirements[] = $elementBuilding->createRequirement((int) $requirementInfo['required_element']['id'], (int) $requirementInfo['ratio']);
     }
     $arrayReturn['requirementsElementBuilding'] = $createdRequirements;
 }

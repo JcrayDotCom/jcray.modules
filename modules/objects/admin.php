@@ -3,6 +3,8 @@
 $arrayReturn = [];
 $defaultProperties = [];
 
+$defaultProperties['requirable'] = 1;
+
 /*
 * Add module objects to the game menu
 */
@@ -77,17 +79,19 @@ foreach ($objects as $element) {
     }
 }
 
+$arrayReturn['requirementsElementObject'] = [];
 // Update requirements of a Object
 if ($request->get('requirementsElementObject')) {
     $currentObject = (array) $request->get('requirementsElementObject');
-    $elementObject = $game->getElement($currentObject['id']);
+    $elementObject = $game->getElement((int) $currentObject['id']);
     foreach ($currentObject['requirements'] as $requirementInfo) {
         $requirementInfo = (array) $requirementInfo;
         if (!isset($requirementInfo['required_element'])) {
             continue;
         }
+
         $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
-        $createdRequirements[] = $elementObject->createRequirement($requirementInfo['required_element']['id'], $requirementInfo['ratio']);
+        $createdRequirements[] = $elementObject->createRequirement((int) $requirementInfo['required_element']['id'], (int) $requirementInfo['ratio']);
     }
     $arrayReturn['requirementsElementObject'] = $createdRequirements;
 }

@@ -6,6 +6,27 @@ Feature:
   Background:
     Given I use the "objects" module
 
+Scenario: Successfully create a Object with requirable property
+  When I send a "POST" request with:
+  """
+  {
+      "newObject": {
+          "name": "Sample Object",
+          "properties": {
+              "quantity": 1000,
+              "picture": "blah"
+          }
+      }
+  }
+  """
+  Then the response status code should be 200
+  Then the JSON nodes should be equal to:
+      | objects[0].name                      | Sample Object   |
+      | objects[0].properties.picture        | blah                   |
+      | objects[0].properties.quantity       | 1000                   |
+      | objects[0].properties.type           | Object          |
+      | objects[0].properties.requirable     | 1                      |
+
 Scenario: Successfully create a Object
   When I send a "POST" request with:
   """
@@ -65,35 +86,41 @@ Scenario: Successfully create a Object requirement
                 "id": {previous_nodes.objects[0].id},
                 "requirements": [{
                     "required_element": {
-                        "id": "{previous_nodes.objects[1].id}"
+                        "id": {previous_nodes.objects[1].id}
                     },
                     "ratio": 10
                 }]
         }
     }
     """
-    Then print last response
     Then the response status code should be 200
-    Then the JSON nodes should be equal to:
-        | objects[0].requirements[0]['ratio']    | 10   |
+
+Scenario: Successfully list all Object
+  When I send a "POST" request with:
+  """
+  {}
+  """
+  Then the response status code should be 200
+
 
 Scenario: Successfully edit a Object requirement
-      """
-      {
-          "requirementsElementObject": {
-                  "id": {previous_nodes.objects[0].id},
-                  "requirements": [{
-                      "required_element": {
-                          "id": "{previous_nodes.objects[1].id}"
-                      },
-                      "ratio": 20
-                  }]
-          }
-      }
-      """
-      Then the response status code should be 200
-      Then the JSON nodes should be equal to:
-          | objects[0].requirements[0]['ratio']    | 20   |
+    When I send a "POST" request with:
+    """
+    {
+        "requirementsElementObject": {
+                "id": {previous_nodes.objects[0].id},
+                "requirements": [{
+                    "required_element": {
+                        "id": {previous_nodes.objects[0].requirements[1].required_element.id}
+                    },
+                    "ratio": 20
+                }]
+        }
+    }
+    """
+    Then the response status code should be 200
+    Then the JSON nodes should be equal to:
+      | objects[0].requirements[1].ratio    | 20   |
 
 Scenario: Successfully retrieve objects
   When I send a "POST" request with:

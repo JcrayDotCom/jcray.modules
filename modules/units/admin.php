@@ -128,17 +128,19 @@ foreach ($units as $element) {
     }
 }
 
+$arrayReturn['requirementsElementUnit'] = [];
 // Update requirements of a Unit
 if ($request->get('requirementsElementUnit')) {
     $currentUnit = (array) $request->get('requirementsElementUnit');
-    $elementUnit = $game->getElement($currentUnit['id']);
+    $elementUnit = $game->getElement((int) $currentUnit['id']);
     foreach ($currentUnit['requirements'] as $requirementInfo) {
         $requirementInfo = (array) $requirementInfo;
         if (!isset($requirementInfo['required_element'])) {
             continue;
         }
+
         $requirementInfo['required_element'] = (array) $requirementInfo['required_element'];
-        $createdRequirements[] = $elementUnit->createRequirement($requirementInfo['required_element']['id'], $requirementInfo['ratio']);
+        $createdRequirements[] = $elementUnit->createRequirement((int) $requirementInfo['required_element']['id'], (int) $requirementInfo['ratio']);
     }
     $arrayReturn['requirementsElementUnit'] = $createdRequirements;
 }
